@@ -1,10 +1,10 @@
 # encoding: utf-8
 #
-# This file is part of the mbriao gem. Copyright (C) 2013 and above Shogun <shogun_panda@me.com>.
+# This file is part of the mbrao gem. Copyright (C) 2013 and above Shogun <shogun_panda@me.com>.
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-module Mbriao
+module Mbrao
   # Represents the author of a parsed content, with its metadata.
   #
   # @attribute uid
@@ -37,10 +37,10 @@ module Mbriao
     # @param uid [String] A unique ID for this post. This is only for client uses.
     def initialize(name, email = nil, website = nil, image = nil, metadata = nil, uid = nil)
       @name = name
-      @email = email # TODO: Check that is a E-Mail
-      @website = website # TODO: Check that is a URL
-      @image = image # TODO: Check that is a URL
-      @metata = metadata # TODO: Make sure this is a recursive HashWithIndifferentAccesss
+      @email = Mbrao::Parser.is_email?(email) ? email : nil
+      @website = Mbrao::Parser.is_url?(website) ? website : nil
+      @image = Mbrao::Parser.is_url?(image) ? image : nil
+      @metadata = Mbrao::Parser.ensure_safe_hash(metadata)
       @uid = uid
     end
   end

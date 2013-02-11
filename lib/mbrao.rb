@@ -4,10 +4,14 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-source "http://rubygems.org"
+require "lazier"
+require 'html/pipeline'
+require "slim"
 
-gemspec
+require "mbrao/version" if !defined?(Mbrao::Version)
+require "mbrao/errors"
+require "mbrao/content"
+require "mbrao/author"
+require "mbrao/parser"
 
-# Testing
-gem "rspec", "~> 2.12.0"
-gem "rake", "~> 10.0.3"
+Lazier.load!(:object)

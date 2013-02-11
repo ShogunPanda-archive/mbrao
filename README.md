@@ -1,16 +1,16 @@
 # Introduction
 
-[![Build Status](https://secure.travis-ci.org/ShogunPanda/mbriao.png?branch=master)](https://travis-ci.org/ShogunPanda/mbriao)
-[![Dependency Status](https://gemnasium.com/ShogunPanda/mbriao.png?travis)](https://gemnasium.com/ShogunPanda/mbriao)
-[![Code Climate](https://codeclimate.com/github/ShogunPanda/mbriao.png)](https://codeclimate.com/github/ShogunPanda/mbriao)
+[![Build Status](https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master)](https://travis-ci.org/ShogunPanda/mbrao)
+[![Dependency Status](https://gemnasium.com/ShogunPanda/mbrao.png?travis)](https://gemnasium.com/ShogunPanda/mbrao)
+[![Code Climate](https://codeclimate.com/github/ShogunPanda/mbrao.png)](https://codeclimate.com/github/ShogunPanda/mbrao)
 
 A pipelined content parser with metadata support.
 
-http://sw.cow.tc/mbriao
+http://sw.cow.tc/mbrao
 
-http://rdoc.info/gems/mbriao
+http://rdoc.info/gems/mbrao
 
-## Contributing to mbriao
+## Contributing to mbrao
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
