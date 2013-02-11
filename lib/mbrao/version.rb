@@ -10,10 +10,10 @@ module Mbrao
   # @see http://semver.org
   module Version
     # The major version.
-    MAJOR = 1
+    MAJOR = 0
 
     # The minor version.
-    MINOR = 0
+    MINOR = 5
 
     # The patch version.
     PATCH = 0

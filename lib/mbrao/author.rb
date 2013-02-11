@@ -40,7 +40,7 @@ module Mbrao
       @email = Mbrao::Parser.is_email?(email) ? email : nil
       @website = Mbrao::Parser.is_url?(website) ? website : nil
       @image = Mbrao::Parser.is_url?(image) ? image : nil
-      @metadata = Mbrao::Parser.ensure_safe_hash(metadata)
+      @metadata = Mbrao::Parser.sanitized_hash(metadata)
       @uid = uid
     end
   end
