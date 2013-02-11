@@ -4,7 +4,11 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-# TODO: Include dependencies
+require "html_pipeline"
+require "slim"
 
 require "mbriao/version" if !defined?(Mbriao::Version)
-# TODO: Include other sources
+require "mbriao/errors"
+require "mbriao/content"
+require "mbriao/author"
+require "mbriao/parser"

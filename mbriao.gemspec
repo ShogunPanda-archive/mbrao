@@ -22,10 +22,8 @@ Gem::Specification.new do |gem|
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  # TODO: OPTIONAL: Apply the folllowing to restrict Ruby version.
-  # gem.required_ruby_version = ">= 1.X"
+  gem.required_ruby_version = ">= 1.9.3"
 
-  # TODO: Add dependencies via gem.add_dependency
-
-  # TODO: Add development dependencies via gem.add_development_dependency
+  gem.add_dependency("html-pipeline", "0.0.8")
+  gem.add_dependency("slim, 1.3.6")
 end
