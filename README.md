@@ -6,7 +6,9 @@
 
 A pipelined content parser with metadata support.
 
-http://github.com/ShogunPanda/mbriao
+http://sw.cow.tc/mbriao
+
+http://rdoc.info/gems/mbriao
 
 ## Contributing to mbriao
  
