@@ -4,7 +4,7 @@
 [![Dependency Status](https://gemnasium.com/ShogunPanda/mbrao.png?travis)](https://gemnasium.com/ShogunPanda/mbrao)
 [![Code Climate](https://codeclimate.com/github/ShogunPanda/mbrao.png)](https://codeclimate.com/github/ShogunPanda/mbrao)
 
-A pipelined content parser with metadata support.
+A content parser and renderer with embedded metadata support.
 
 http://sw.cow.tc/mbrao
 

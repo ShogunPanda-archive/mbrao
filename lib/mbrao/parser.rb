@@ -5,10 +5,8 @@
 #
 
 # TODO: Handler for assets pipeline. Looking at params[:locale] or @locale, if is not available, it should raise a UnavailableLocaleError. Also, it should save the Content object in the @mbrao_view_content of the controller.
-# TODO: Method to set the default locale.
-# TODO: Setup the marker for the metadata and different locales. By default: "---"
 
-# A pipelined content parser with metadata support.
+# A content parser and renderer with embedded metadata support.
 module Mbrao
   # Methods to allow class level access.
   module PublicInterface
@@ -18,14 +16,31 @@ module Mbrao
     #
     # @attribute default_locale
     #   @return [String] The Mbrao default locale.
+    # @attribute marker
+    #   @return [Array] The opening and closing markers used for looking for metadata and locale in elements. If a string or single element array, it will used for both. Default is `["---"]`.
     module ClassMethods
       attr_accessor :default_locale
+      attr_accessor :marker
 
       # Sets the default locale for Mbrao.
       #
       # @param value [String|Symbol] The new default locale.
       def default_locale=(value)
         @default_locale = value.ensure_string
+      end
+
+      # Gets the markers for Mbrao parsing.
+      #
+      # @return value [Array] The markers to use for Mbrao parsing.
+      def marker
+        @marker ||= ["---"]
+      end
+
+      # Sets the markers for Mbrao parsing.
+      #
+      # @param value [String|Array] The new marker.
+      def marker=(value)
+        @marker = value.ensure_array.compact.collect(&:ensure_string).slice(0, 2)
       end
 
       # Registers a renderer for contents.
