@@ -7,6 +7,10 @@
 module Mbrao
   # The errors which are triggered by the parser.
   module Errors
+    # Error raised when a date is invalid.
+    class InvalidDate < ::Exception
+    end
+
     # Error raised when there is a parsing error.
     class Parsing < ::Exception
     end

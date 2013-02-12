@@ -5,6 +5,69 @@
 #
 
 module Mbrao
+  # Setter methods for the {Content Content} class.
+  module ContentPublicInterface
+    # Checks if the content is available for at least one of the provided locales.
+    #
+    # @param locales [Array] The desired locales.
+    # @return [Boolean] `true` if the content is available for at least one of the desired locales, `false` otherwise.
+    def enabled_for_locales?(*locales)
+      locales = Mbrao::Parser.sanitized_array(locales)
+      @locales.blank? || locales.blank? || (@locales & locales).present?
+    end
+
+    # Gets the title of the content in the desired locales.
+    #
+    # @param locales [String|Array] The desired locales.
+    # @return [String|HashWithIndifferentAccess] Return the title of the content in the desired locales. If only one locale is available, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
+    def get_title(locales = [])
+      filter_attribute_for_locales(@title, locales)
+    end
+
+    # Gets the body of the content in the desired locales.
+    #
+    # @param locales [String|Array] The desired locales.
+    # @return [String|HashWithIndifferentAccess] Return the bold of the content in the desired locales. If only one locale is available, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
+    def get_body(locales = [])
+      filter_attribute_for_locales(@body, locales)
+    end
+
+    # Gets the tags of the content in the desired locales.
+    #
+    # @param locales [String|Array] The desired locales.
+    # @return [Array|HashWithIndifferentAccess] Return the title of the content in the desired locales. If only one locale is available, then a `Array` is returned, else a `HashWithIndifferentAccess` with locales as keys.
+    def get_tags(locales = [])
+      filter_attribute_for_locales(@tags, locales)
+    end
+
+    # Gets the "more link" text of the content in the desired locales.
+    #
+    # @param locales [String|Array] The desired locales.
+    # @return [String|HashWithIndifferentAccess] Return the label of the "more link" of the content in the desired locales. If only one locale is available, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
+    def get_more(locales = [])
+      filter_attribute_for_locales(@more, locales)
+    end
+
+    private
+      # Filter an attribute basing a set of locales.
+      #
+      # @param attribute [Object|HashWithIndifferentAccess] The desired attribute.
+      # @param locales [String|Array] The desired locales.
+      # @return [String|HashWithIndifferentAccess] Return the object for desired locales. If only one locale is available, then only a object is returned, else a `HashWithIndifferentAccess` with locales as keys.
+      def filter_attribute_for_locales(attribute, locales)
+        locales = Mbrao::Parser.sanitized_array(locales)
+        locales = [Mbrao::Parser.default_locale] if locales.empty?
+        raise Mbrao::Errors::UnavailableLocale.new if !self.enabled_for_locales?(locales)
+
+        if attribute.is_a?(HashWithIndifferentAccess) then
+          rv = attribute.select {|k, v| locales.include?(k) }
+          rv = rv.keys.length == 1 ? rv.values.first : HashWithIndifferentAccess.new(rv)
+        else
+          attribute
+        end
+      end
+  end
+
   # Represents a parsed content, with its metadata.
   #
   # @attribute uid
@@ -28,6 +91,8 @@ module Mbrao
   # @attribute metadata
   #   @return [Hash] The full list of metadata of this content.
   class Content
+    include Mbrao::ContentPublicInterface
+
     attr_accessor :uid
     attr_accessor :locales
     attr_accessor :title
@@ -54,38 +119,45 @@ module Mbrao
     #
     # @param value [String|Hash] The new value for the attribute.
     def title=(value)
-      @title = values.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(values, :ensure_string) : value.ensure_string
+      @title = value.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(value, :ensure_string) : value.ensure_string
     end
 
     # Sets the `body` attribute.
     #
     # @param value [String|Hash] The new value for the attribute.
     def body=(value)
-      @body = values.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(values, :ensure_string) : value.ensure_string
+      @body = value.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(value, :ensure_string) : value.ensure_string
     end
 
     # Sets the `tags` attribute.
     #
     # @param value [Array|Hash] The new value for the attribute.
     def tags=(value)
-      @body = values.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(values) {|value| Mbrao::Parser.sanitized_array(value) } : Mbrao::Parser.sanitized_array(value)
+      @tags = if value.is_a?(Hash) then
+        values = Mbrao::Parser.sanitized_hash(value)
+        values.each {|k, v| values[k] = Mbrao::Parser.sanitized_array(v, true, true) }
+        @tags = values
+      else
+        Mbrao::Parser.sanitized_array(value, true, true)
+      end
     end
 
     # Sets the `more` attribute.
     #
     # @param value [String|Hash] The new value for the attribute.
     def more=(value)
-      @title = values.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(values, :ensure_string) : value.ensure_string
+      @more = value.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(value, :ensure_string) : value.ensure_string
     end
 
     # Sets the `author` attribute.
     #
     # @param value [Author|Hash|Object] The new value for the attribute.
     def author=(value)
-      if values.is_a?(Mbrao::Author) then
-        @author = author
-      elsif values.is_a?(Hash) then
-
+      if value.is_a?(Mbrao::Author) then
+        @author = value
+      elsif value.is_a?(Hash) then
+        value = Mbrao::Parser.sanitized_hash(value, nil)
+        @author = Mbrao::Author.new(value["name"], value["email"], value["website"], value["image"], value["metadata"], value["uid"])
       else
         @author = Mbrao::Author.new(value.ensure_string)
       end
@@ -96,7 +168,6 @@ module Mbrao
     # @param value [String|DateTime|Fixnum] The new value for the attribute.
     def created_at=(value)
       @created_at = extract_datetime(value)
-      # TODO
     end
 
     # Sets the `updated_at` attribute.
@@ -111,56 +182,11 @@ module Mbrao
     #
     # @param value [Hash] The new value for the attribute.
     def metadata=(value)
-      if values.is_a?(Hash) then
-        @metadata = Mbrao::Parser.sanitized_hash(values)
+      if value.is_a?(Hash) then
+        @metadata = Mbrao::Parser.sanitized_hash(value)
       else
-        @metadata = HashWithIndifferentAccess.new({raw: values})
+        @metadata = HashWithIndifferentAccess.new({raw: value})
       end
-    end
-
-    # Checks if the content is available for at least one of the provided locales.
-    #
-    # @param locales [String] The desired locales.
-    # @return [Boolean] `true` if the content is available for at least one of the desired locales, `false` otherwise.
-    def enabled_for_locales?(locales = [])
-      locales = Mbrao::Parser.sanitized_array(locales)
-      @locales.empty? || locales.empty? || (@locales & locales).present?
-    end
-
-    # Gets the title of the content in the desired locales.
-    #
-    # @param locales [String|Array] The desired locales.
-    # @return [String|HashWithIndifferentAccess] Return the title of the content in the desired locales. If only one locale is available, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
-    def get_title(locales = [])
-      locales = Mbrao::Parser.sanitized_array(locales)
-      # TODO
-    end
-
-    # Gets the body of the content in the desired locales.
-    #
-    # @param locales [String|Array] The desired locales.
-    # @return [String|HashWithIndifferentAccess] Return the bold of the content in the desired locales. If only one locale is available, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
-    def get_body(locales = [])
-      locales = Mbrao::Parser.sanitized_array(locales)
-      # TODO
-    end
-
-    # Gets the tags of the content in the desired locales.
-    #
-    # @param locales [String|Array] The desired locales.
-    # @return [Array|HashWithIndifferentAccess] Return the title of the content in the desired locales. If only one locale is available, then a `Array` is returned, else a `HashWithIndifferentAccess` with locales as keys.
-    def get_tags(locales = [])
-      locales = Mbrao::Parser.sanitized_array(locales)
-      # TODO
-    end
-
-    # Gets the "more link" text of the content in the desired locales.
-    #
-    # @param locales [String|Array] The desired locales.
-    # @return [String|HashWithIndifferentAccess] Return the label of the "more link" of the content in the desired locales. If only one locale is available, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
-    def get_more(locales = [])
-      locales = Mbrao::Parser.sanitized_array(locales)
-      # TODO
     end
 
     private
@@ -168,8 +194,20 @@ module Mbrao
       #
       # @param value [String|DateTime|Fixnum] The value to parse.
       # @return [DateTime] The extract values.
-      def extract_date(value)
-        # TODO
+      def extract_datetime(value)
+        begin
+          if value.is_a?(Date) || value.is_a?(Time) then
+            value = value.to_datetime
+          elsif value.is_a?(Fixnum)
+            value = Time.at(value).to_datetime
+          elsif !value.is_a?(DateTime) then
+            value = DateTime.strptime(value.ensure_string, "%Y%m%dT%H%M%S%z")
+          end
+
+          value.utc
+        rescue ArgumentError => e
+          raise Mbrao::Errors::InvalidDate.new
+        end
       end
   end
 end

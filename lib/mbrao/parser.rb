@@ -5,7 +5,8 @@
 #
 
 # TODO: Handler for assets pipeline. Looking at params[:locale] or @locale, if is not available, it should raise a UnavailableLocaleError. Also, it should save the Content object in the @mbrao_view_content of the controller.
-# TODD: Method to set the default locale.
+# TODO: Method to set the default locale.
+# TODO: Setup the marker for the metadata and different locales. By default: "---"
 
 # A pipelined content parser with metadata support.
 module Mbrao
@@ -14,17 +15,42 @@ module Mbrao
     extend ActiveSupport::Concern
 
     # Class methods.
+    #
+    # @attribute default_locale
+    #   @return [String] The Mbrao default locale.
     module ClassMethods
+      attr_accessor :default_locale
+
+      # Sets the default locale for Mbrao.
+      #
+      # @param value [String|Symbol] The new default locale.
+      def default_locale=(value)
+        @default_locale = value.ensure_string
+      end
+
+      # Registers a renderer for contents.
+      #
+      # @param name [String|Symbol] The name of this renderer.
+      # @param block [Proc] The block to execute to render contents. It must have the same interface of the #render.
       def register_renderer(name, &block)
         self.instance.register_renderer(name, &block)
       end
 
+      # Parses a source text.
+      #
+      # @param content [String] The content to parse.
+      # @param options [Hash] A list of options for parsing.
+      # @return [Content] The parsed data.
       def parse(content, options = {})
         self.instance.parser(content, options)
       end
 
-      def render(content, renderer, options = {}, context = {})
-        self.instance.render(content, renderer, options = {}, context = {})
+      # Renders a content.
+      #
+      # @param content [Content] The content to parse.
+      # @param renderer [StringSymbol] T
+      def render(content, renderer = :html_pipeline, options = {}, context = {})
+        self.instance.render(content, renderer, options, context)
       end
 
       # Returns a unique (singleton) instance of the parser.
@@ -81,11 +107,11 @@ module Mbrao
       def sanitized_hash(object, sanitize_method = nil, &block)
         if object.is_a?(Hash) || object.is_a?(HashWithIndifferentAccess) then
           object.inject(HashWithIndifferentAccess.new) do |hash, pair|
-            hash[pair[0]] = Mbrao::Parser.sanitized_hash(pair[1])
+            hash[pair[0]] = Mbrao::Parser.sanitized_hash(pair[1], sanitize_method, &block)
             hash
           end
         elsif object.respond_to?(:collect) then
-          object.collect {|item| Mbrao::Parser.sanitized_hash(item) }
+          object.collect {|item| Mbrao::Parser.sanitized_hash(item, sanitize_method, &block) }
         else
           sanitized_hash_entry(object, sanitize_method, &block)
         end
@@ -94,8 +120,8 @@ module Mbrao
       # Convert an object to a a flatten array with all values sanitize.
       #
       # @param object [Object] The object to convert.
-      # @param uniq [Boolean] If to remove duplicates from the array before stringifing.
-      # @param compact [Boolean] If to compact the array before stringifing.
+      # @param uniq [Boolean] If to remove duplicates from the array before sanitizing.
+      # @param compact [Boolean] If to compact the array before sanitizing.
       # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
       # @param block [Proc] A block to sanitize entries. It must accept the value as unique argument.
       # @return [Array] An flattened array whose all values are strings.
@@ -104,13 +130,15 @@ module Mbrao
         rv.uniq! if uniq
         rv.compact! if compact
 
-        if block
-          rv.collect(&block)
-        elsif sanitize_method
-          rv.collect(&sanitize_method)
-        else
-          rv
+        if block then
+          rv = rv.collect(&block)
+        elsif sanitize_method then
+          rv = rv.collect(&sanitize_method)
         end
+
+        rv.uniq! if uniq
+        rv.compact! if compact
+        rv
       end
 
       private
