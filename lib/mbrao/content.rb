@@ -56,9 +56,7 @@ module Mbrao
       # @param locales [String|Array] The desired locales. Can include `*` to match all.
       # @return [String|HashWithIndifferentAccess] Return the object for desired locales. If only one locale is available, then only a object is returned, else a `HashWithIndifferentAccess` with locales as keys.
       def filter_attribute_for_locales(attribute, locales)
-        locales = Mbrao::Parser.sanitized_array(locales).collect(&:strip)
-        locales = (locales.empty? ? [Mbrao::Parser.locale] : locales)
-        raise Mbrao::Exceptions::UnavailableLocale.new if !self.enabled_for_locales?(locales)
+        locales = validate_locales(locales)
 
         if attribute.is_a?(HashWithIndifferentAccess) then
           rv = attribute.inject(HashWithIndifferentAccess.new) { |hash, pair| append_value_for_locale(hash, pair[0], locales, pair[1]) }
@@ -66,6 +64,17 @@ module Mbrao
         else
           attribute
         end
+      end
+
+      # Validate locales for attribute retrieval.
+      #
+      # @param locales [Array] A list of desired locales for an attribute.
+      # @return [Array] The validated list of locales.
+      def validate_locales(locales)
+        locales = Mbrao::Parser.sanitized_array(locales).collect(&:strip)
+        locales = (locales.empty? ? [Mbrao::Parser.locale] : locales)
+        raise Mbrao::Exceptions::UnavailableLocale.new if !self.enabled_for_locales?(locales)
+        locales
       end
 
       # Add an value on a hash if enable for requested locales.
