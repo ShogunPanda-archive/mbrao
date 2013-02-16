@@ -223,13 +223,13 @@ module Mbrao
         begin
           if value.is_a?(Date) || value.is_a?(Time) then
             value = value.to_datetime
-          elsif value.is_float? then
+          elsif value.to_float > 0 then
             value = Time.at(value.to_float).to_datetime
-          elsif !value.is_a?(DateTime) then
+          elsif value && !value.is_a?(DateTime) then
             value = DateTime.strptime(value.ensure_string, "%Y%m%dT%H%M%S%z")
           end
 
-          value.utc
+          value ? value.utc : nil
         rescue ArgumentError => e
           raise Mbrao::Exceptions::InvalidDate.new
         end
