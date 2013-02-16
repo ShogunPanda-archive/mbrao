@@ -233,8 +233,8 @@ module Mbrao
 
           value.utc
         rescue ArgumentError => e
-          p e
-          raise Mbrao::Exceptions::InvalidDate.new
+          raise e
+          #raise Mbrao::Exceptions::InvalidDate.new
         end
       end
   end
