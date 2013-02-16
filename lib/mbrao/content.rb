@@ -223,7 +223,7 @@ module Mbrao
         begin
           if value.is_a?(Date) || value.is_a?(Time) then
             value = value.to_datetime
-          elsif value.is_a?(Fixnum)
+          elsif value.is_a?(Fixnum) then
             value = Time.at(value).to_datetime
           elsif !value then
             value = DateTime.now
@@ -233,6 +233,7 @@ module Mbrao
 
           value.utc
         rescue ArgumentError => e
+          p e
           raise Mbrao::Exceptions::InvalidDate.new
         end
       end
