@@ -44,8 +44,6 @@ describe Mbrao::ParsingEngines::Base do
 
     it "should assign contents" do
       created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
-      now = DateTime.civil(2012, 7, 7, 11, 30, 0)
-      DateTime.stub(:now).and_return(now)
       metadata = {uid: "UID", title: {it: "IT", en: "EN"}, author: "AUTHOR", tags: {it: "IT", en: "EN"}, more: "MORE", created_at: created_at, locales: ["it", ["en"]], other: ["OTHER"]}
 
       reference.should_receive(:separate_components).with("CONTENT", {a: "b"}).and_return([metadata, "BODY"])
@@ -59,7 +57,7 @@ describe Mbrao::ParsingEngines::Base do
       expect(content.tags).to eq({"it" => ["IT"], "en" => ["EN"]})
       expect(content.more).to eq("MORE")
       expect(content.created_at).to eq(created_at)
-      expect(content.updated_at).to eq(now)
+      expect(content.updated_at).to eq(created_at)
       expect(content.locales).to eq(["it", "en"])
       expect(content.metadata).to eq({"other" => ["OTHER"]})
     end
