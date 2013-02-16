@@ -225,8 +225,6 @@ module Mbrao
             value = value.to_datetime
           elsif value.is_float? then
             value = Time.at(value.to_float).to_datetime
-          elsif !value then
-            value = DateTime.now
           elsif !value.is_a?(DateTime) then
             value = DateTime.strptime(value.ensure_string, "%Y%m%dT%H%M%S%z")
           end
