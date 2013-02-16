@@ -4,8 +4,6 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-# TODO: Handler for assets pipeline. Looking at params[:locale] or @locale, if is not available, it should raise a UnavailableLocaleError. Also, it should save the Content object in the @mbrao_view_content of the controller.
-
 # A content parser and renderer with embedded metadata support.
 module Mbrao
   # Methods to allow class level access.
@@ -16,56 +14,73 @@ module Mbrao
     #
     # @attribute default_locale
     #   @return [String] The Mbrao default locale.
+    # @attribute parsing_engine
+    #   @return [String] The default parsing engine.
+    # @attribute rendering_engine
+    #   @return [String] The default rendering engine.
     # @attribute marker
     #   @return [Array] The opening and closing markers used for looking for metadata and locale in elements. If a string or single element array, it will used for both. Default is `["---"]`.
     module ClassMethods
-      attr_accessor :default_locale
-      attr_accessor :marker
+      attr_accessor :locale
+      attr_accessor :parsing_engine
+      attr_accessor :rendering_engine
+      attr_accessor :markers
 
-      # Sets the default locale for Mbrao.
+      # Gets the default locale for Mbrao.
       #
-      # @param value [String|Symbol] The new default locale.
-      def default_locale=(value)
-        @default_locale = value.ensure_string
+      # @return value [String] The default locale.
+      def locale
+        attribute_or_default(@locale, "en")
       end
 
-      # Gets the markers for Mbrao parsing.
+      # Gets the default parsing engine.
       #
-      # @return value [Array] The markers to use for Mbrao parsing.
-      def marker
-        @marker ||= ["---"]
+      # @return [String] The default parsing engine.
+      def parsing_engine
+        attribute_or_default(@parsing_engine, "Markdown")
       end
 
-      # Sets the markers for Mbrao parsing.
+      # Gets the default rendering engine.
       #
-      # @param value [String|Array] The new marker.
-      def marker=(value)
-        @marker = value.ensure_array.compact.collect(&:ensure_string).slice(0, 2)
-      end
-
-      # Registers a renderer for contents.
-      #
-      # @param name [String|Symbol] The name of this renderer.
-      # @param block [Proc] The block to execute to render contents. It must have the same interface of the #render.
-      def register_renderer(name, &block)
-        self.instance.register_renderer(name, &block)
+      # @return [String] The default rendering_engine.
+      def rendering_engine
+        attribute_or_default(@rendering_engine, "HtmlPipeline")
       end
 
       # Parses a source text.
       #
-      # @param content [String] The content to parse.
+      # @param content [Object] The content to parse.
       # @param options [Hash] A list of options for parsing.
       # @return [Content] The parsed data.
       def parse(content, options = {})
-        self.instance.parser(content, options)
+        self.instance.parse(content, options)
       end
 
       # Renders a content.
       #
       # @param content [Content] The content to parse.
-      # @param renderer [StringSymbol] T
-      def render(content, renderer = :html_pipeline, options = {}, context = {})
-        self.instance.render(content, renderer, options, context)
+      # @param options [Hash] A list of options for renderer.
+      # @param context [Hash] A context for rendering.
+      def render(content, options = {}, context = {})
+        self.instance.render(content, options, context)
+      end
+
+      # Instantiate a new engine for rendering or parsing.
+      #
+      # @param cls [String|Symbol|Object] If a `String` or a `Symbol`, then it will be the class to instantiate. Else it will returned as engine.
+      # @param type [Symbol] The type or engine. Can be `:parsing` or `:rendering`.
+      # @return [Object] A new engine.
+      def create_engine(cls, type = :parsing)
+        if cls.is_a?(String) || cls.is_a?(Symbol) then
+          type = :parsing if type != :rendering
+          cls = cls.to_s.classify
+          engine = cls.constantize.new rescue nil
+          engine = ("::Mbrao::#{type.to_s.classify}Engines::#{cls}".constantize.new rescue nil) if !engine && cls !~ /^::/
+          raise Mbrao::Exceptions::UnknownEngine.new if !engine
+          engine
+        else
+          cls
+        end
       end
 
       # Returns a unique (singleton) instance of the parser.
@@ -76,6 +91,18 @@ module Mbrao
         @instance = nil if force
         @instance ||= Mbrao::Parser.new
       end
+
+      private
+        # Return an attribute or a default value.
+        #
+        # @param attr [Object ]The attribute to return.
+        # @param default_value [Object] The value to return if `attr` is blank.
+        # @param sanitizer [Symbol] An optional method to sanitize the returned value.
+        def attribute_or_default(attr, default_value = nil, sanitizer = :ensure_string)
+          rv = attr.present? ? attr : default_value
+          rv = rv.send(sanitizer) if sanitizer
+          rv
+        end
     end
   end
 
@@ -101,7 +128,7 @@ module Mbrao
       def is_url?(text)
         regex = /
           ^(
-            (http(s?):\/\/) #PROTOCOL
+            ([a-z0-9\-]+:\/\/) #PROTOCOL
             (([\w-]+\.)?) # LOWEST TLD
             ([\w-]+) # 2nd LEVEL TLD
             (\.[a-z]+) # TOP TLD
@@ -180,16 +207,51 @@ module Mbrao
     include Mbrao::PublicInterface
     include Mbrao::Validations
 
+    # Parses a source text.
+    #
+    # @param content [Object] The content to parse.
+    # @param options [Hash] A list of options for parsing.
+    # @return [Content] The parsed data.
     def parse(content, options = {})
-      # TODO
+      options = sanitize_parsing_options(options)
+      ::Mbrao::Parser.create_engine(options[:engine]).parse(content, options)
     end
 
-    def render(content, renderer, options = {}, context = {})
-      # TODO
+    # Renders a content.
+    #
+    # @param content [Content] The content to parse.
+    # @param options [Hash] A list of options for renderer.
+    # @param context [Hash] A context for rendering.
+    def render(content, options = {}, context = {})
+      options = sanitize_rendering_options(options)
+      ::Mbrao::Parser.create_engine(options[:engine], :rendering).render(content, options, context)
     end
 
-    def register_renderer(name, &block)
-      # TODO
-    end
+    private
+      # Sanitizes options for parsing.
+      #
+      # @param options [Hash] The options to sanitize.
+      # @return [HashWithIndifferentAccess] The sanitized options.
+      def sanitize_parsing_options(options)
+        options = (options.is_a?(Hash) ? options : {}).symbolize_keys
+
+        options[:engine] ||= Mbrao::Parser.parsing_engine
+        options[:metadata] = options.fetch(:metadata, true).to_boolean
+        options[:content] = options.fetch(:content, true).to_boolean
+
+        HashWithIndifferentAccess.new(options)
+      end
+
+      # Sanitizes options for rendering.
+      #
+      # @param options [Hash] The options to sanitize.
+      # @return [HashWithIndifferentAccess] The sanitized options.
+      def sanitize_rendering_options(options)
+        options = (options.is_a?(Hash) ? options : {}).symbolize_keys
+
+        options[:engine] ||= Mbrao::Parser.rendering_engine
+
+        HashWithIndifferentAccess.new(options)
+      end
   end
 end

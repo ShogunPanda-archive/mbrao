@@ -51,8 +51,8 @@ describe Mbrao::Content do
     it "should raise an exception if not available for that locale" do
       reference.locales = [:en, :it, :es]
       reference.send("#{attribute}=", v1)
-      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error(Mbrao::Errors::UnavailableLocale)
-      expect { reference.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Errors::UnavailableLocale)
+      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error(Mbrao::Exceptions::UnavailableLocale)
+      expect { reference.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Exceptions::UnavailableLocale)
     end
 
     it "should return the attribute itself if not localized" do
@@ -62,19 +62,29 @@ describe Mbrao::Content do
     end
 
     it "should return the default locale if no locales are specified" do
-      Mbrao::Parser.default_locale = :it
+      Mbrao::Parser.locale = :it
       reference.send("#{attribute}=", {en: v1, it: v2})
       expect(reference.send("get_#{attribute}")).to eq(v2)
     end
 
     it "should return only the subset of valid and request locales" do
-      Mbrao::Parser.default_locale = :it
+      Mbrao::Parser.locale = :it
       reference.send("#{attribute}=", {en: v1, it: v2, de: v1, es: v2})
+
       value = reference.send("get_#{attribute}", [:de, :es])
       expect(value).to be_a(::HashWithIndifferentAccess)
       expect(value.keys).to eq(["de", "es"])
+
       value = reference.send("get_#{attribute}", [:it, :de, :pt, :fr])
       expect(value.keys.sort).to eq(["de", "it"])
+
+      reference.locales = [:en, :it, :es]
+      value = reference.send("get_#{attribute}", "*")
+      expect(value.keys.sort).to eq(["de", "en", "es", "it"])
+
+      reference.send("#{attribute}=", {en: v1, "it,es" => v2, " de,    fr " => v1})
+      value = reference.send("get_#{attribute}", [:it, :fr])
+      expect(value.keys.sort).to eq(["fr", "it"])
     end
   end
 
@@ -111,9 +121,8 @@ describe Mbrao::Content do
       expect(value).to be_a(DateTime)
       expect(value.strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103000+0000")
 
-      expect { reference.send("#{attribute}=", nil) }.to raise_error(Mbrao::Errors::InvalidDate)
-      expect { reference.send("#{attribute}=", "ABC") }.to raise_error(Mbrao::Errors::InvalidDate)
-      expect { reference.send("#{attribute}=", []) }.to raise_error(Mbrao::Errors::InvalidDate)
+      expect { reference.send("#{attribute}=", "ABC") }.to raise_error(Mbrao::Exceptions::InvalidDate)
+      expect { reference.send("#{attribute}=", []) }.to raise_error(Mbrao::Exceptions::InvalidDate)
     end
   end
 
@@ -122,7 +131,14 @@ describe Mbrao::Content do
   end
 
   describe "#body=" do
-    it_should_behave_like "localized setter", :body
+    it "should set the content as string" do
+      reference.body = "A"
+      expect(reference.body).to eq("A")
+      reference.body = 1
+      expect(reference.body).to eq("1")
+      reference.body = nil
+      expect(reference.body).to eq("")
+    end
   end
 
   describe "#tags=" do
@@ -210,7 +226,13 @@ describe Mbrao::Content do
   end
 
   describe "#get_body" do
-    it_should_behave_like "localized getter", :body, "ABC", "123"
+    it "should create a parsing engine and use it for filtering" do
+      reference.body = "BODY"
+      engine = ::Mbrao::ParsingEngines::Base.new
+      engine.should_receive(:filter_content).with("BODY", ["it", "en"])
+      ::Mbrao::Parser.should_receive(:create_engine).with("ENGINE").and_return(engine)
+      reference.get_body(["it", "en"], "ENGINE")
+    end
   end
 
   describe "#get_tags" do

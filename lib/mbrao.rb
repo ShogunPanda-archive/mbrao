@@ -9,9 +9,16 @@ require 'html/pipeline'
 require "slim"
 
 require "mbrao/version" if !defined?(Mbrao::Version)
-require "mbrao/errors"
+require "mbrao/exceptions"
 require "mbrao/content"
 require "mbrao/author"
 require "mbrao/parser"
+require "mbrao/parsing_engines/base"
+require "mbrao/parsing_engines/plain_text"
+
+# TODO:
+#   Handler for the Rails assets pipeline. Looking at params[:locale] or @locale for rendering the body.
+#   If the content is not available for the locale it should raise a ::Mbrao::Exceptions::UnavailableLocale.
+#   Also, it should save the Content object in the @mbrao_content of the controller.
 
 Lazier.load!(:object)

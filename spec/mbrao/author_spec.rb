@@ -7,6 +7,27 @@
 require "spec_helper"
 
 describe Mbrao::Author do
+  describe ".create" do
+    it "creates a author from a non-hash" do
+      Mbrao::Author.should_receive(:new).with("NAME")
+      Mbrao::Author.create("NAME")
+
+      Mbrao::Author.should_receive(:new).with(nil)
+      Mbrao::Author.create(nil)
+
+      Mbrao::Author.should_receive(:new).with([])
+      Mbrao::Author.create([])
+
+      Mbrao::Author.should_receive(:new).with(["NAME"])
+      Mbrao::Author.create(["NAME"])
+    end
+
+    it "creates a author from a hash" do
+      Mbrao::Author.should_receive(:new).with("NAME", "EMAIL", "WEBSITE", "IMAGE", {"other" => "OTHER"}, "UID")
+      Mbrao::Author.create({name: "NAME", email: "EMAIL", website: "WEBSITE", image: "IMAGE", other: "OTHER", uid: "UID"})
+    end
+  end
+
   describe "#initialize" do
     it "create a new object" do
       reference = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
