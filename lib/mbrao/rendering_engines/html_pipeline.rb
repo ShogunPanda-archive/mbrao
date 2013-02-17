@@ -10,7 +10,7 @@ module Mbrao
     # A renders which use the {html-pipeline https://github.com/jch/html-pipeline} gem.
     class HtmlPipeline
       # TODO: Support for kramdown.
-      
+
       # Renders a content.
       #
       # @param content [Content] The content to parse.
@@ -29,25 +29,24 @@ module Mbrao
       end
 
       private
-      # Sanitizes options.
-      #
-      # @param options [Hash] The options to sanitize.
-      # @return [HashWithIndifferentAccess] The sanitized options.
-      def sanitize_options(options)
-        default_pipeline = [:markdown, :syntax_highlight, :table_of_contents, :auto_link, :emoji, :image_max_width]
-        default_options = {:gfm => true}
+        # Sanitizes options.
+        #
+        # @param options [Hash] The options to sanitize.
+        # @return [HashWithIndifferentAccess] The sanitized options.
+        def sanitize_options(options)
+          default_pipeline = [:markdown, :syntax_highlight, :table_of_contents, :auto_link, :emoji, :image_max_width]
+          default_options = {:gfm => true}
 
-        options = {} if !options.is_a?(Hash)
-        options[:pipeline] = options.fetch(:pipeline, default_pipeline).collect(&:to_sym)
-        options[:pipeline].delete(:syntax_highlight) if !options.fetch(:highlight, true)
-        options[:pipeline].delete(:table_of_contents) if !options.fetch(:toc, true)
-        options[:pipeline].delete(:auto_link) if !options.fetch(:links, true)
-        options[:pipeline].delete(:emoji) if !options.fetch(:emoji, true)
-        options[:pipeline_options] = default_options.merge((options[:pipeline_options].is_a?(Hash) ? options[:pipeline_options] : {}).symbolize_keys)
+          options = {} if !options.is_a?(Hash)
+          options[:pipeline] = options.fetch(:pipeline, default_pipeline).collect(&:to_sym)
+          options[:pipeline].delete(:syntax_highlight) if !options.fetch(:highlight, true)
+          options[:pipeline].delete(:table_of_contents) if !options.fetch(:toc, true)
+          options[:pipeline].delete(:auto_link) if !options.fetch(:links, true)
+          options[:pipeline].delete(:emoji) if !options.fetch(:emoji, true)
+          options[:pipeline_options] = default_options.merge((options[:pipeline_options].is_a?(Hash) ? options[:pipeline_options] : {}).symbolize_keys)
 
-        options
-      end
-
+          options
+        end
     end
   end
 end
