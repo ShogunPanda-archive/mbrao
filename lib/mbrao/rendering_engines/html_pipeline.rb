@@ -50,10 +50,11 @@ module Mbrao
         # @return [Hash] The options with the new set of filters.
         def filter_filters(options)
           options[:pipeline] = options.fetch(:pipeline, default_pipeline).collect(&:to_sym)
-          options[:pipeline].delete(:syntax_highlight) if !options.fetch(:highlight, true)
-          options[:pipeline].delete(:table_of_contents) if !options.fetch(:toc, true)
-          options[:pipeline].delete(:auto_link) if !options.fetch(:links, true)
-          options[:pipeline].delete(:emoji) if !options.fetch(:emoji, true)
+
+          [[:highlight, :syntax_highlight], [:toc, :table_of_contents], [:links, :auto_link], [:emoji]].each do |f|
+            options[:pipeline].delete(f.last) if !options.fetch(f.first, true)
+          end
+
           options
         end
     end
