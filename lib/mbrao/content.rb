@@ -50,7 +50,7 @@ module Mbrao
     end
 
     private
-      # Filter an attribute basing a set of locales.
+      # Filters an attribute basing a set of locales.
       #
       # @param attribute [Object|HashWithIndifferentAccess] The desired attribute.
       # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
@@ -66,7 +66,7 @@ module Mbrao
         end
       end
 
-      # Add an value on a hash if enable for requested locales.
+      # Adds an value on a hash if enable for requested locales.
       #
       # @param hash [Hash] The hash to handle.
       # @param available_locales [String] The list of locale (separated by commas) for which the value is available.
@@ -203,7 +203,7 @@ module Mbrao
       end
     end
 
-    # Validate locales for attribute retrieval.
+    # Validates locales for attribute retrieval.
     #
     # @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
     # @param content [Content|nil] An optional content to check for availability
@@ -216,7 +216,7 @@ module Mbrao
     end
 
     private
-      # Extract a date and time from a value.
+      # Extracts a date and time from a value.
       #
       # @param value [String|DateTime|Fixnum] The value to parse.
       # @return [DateTime] The extract values.

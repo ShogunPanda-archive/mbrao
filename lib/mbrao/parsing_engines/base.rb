@@ -27,7 +27,7 @@ module Mbrao
         raise Mbrao::Exceptions::Unimplemented.new
       end
 
-      # Filter content of a post by locale.
+      # Filters content of a post by locale.
       #
       # @param content [String] The content to filter.
       # @param locales [String|Array] The desired locales. Can include `*` to match all.
@@ -37,7 +37,7 @@ module Mbrao
         raise Mbrao::Exceptions::Unimplemented.new
       end
 
-      # Parse a content and return a {Content Content} object.
+      # Parses a content and return a {Content Content} object.
       #
       # @param content [Object] The content to parse.
       # @param options [Hash] Options to customize parsing.

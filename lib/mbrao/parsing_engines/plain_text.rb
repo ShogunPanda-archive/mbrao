@@ -19,13 +19,14 @@ module Mbrao
         content = content.ensure_string.strip
         options = sanitize_options(options)
         scanner = StringScanner.new(content)
+        end_tag = options[:meta_tags].last
 
-        if scanner.scan_until(/^(#{Regexp.quote(options[:meta_tags].first)})/) && (metadata = scanner.scan_until(/^(#{Regexp.quote(options[:meta_tags].last)})/)) then
-          metadata = metadata[0..-(scanner.matched_size+1)].strip
-          content = scanner.rest
+        if scanner.scan_until(options[:meta_tags].first) && (metadata = scanner.scan_until(end_tag)) then
+          metadata = metadata.partition(end_tag).first
+          content = scanner.rest.strip
         end
 
-        [metadata.ensure_string, content.strip]
+        [metadata.ensure_string.strip, content]
       end
 
       # Parses metadata part and returns all valid metadata
@@ -51,11 +52,9 @@ module Mbrao
         content = content.ensure_string.strip
         options = sanitize_options(options)
         locales = ::Mbrao::Content.validate_locales(locales)
-        start_tag = /#{Regexp.quote(options[:content_tags].first).gsub("%ARGS%", "\\s*(?<args>[^\\n\\}]+,?)*")}/
-        end_tag = /#{Regexp.quote(options[:content_tags].last)}/
 
         # Split the content
-        result = scan_content(content, start_tag, end_tag)
+        result = scan_content(content, options[:content_tags].first, options[:content_tags].last)
 
         # Now filter results
         result = perform_filter_content(result, locales)
@@ -82,14 +81,14 @@ module Mbrao
         # @return [Array] Sanitized tags.
         def sanitize_tags(tag, default = ["---"])
           tag = tag.ensure_string.split(/\s*,\s*/).collect(&:strip) if tag && !tag.is_a?(Array)
-          (tag.present? ? tag : default).slice(0, 2)
+          (tag.present? ? tag : default).slice(0, 2).collect {|t| /#{Regexp.quote(t).gsub("%ARGS%", "\\s*(?<args>[^\\n\\}]+,?)*")}/ }
         end
 
         # Scan a text and content section.
         #
         # @param content [String] The string to scan
-        # @param start_tag [String] The tag to match for starting section.
-        # @param end_tag [String] The tag to match for ending section.
+        # @param start_tag [Regexp] The tag to match for starting section.
+        # @param end_tag [Regexp] The tag to match for ending section.
         def scan_content(content, start_tag, end_tag)
           rv = []
           scanner = StringScanner.new(content)
@@ -102,27 +101,48 @@ module Mbrao
 
               # Keep a reference to the start tag
               starting = scanner.matched
+
               # Now try to match the rightmost occurring closing tag
-              embedded = ""
+              embedded = parse_embedded_content(scanner, start_tag, end_tag)
 
-              balance = 1
-              while (embedded_part = scanner.scan_until(end_tag)) do
-                balance += embedded_part.scan(start_tag).count - 1 # -1 Because there is a closure
-                embedded_part = embedded_part.partition(end_tag).first if balance == 0 || !scanner.exist?(end_tag) # This is the last occurence.
-                embedded << embedded_part
-                break if balance == 0
-              end
-
-              if embedded.present? then # We have some content
-                args = starting.match(start_tag)["args"]
-                rv << [scan_content(embedded, start_tag, end_tag), args]
-              else # The content was not closed. We ignore this tag.
-                rv << [starting, "*"]
-              end
+              # Append results
+              rv << get_embedded_content(starting, embedded, start_tag, end_tag)
             else # Append the rest to the result.
               rv << [scanner.rest, "*"]
               scanner.terminate
             end
+          end
+
+          rv
+        end
+
+        # Gets results for an embedded content.
+        #
+        # @param [String] starting The match starting expression.
+        # @param [String] embedded The embedded contents.
+        # @param start_tag [Regexp] The tag to match for starting section.
+        # @param end_tag [Regexp] The tag to match for ending section.
+        # @return [Array] An array which the first element is the list of valid contents and second is the list of valid locales.
+        def get_embedded_content(starting, embedded, start_tag, end_tag)
+          # Either we have some content or the content was not closed and therefore we ignore this tag.
+          embedded.present? ? [scan_content(embedded, start_tag, end_tag), starting.match(start_tag)["args"]] : [starting, "*"]
+        end
+
+        # Parse embedded content of a tag
+        #
+        # @param scanner [StringScanner] The scanner to use.
+        # @param start_tag [Regexp] The tag to match for starting section.
+        # @param end_tag [Regexp] The tag to match for ending section.
+        # @return [String] The embedded content or `nil`, if the content was never closed.
+        def parse_embedded_content(scanner, start_tag, end_tag)
+          rv = ""
+          balance = 1
+
+          while (embedded_part = scanner.scan_until(end_tag)) do
+            balance += embedded_part.scan(start_tag).count - 1 # -1 Because there is a closure
+            embedded_part = embedded_part.partition(end_tag).first if balance == 0 || !scanner.exist?(end_tag) # This is the last occurence.
+            rv << embedded_part
+            break if balance == 0
           end
 
           rv

@@ -65,7 +65,7 @@ module Mbrao
         self.instance.render(content, options, context)
       end
 
-      # Instantiate a new engine for rendering or parsing.
+      # Instantiates a new engine for rendering or parsing.
       #
       # @param cls [String|Symbol|Object] If a `String` or a `Symbol`, then it will be the class to instantiate. Else it will returned as engine.
       # @param type [Symbol] The type or engine. Can be `:parsing` or `:rendering`.
@@ -93,7 +93,7 @@ module Mbrao
       end
 
       private
-        # Return an attribute or a default value.
+        # Returns an attribute or a default value.
         #
         # @param attr [Object ]The attribute to return.
         # @param default_value [Object] The value to return if `attr` is blank.
@@ -140,7 +140,7 @@ module Mbrao
         text.ensure_string.strip =~ regex
       end
 
-      # Convert an object making sure that every `Hash` is converted to a `HashWithIndifferentAccess`.
+      # Converts an object making sure that every `Hash` is converted to a `HashWithIndifferentAccess`.
       #
       # @param object [Object] The object to convert. If the object is not an Hash or doesn't respond to `collect` then the original object is returned..
       # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
@@ -159,7 +159,7 @@ module Mbrao
         end
       end
 
-      # Convert an object to a a flatten array with all values sanitize.
+      # Converts an object to a a flatten array with all values sanitize.
       #
       # @param object [Object] The object to convert.
       # @param uniq [Boolean] If to remove duplicates from the array before sanitizing.
@@ -184,7 +184,7 @@ module Mbrao
       end
 
       private
-        # Sanitizies an value for an hash.
+        # Sanitizes an value for an hash.
         #
         # @param value [Object] The value to sanitize.
         # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize the value. Ignored if a block is present.
