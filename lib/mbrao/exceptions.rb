@@ -7,23 +7,27 @@
 module Mbrao
   # The exceptions which are triggered by the parser.
   module Exceptions
-    # Error raised when a date is invalid.
+    # Exception raised when metadata are not invalid.
+    class InvalidMetadata < ::Exception
+    end
+
+    # Exception raised when a date is invalid.
     class InvalidDate < ::Exception
     end
 
-    # Error raised when there is a parsing error.
+    # Exception raised when there is a parsing error.
     class Parsing < ::Exception
     end
 
-    # Error raised when a requested object is not available in any of the desired locales.
+    # Exception raised when a requested object is not available in any of the desired locales.
     class UnavailableLocale < ::Exception
     end
 
-    # Error raised when there a invalid parsing or rendering engine is requested.
+    # Exception raised when there a invalid parsing or rendering engine is requested.
     class UnknownEngine < ::Exception
     end
 
-    # Error raised when a requested method must be overridden by a subclass.
+    # Exception raised when a requested method must be overridden by a subclass.
     class Unimplemented < ::Exception
     end
   end

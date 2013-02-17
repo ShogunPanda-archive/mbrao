@@ -27,9 +27,9 @@ module Mbrao
         raise Mbrao::Exceptions::Unimplemented.new
       end
 
-      # Filter content of a post by and separate by locale.
+      # Filter content of a post by locale.
       #
-      # @param content [Object] The content to parse.
+      # @param content [String] The content to filter.
       # @param locales [String|Array] The desired locales. Can include `*` to match all.
       # @param options [Hash] Options to customize parsing.
       # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
