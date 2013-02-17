@@ -38,11 +38,11 @@ module Mbrao
         begin
           YAML.load(content)
         rescue Exception => e
-          options[:default] ? options[:default] : (raise ::Mbrao::Exceptions::InvalidMetadata.new)
+          options[:default] ? options[:default] : (raise ::Mbrao::Exceptions::InvalidMetadata.new(e.to_s))
         end
       end
 
-      # Filter content of a post by locale.
+      # Filters content of a post by locale.
       #
       # @param content [String] The content to filter.
       # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be requested.
@@ -75,7 +75,7 @@ module Mbrao
           options
         end
 
-        # Sanitize tag markers.
+        # Sanitizes tag markers.
         #
         # @param tag [Array|String] The tag to sanitize.
         # @return [Array] Sanitized tags.
@@ -84,7 +84,7 @@ module Mbrao
           (tag.present? ? tag : default).slice(0, 2).collect {|t| /#{Regexp.quote(t).gsub("%ARGS%", "\\s*(?<args>[^\\n\\}]+,?)*")}/ }
         end
 
-        # Scan a text and content section.
+        # Scans a text and content section.
         #
         # @param content [String] The string to scan
         # @param start_tag [Regexp] The tag to match for starting section.
@@ -128,7 +128,7 @@ module Mbrao
           embedded.present? ? [scan_content(embedded, start_tag, end_tag), starting.match(start_tag)["args"]] : [starting, "*"]
         end
 
-        # Parse embedded content of a tag
+        # Parses embedded content of a tag
         #
         # @param scanner [StringScanner] The scanner to use.
         # @param start_tag [Regexp] The tag to match for starting section.
@@ -148,7 +148,7 @@ module Mbrao
           rv
         end
 
-        # Filter content by locale.
+        # Filters content by locale.
         #
         # @param content [Array] The content to filter. @see #scan_content.
         # @param locales [Array] The desired locales. Can include `*` to match all.
@@ -165,7 +165,7 @@ module Mbrao
           }.compact.join("")
         end
 
-        # Parse locales of a content.
+        # Parses locales of a content.
         #
         # @param locales [String] The desired locales. Can include `*` to match all. Note that `!*` is ignored.
         # @return [Hash] An hash with valid and invalid locales.
@@ -176,7 +176,7 @@ module Mbrao
           types
         end
 
-        # Check if all locales in a list are valid for a part.
+        # Checks if all locales in a list are valid for a part.
         #
         # @param locales [Array] The desired locales. Can include `*` to match all.
         # @param part_locales[Hash] An hash with valid and invalid locales.

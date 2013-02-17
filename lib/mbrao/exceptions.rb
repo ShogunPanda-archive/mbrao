@@ -19,6 +19,10 @@ module Mbrao
     class Parsing < ::Exception
     end
 
+    # Exception raised when there is a rendering error.
+    class Rendering < ::Exception
+    end
+
     # Exception raised when a requested object is not available in any of the desired locales.
     class UnavailableLocale < ::Exception
     end

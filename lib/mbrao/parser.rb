@@ -61,25 +61,38 @@ module Mbrao
       # @param content [Content] The content to parse.
       # @param options [Hash] A list of options for renderer.
       # @param context [Hash] A context for rendering.
+      # @return [String] The rendered content.
       def render(content, options = {}, context = {})
         self.instance.render(content, options, context)
       end
 
       # Instantiates a new engine for rendering or parsing.
       #
-      # @param cls [String|Symbol|Object] If a `String` or a `Symbol`, then it will be the class to instantiate. Else it will returned as engine.
+      # @param cls [String|Symbol|Object] If a `String` or a `Symbol`, then it will be the class of the engine.
       # @param type [Symbol] The type or engine. Can be `:parsing` or `:rendering`.
       # @return [Object] A new engine.
       def create_engine(cls, type = :parsing)
-        if cls.is_a?(String) || cls.is_a?(Symbol) then
+        begin
           type = :parsing if type != :rendering
+          ::Mbrao::Parser.find_class(cls, "::Mbrao::#{type.to_s.classify}Engines::%CLASS%").new
+        rescue Mbrao::Exceptions::Unimplemented
+          raise Mbrao::Exceptions::UnknownEngine.new
+        end
+      end
+
+      # Finds a class to instantiate.
+      #
+      # @param cls [Symbol|String|Object] If a `String` or a `Symbol`, then it will be the class to instantiate. Otherwise the class of the object will returned.
+      # @param scope [String] An additional scope to find the class. `%CLASS%` will be substituted with the class name.
+      # @return [Class] The found class.
+      def find_class(cls, scope = "::%CLASS%")
+        if cls.is_a?(String) || cls.is_a?(Symbol) then
           cls = cls.to_s.classify
-          engine = cls.constantize.new rescue nil
-          engine = ("::Mbrao::#{type.to_s.classify}Engines::#{cls}".constantize.new rescue nil) if !engine && cls !~ /^::/
-          raise Mbrao::Exceptions::UnknownEngine.new if !engine
-          engine
+          rv = cls.constantize rescue nil
+          rv = (scope.gsub("%CLASS%", cls).constantize rescue nil) if !rv && cls !~ /^::/
+          rv || raise(Mbrao::Exceptions::Unimplemented.new)
         else
-          cls
+          cls.class
         end
       end
 
@@ -222,6 +235,7 @@ module Mbrao
     # @param content [Content] The content to parse.
     # @param options [Hash] A list of options for renderer.
     # @param context [Hash] A context for rendering.
+    # @return [String] The rendered content.
     def render(content, options = {}, context = {})
       options = sanitize_rendering_options(options)
       ::Mbrao::Parser.create_engine(options[:engine], :rendering).render(content, options, context)

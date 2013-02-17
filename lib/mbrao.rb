@@ -15,6 +15,8 @@ require "mbrao/author"
 require "mbrao/parser"
 require "mbrao/parsing_engines/base"
 require "mbrao/parsing_engines/plain_text"
+require "mbrao/rendering_engines/base"
+require "mbrao/rendering_engines/html_pipeline"
 
 # TODO:
 #   Handler for the Rails assets pipeline. Looking at params[:locale] or @locale for rendering the body.
