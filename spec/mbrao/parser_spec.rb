@@ -84,8 +84,12 @@ describe Mbrao::Parser do
       expect { ::Mbrao::Parser.find_class(:invalid) }.to raise_error(::Mbrao::Exceptions::Unimplemented)
     end
 
-    it "should not expand engine scope" do
+    it "should not expand engine scope if the class starts with ::" do
       expect { ::Mbrao::Parser.find_class("::ScopedParser", "::Mbrao::ParsingEngines::%CLASS%") }.to raise_error(::Mbrao::Exceptions::Unimplemented)
+    end
+
+    it "should only use scope if requested to" do
+      expect { ::Mbrao::Parser.find_class("::Fixnum", "::Mbrao::ParsingEngines::%CLASS%", true) }.to raise_error(::Mbrao::Exceptions::Unimplemented)
     end
 
     it "should return anything but string or symbol as their class" do

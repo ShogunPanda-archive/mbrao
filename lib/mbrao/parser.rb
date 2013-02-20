@@ -84,13 +84,21 @@ module Mbrao
       #
       # @param cls [Symbol|String|Object] If a `String` or a `Symbol`, then it will be the class to instantiate. Otherwise the class of the object will returned.
       # @param scope [String] An additional scope to find the class. `%CLASS%` will be substituted with the class name.
+      # @param only_in_scope [Boolean] Only try to instantiate the class in the scope.
       # @return [Class] The found class.
-      def find_class(cls, scope = "::%CLASS%")
+      def find_class(cls, scope = "::%CLASS%", only_in_scope = false)
         if cls.is_a?(String) || cls.is_a?(Symbol) then
-          cls = cls.to_s.classify
-          rv = cls.constantize rescue nil
-          rv = (scope.gsub("%CLASS%", cls).constantize rescue nil) if !rv && cls !~ /^::/
-          rv || raise(Mbrao::Exceptions::Unimplemented.new)
+          rv = nil
+
+          cls = cls.to_s.camelize
+          if only_in_scope then
+            cls.gsub!(/^::/, "")
+          else
+            rv = (cls.constantize rescue nil)
+          end
+
+          rv = (scope.ensure_string.gsub("%CLASS%", cls).constantize rescue nil) if !rv && cls !~ /^::/ && scope.present?
+          rv || raise(Mbrao::Exceptions::Unimplemented.new(cls))
         else
           cls.class
         end
