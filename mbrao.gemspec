@@ -27,4 +27,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency("lazier", "~> 2.6.5")
   gem.add_dependency("html-pipeline", "~> 0.0.8")
   gem.add_dependency("slim", "~> 1.3.6")
+  gem.add_dependency("kramdown", "~> 0.14.2")
 end

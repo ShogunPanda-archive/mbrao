@@ -67,13 +67,21 @@ module Mbrao
         # @param options [Hash] The original options.
         # @return [Hash] The options with the new set of filters.
         def filter_filters(options)
-          options[:pipeline] = options.fetch(:pipeline, self.default_pipeline.collect(&:first)).collect(&:to_sym)
+          options[:pipeline] = get_pipeline(options)
 
           self.default_pipeline.each do |f|
             options[:pipeline].delete(f.first) if !options.fetch(f.last, true)
           end
 
           options
+        end
+
+        # Gets the pipeline for the current options.
+        #
+        # @param options [Hash] The options to parse.
+        # @return [Array] The pipeline to process.
+        def get_pipeline(options)
+          options.fetch(:pipeline, self.default_pipeline.collect(&:first)).collect(&:to_sym)
         end
     end
   end
