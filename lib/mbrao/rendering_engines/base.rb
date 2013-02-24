@@ -11,7 +11,7 @@ module Mbrao
     class Base
       # Renders a content.
       #
-      # @param content [Content] The content to parse.
+      # @param content [Content|String] The content to parse.
       # @param options [Hash] A list of options for renderer.
       # @param context [Hash] A context for rendering.
       def render(content, options = {}, context = {})

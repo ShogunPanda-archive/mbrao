@@ -4,6 +4,31 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
+# Main module of the html-pipeline gem.
+module HTML
+  # A html-pipeline gem Pipeline.
+  class Pipeline
+    class KramdownFilter < TextFilter
+      # Creates a new filter.
+      #
+      # @param text [String] The string to convert
+      # @param context [Hash] The context of the conversion.
+      # @param result [Hash] A result hash.
+      def initialize(text, context = nil, result = nil)
+        super(text, context, result)
+        @text = @text.gsub("\r", "")
+      end
+
+      # Convert Markdown to HTML using Kramdown and convert into a DocumentFragment.
+      #
+      # @return [DocumentFragment] The converted fragment.
+      def call
+        Kramdown::Document.new(@text, @context).to_html
+      end
+    end
+  end
+end
+
 module Mbrao
   # Engines used to render contents with metadata.
   module RenderingEngines
@@ -11,40 +36,54 @@ module Mbrao
     #
     # @attribute default_pipeline.
     #   @return [Array] The default pipeline to use. It should be an array of pairs of `Symbol`, which the first element is the filter (in underscorized version and without the filter suffix) and the second is a shortcut to disable the pipeline via options. You can also specify a single element to disable shortcuts.
+    # @attribute default_options.
+    #   @return [Hash] The default options for the renderer.
     class HtmlPipeline < Mbrao::RenderingEngines::Base
       attr_accessor :default_pipeline
-
-      # TODO: Support for kramdown.
-      # TODO: Support for oEmbed.
+      attr_accessor :default_options
 
       # Renders a content.
       #
-      # @param content [Content] The content to parse.
+      # @param content [Content|String] The content to parse.
       # @param options [Hash] A list of options for renderer.
       # @param context [Hash] A context for rendering.
       def render(content, options = {}, context = {})
         options = sanitize_options(options)
         context = context.is_a?(Hash) ? context.symbolize_keys : {}
+        content = ::Mbrao::Content.create(nil, content.ensure_string) if !content.is_a?(::Mbrao::Content)
 
         begin
-          ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context)).call(content)
+          body = content.get_body(options.fetch(:locale, ::Mbrao::Parser.locale).ensure_string)
+          result = ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context)).call(body)
+          result[:output].to_s
         rescue Exception => e
           raise ::Mbrao::Exceptions::Rendering.new(e.to_s)
         end
       end
 
-      # Gets the default pipeline
+      # Gets the default pipeline.
       #
-      # @return [Array] The default pipeline
+      # @return [Array] The default pipeline.
       def default_pipeline
-        @default_pipeline || [[:markdown], [:table_of_contents, :toc], [:autolink, :links], [:emoji], [:image_max_width]]
+        @default_pipeline || [[:kramdown], [:table_of_contents, :toc], [:autolink, :links], [:emoji], [:image_max_width]]
       end
 
-      # Sets the default pipeline
+      # Sets the default pipeline.
       #
-      # @return [Array] The default pipeline
+      # @return [Array] The default pipeline.
       def default_pipeline=(value)
         @default_pipeline = value.ensure_array.collect {|v| v.ensure_array.flatten.compact.collect { |p| p.ensure_string.to_sym } }
+      end
+
+      # Gets the default options.
+      #
+      # @return [Hash] The default options.
+      def default_options
+        @default_options || {gfm: true, asset_root: "/"}
+      end
+
+      def default_options=(value)
+        @default_options = value.is_a?(Hash) ? value : {}
       end
 
       private
@@ -53,11 +92,9 @@ module Mbrao
         # @param options [Hash] The options to sanitize.
         # @return [Hash] The sanitized options.
         def sanitize_options(options)
-          default_options = {gfm: true, asset_root: "/"}
-
           options = options.is_a?(Hash) ? options.symbolize_keys : {}
           options = filter_filters(options)
-          options[:pipeline_options] = default_options.merge((options[:pipeline_options].is_a?(Hash) ? options[:pipeline_options] : {}).symbolize_keys)
+          options[:pipeline_options] = self.default_options.merge((options[:pipeline_options].is_a?(Hash) ? options[:pipeline_options] : {}).symbolize_keys)
 
           options
         end

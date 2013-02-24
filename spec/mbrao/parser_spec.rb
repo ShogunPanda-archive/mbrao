@@ -36,11 +36,11 @@ describe Mbrao::Parser do
   end
 
   describe ".parsing_engine" do
-    it_should_behave_like("attribute_with_default", :parsing_engine, "Markdown", :ensure_string)
+    it_should_behave_like("attribute_with_default", :parsing_engine, :plain_text, :to_sym)
   end
 
   describe ".rendering_engine" do
-    it_should_behave_like("attribute_with_default", :rendering_engine, "HtmlPipeline", :ensure_string)
+    it_should_behave_like("attribute_with_default", :rendering_engine, :html_pipeline, :to_sym)
   end
 
   describe ".parse" do

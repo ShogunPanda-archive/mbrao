@@ -229,7 +229,7 @@ describe Mbrao::Content do
     it "should create a parsing engine and use it for filtering" do
       reference.body = "BODY"
       engine = ::Mbrao::ParsingEngines::Base.new
-      engine.should_receive(:filter_content).with("BODY", ["it", "en"])
+      engine.should_receive(:filter_content).with(reference, ["it", "en"])
       ::Mbrao::Parser.should_receive(:create_engine).with("ENGINE").and_return(engine)
       reference.get_body(["it", "en"], "ENGINE")
     end
@@ -241,5 +241,40 @@ describe Mbrao::Content do
 
   describe "#get_more" do
     it_should_behave_like "localized getter", :more, "ABC", "123"
+  end
+
+  describe ".create" do
+    it "should return a Content object" do
+      expect(::Mbrao::Content.create(nil, "BODY")).to be_a(::Mbrao::Content)
+    end
+
+    it "should assign the body" do
+      expect(::Mbrao::Content.create(nil, "BODY").body).to eq("BODY")
+    end
+
+    it "should assign metadata if present" do
+      created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
+      metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: created_at, locales: ["it", ["en"]], other: ["OTHER"]}
+      content = ::Mbrao::Content.create(metadata, "BODY")
+
+      expect(content.uid).to eq("UID")
+      expect(content.title).to eq({"it" => "IT", "en" => "EN"})
+      expect(content.author).to be_a(::Mbrao::Author)
+      expect(content.author.name).to eq("AUTHOR")
+      expect(content.body).to eq("BODY")
+      expect(content.tags).to eq({"it" => ["IT"], "en" => ["EN"]})
+      expect(content.more).to eq("MORE")
+      expect(content.created_at).to eq(created_at)
+      expect(content.updated_at).to eq(created_at)
+      expect(content.locales).to eq(["it", "en"])
+      expect(content.metadata).to eq({"other" => ["OTHER"]})
+    end
+
+    it "should ignore invalid metadata" do
+      expect(::Mbrao::Content.create(nil, "BODY").metadata).to be_nil
+      expect(::Mbrao::Content.create(1, "BODY").metadata).to be_nil
+      expect(::Mbrao::Content.create([], "BODY").metadata).to be_nil
+      expect(::Mbrao::Content.create("A", "BODY").metadata).to be_nil
+    end
   end
 end

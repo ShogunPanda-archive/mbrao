@@ -109,33 +109,33 @@ EOS4
     end
 
     it "should return the original content if locales contains *" do
-      expect(parse_content(reference.filter_content(sample_nested_content, "*"))).to eq(["START", "IT, EN", "MIDDLE", "!IT and !ES", "EN in !IT", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), "*"))).to eq(["START", "IT, EN", "MIDDLE", "!IT and !ES", "EN in !IT", "!IT", "END"])
     end
 
     it "should use default locale if nothing is specified" do
       ::Mbrao::Parser.locale = :it
-      expect(parse_content(reference.filter_content(sample_nested_content))).to eq(["START", "IT, EN", "MIDDLE", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content)))).to eq(["START", "IT, EN", "MIDDLE", "END"])
     end
 
     it "should ignore unclosed tag, trying to close the leftmost start tag" do
-      expect(parse_content(reference.filter_content("{{content: it}}\n{{content: en}}NO{{/content}}"))).to eq(["{{content: en}}NO"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, "{{content: it}}\n{{content: en}}NO{{/content}}")))).to eq(["{{content: en}}NO"])
     end
 
     it "should correctly filter by tag" do
-      expect(parse_content(reference.filter_content(sample_nested_content, "en"))).to eq(["START", "IT, EN", "MIDDLE", "!IT and !ES", "EN in !IT", "!IT", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, "it"))).to eq(["START", "IT, EN", "MIDDLE", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, "es"))).to eq(["START", "MIDDLE", "!IT", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, "fr"))).to eq(["START", "MIDDLE", "!IT and !ES", "!IT", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, ["it", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, ["es", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "EN in !IT", "!IT", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, ["fr", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "!IT and !ES", "EN in !IT", "!IT", "END"])
-      expect(parse_content(reference.filter_content(sample_nested_content, ["fr", "es", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "EN in !IT", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), "en"))).to eq(["START", "IT, EN", "MIDDLE", "!IT and !ES", "EN in !IT", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), "it"))).to eq(["START", "IT, EN", "MIDDLE", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), "es"))).to eq(["START", "MIDDLE", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), "fr"))).to eq(["START", "MIDDLE", "!IT and !ES", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), ["it", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), ["es", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "EN in !IT", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), ["fr", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "!IT and !ES", "EN in !IT", "!IT", "END"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample_nested_content), ["fr", "es", "en"]))).to eq(["START", "IT, EN", "MIDDLE", "EN in !IT", "!IT", "END"])
     end
 
     it "should use different tags" do
       sample = "[content-it]{{content: !it}}IT[/content]\nOK"
-      expect(parse_content(reference.filter_content(sample, "it", {content_tags: ["[content-%ARGS%]", "[/content]"]}))).to eq(["{{content: !it}}IT", "OK"])
-      expect(parse_content(reference.filter_content(sample, "en", {content_tags: ["[content-%ARGS%]", "[/content]"]}))).to eq(["OK"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample), "it", {content_tags: ["[content-%ARGS%]", "[/content]"]}))).to eq(["{{content: !it}}IT", "OK"])
+      expect(parse_content(reference.filter_content(::Mbrao::Content.create(nil, sample), "en", {content_tags: ["[content-%ARGS%]", "[/content]"]}))).to eq(["OK"])
     end
   end
 end

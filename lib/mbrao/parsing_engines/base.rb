@@ -29,7 +29,7 @@ module Mbrao
 
       # Filters content of a post by locale.
       #
-      # @param content [String] The content to filter.
+      # @param content [Content] The content to filter.
       # @param locales [String|Array] The desired locales. Can include `*` to match all.
       # @param options [Hash] Options to customize parsing.
       # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
@@ -42,25 +42,9 @@ module Mbrao
       # @param content [Object] The content to parse.
       # @param options [Hash] Options to customize parsing.
       def parse(content, options = {})
-        rv = Mbrao::Content.new
-
-        # Get components
         metadata, body = separate_components(content, options)
-
-        # Assign all data
-        rv.body = body
         metadata = parse_metadata(metadata, options)
-        rv.uid = metadata.delete(:uid)
-        rv.title = metadata.delete(:title)
-        rv.author = Mbrao::Author.create(metadata.delete(:author))
-        rv.tags = metadata.delete(:tags)
-        rv.more = metadata.delete(:more)
-        rv.created_at = metadata.delete(:created_at)
-        rv.updated_at = metadata.delete(:updated_at)
-        rv.locales = metadata.delete(:locales)
-        rv.metadata = metadata
-
-        rv
+        Mbrao::Content.create(metadata, body)
       end
     end
   end

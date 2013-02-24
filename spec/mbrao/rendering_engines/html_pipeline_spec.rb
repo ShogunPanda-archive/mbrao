@@ -12,7 +12,7 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
   describe "#render" do
     it "should forward everything to the html-pipeline" do
       pipeline = Object.new
-      pipeline.should_receive(:call).with("CONTENT")
+      pipeline.should_receive(:call).with("CONTENT").and_return({output: ""})
       ::HTML::Pipeline.should_receive(:new).with(an_instance_of(Array), an_instance_of(Hash)).and_return(pipeline)
       reference.render("CONTENT")
     end
@@ -23,7 +23,7 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
     end
 
     it "should have default options" do
-      filters = [:markdown, :table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, {gfm: true, asset_root: "/"}).and_call_original
       reference.render("CONTENT")
     end
@@ -36,21 +36,21 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
     it "should restrict filter used" do
       filters = [:table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
-      reference.render("CONTENT", {markdown: false})
+      reference.render("CONTENT", {kramdown: false})
 
-      filters = [:markdown, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {toc: false})
 
-      filters = [:markdown, :table_of_contents, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {links: false})
 
-      filters = [:markdown, :table_of_contents, :autolink, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :autolink, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {emoji: false})
 
-      filters = [:markdown, :table_of_contents, :autolink, :emoji].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :autolink, :emoji].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {image_max_width: false})
     end
@@ -58,7 +58,7 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
 
   describe "#default_pipeline" do
     it "should return a default pipeline" do
-      expect(reference.default_pipeline).to eq([[:markdown], [:table_of_contents, :toc], [:autolink, :links], [:emoji], [:image_max_width]])
+      expect(reference.default_pipeline).to eq([[:kramdown], [:table_of_contents, :toc], [:autolink, :links], [:emoji], [:image_max_width]])
     end
   end
 
@@ -75,6 +75,49 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
 
       reference.default_pipeline = ["1", [["B", ["C"]]]]
       expect(reference.default_pipeline).to eq([[:"1"], [:B, :C]])
+    end
+  end
+
+  describe "#default_options" do
+    it "should return a default hash" do
+      expect(reference.default_options).to eq({gfm: true, asset_root: "/"})
+    end
+
+    it "should return the set hash" do
+      reference.instance_variable_set(:@default_options, {})
+      expect(reference.default_options).to eq({})
+    end
+  end
+
+  describe "#default_options=" do
+    it "should only assign if the value is an Hash" do
+      reference.default_options = {a: "b"}
+      expect(reference.default_options).to eq({a: "b"})
+      reference.default_options = 1
+      expect(reference.default_options).to eq({})
+      reference.default_options = nil
+      expect(reference.default_options).to eq({})
+    end
+  end
+end
+
+describe HTML::Pipeline::KramdownFilter do
+  describe "#initialize" do
+    it "should call the parent constructor" do
+      HTML::Pipeline::TextFilter.should_receive(:new).with("\rCONTENT\r", {a: "b"}, {c: "d"})
+      HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"})
+    end
+
+    it "should remove \r from the text" do
+      reference = HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"})
+      expect(reference.instance_variable_get(:@text)).to eq("CONTENT")
+    end
+
+    it "should use Kramdown with given options for building the result" do
+      object = Object.new
+      Kramdown::Document.should_receive(:new).with("CONTENT", {a: "b"}).and_return(object)
+      object.should_receive(:to_html)
+      HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"}).call
     end
   end
 end

@@ -44,17 +44,17 @@ module Mbrao
 
       # Filters content of a post by locale.
       #
-      # @param content [String] The content to filter.
+      # @param content [Content] The content to filter.
       # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be requested.
       # @param options [Hash] Options to customize parsing.
       # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
       def filter_content(content, locales = [], options = {})
-        content = content.ensure_string.strip
+        body = content.body.ensure_string.strip
         options = sanitize_options(options)
-        locales = ::Mbrao::Content.validate_locales(locales)
+        locales = ::Mbrao::Content.validate_locales(locales, content)
 
         # Split the content
-        result = scan_content(content, options[:content_tags].first, options[:content_tags].last)
+        result = scan_content(body, options[:content_tags].first, options[:content_tags].last)
 
         # Now filter results
         result = perform_filter_content(result, locales)

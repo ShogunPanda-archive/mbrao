@@ -37,14 +37,14 @@ module Mbrao
       #
       # @return [String] The default parsing engine.
       def parsing_engine
-        attribute_or_default(@parsing_engine, "Markdown")
+        attribute_or_default(@parsing_engine, :plain_text, :to_sym)
       end
 
       # Gets the default rendering engine.
       #
       # @return [String] The default rendering_engine.
       def rendering_engine
-        attribute_or_default(@rendering_engine, "HtmlPipeline")
+        attribute_or_default(@rendering_engine, :html_pipeline, :to_sym)
       end
 
       # Parses a source text.

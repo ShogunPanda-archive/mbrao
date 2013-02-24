@@ -30,7 +30,7 @@ module Mbrao
     # @param engine [String|Symbol|Object] The engine to use to filter contents. @see {Parser.create_engine Parser.create_engine}.
     # @return [String|HashWithIndifferentAccess] Return the body of the content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
     def get_body(locales = [], engine = :plain_text)
-      Mbrao::Parser.create_engine(engine).filter_content(@body, locales)
+      Mbrao::Parser.create_engine(engine).filter_content(self, locales)
     end
 
     # Gets the tags of the content in the desired locales.
@@ -213,6 +213,34 @@ module Mbrao
       locales = (locales.empty? ? [Mbrao::Parser.locale] : locales)
       raise Mbrao::Exceptions::UnavailableLocale.new if content && !content.enabled_for_locales?(locales)
       locales
+    end
+
+    # Creates a content with metadata and body.
+    #
+    # @param metadata [Hash] The metadata.
+    # @param body [String] The body of the content.
+    # @return [Content] A new content.
+    def self.create(metadata, body)
+      rv = Mbrao::Content.new
+      rv.body = body.ensure_string.strip
+
+      if metadata.is_a?(Hash) then
+        metadata = metadata.symbolize_keys!
+        locales = metadata.delete(:locales)
+        locales = locales.split(/\s*,\s*/) if locales.is_a?(::String)
+
+        rv.uid = metadata.delete(:uid)
+        rv.title = metadata.delete(:title)
+        rv.author = Mbrao::Author.create(metadata.delete(:author))
+        rv.tags = metadata.delete(:tags)
+        rv.more = metadata.delete(:more)
+        rv.created_at = metadata.delete(:created_at)
+        rv.updated_at = metadata.delete(:updated_at)
+        rv.locales = locales.collect(&:ensure_string).collect(&:strip)
+        rv.metadata = metadata
+      end
+
+      rv
     end
 
     private
