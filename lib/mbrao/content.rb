@@ -192,6 +192,13 @@ module Mbrao
       @updated_at = @created_at if !@updated_at
     end
 
+    # Gets metadata attribute.
+    #
+    # @return The metadata attribute.
+    def metadata
+      @metadata || {}
+    end
+
     # Sets the `metadata` attribute.
     #
     # @param value [Hash] The new value for the attribute.
@@ -211,7 +218,7 @@ module Mbrao
     def self.validate_locales(locales, content = nil)
       locales = Mbrao::Parser.sanitized_array(locales).collect(&:strip)
       locales = (locales.empty? ? [Mbrao::Parser.locale] : locales)
-      raise Mbrao::Exceptions::UnavailableLocale.new if content && !content.enabled_for_locales?(locales)
+      raise Mbrao::Exceptions::UnavailableLocalization.new if content && !content.enabled_for_locales?(locales)
       locales
     end
 

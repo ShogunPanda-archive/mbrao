@@ -19,7 +19,7 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
 
     it "should raise a specific exception if a locale is not available" do
 
-      expect { reference.render(::Mbrao::Content.create({locales: ["en"]}, "BODY"), {locales: ["it"]}) }.to raise_error(::Mbrao::Exceptions::UnavailableLocale)
+      expect { reference.render(::Mbrao::Content.create({locales: ["en"]}, "BODY"), {locales: ["it"]}) }.to raise_error(::Mbrao::Exceptions::UnavailableLocalization)
     end
 
       it "should raise an exception if anything goes wrong" do

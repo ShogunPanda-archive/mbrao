@@ -24,7 +24,7 @@ module Mbrao
     end
 
     # Exception raised when a requested object is not available in any of the desired locales.
-    class UnavailableLocale < ::Exception
+    class UnavailableLocalization < ::Exception
     end
 
     # Exception raised when there a invalid parsing or rendering engine is requested.

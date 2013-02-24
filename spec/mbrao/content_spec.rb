@@ -51,8 +51,8 @@ describe Mbrao::Content do
     it "should raise an exception if not available for that locale" do
       reference.locales = [:en, :it, :es]
       reference.send("#{attribute}=", v1)
-      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error(Mbrao::Exceptions::UnavailableLocale)
-      expect { reference.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Exceptions::UnavailableLocale)
+      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error(Mbrao::Exceptions::UnavailableLocalization)
+      expect { reference.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Exceptions::UnavailableLocalization)
     end
 
     it "should return the attribute itself if not localized" do
@@ -271,10 +271,10 @@ describe Mbrao::Content do
     end
 
     it "should ignore invalid metadata" do
-      expect(::Mbrao::Content.create(nil, "BODY").metadata).to be_nil
-      expect(::Mbrao::Content.create(1, "BODY").metadata).to be_nil
-      expect(::Mbrao::Content.create([], "BODY").metadata).to be_nil
-      expect(::Mbrao::Content.create("A", "BODY").metadata).to be_nil
+      expect(::Mbrao::Content.create(nil, "BODY").metadata).to eq({})
+      expect(::Mbrao::Content.create(1, "BODY").metadata).to eq({})
+      expect(::Mbrao::Content.create([], "BODY").metadata).to eq({})
+      expect(::Mbrao::Content.create("A", "BODY").metadata).to eq({})
     end
   end
 end

@@ -56,7 +56,7 @@ module Mbrao
           body = content.get_body(options.fetch(:locale, ::Mbrao::Parser.locale).ensure_string)
           result = ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context)).call(body)
           result[:output].to_s
-        rescue Mbrao::Exceptions::UnavailableLocale => le
+        rescue Mbrao::Exceptions::UnavailableLocalization => le
           raise le
         rescue Exception => e
           raise ::Mbrao::Exceptions::Rendering.new(e.to_s)

@@ -8,7 +8,7 @@
 # TODO: Understand why the template is not correctly reported in backtraces.
 
 if defined?(ActionView) then
-  # Generic interface to multiple Ruby template engines.
+  # Generic interface to mulsdtiple Ruby template engines.
   module ActionView::Template::Handlers
     # Class for rendering mbrao contents in Rails.
     class MbraoTemplate
@@ -28,8 +28,9 @@ if defined?(ActionView) then
       def self.render(renderer, template)
         content = ::Mbrao::Parser.parse(template)
         renderer.controller.instance_variable_set(:@mbrao_content, content)
+        renderer.controller.define_singleton_method(:mbrao_content) { @mbrao_content }
 
-        ::Mbrao::Parser.render(content, {engine: content.metadata.fetch(:engine, nil), locale: renderer.controller.params[:locale]})
+        ::Mbrao::Parser.render(content, {engine: content.metadata[:engine], locale: renderer.controller.params[:locale]})
       end
     end
   end
