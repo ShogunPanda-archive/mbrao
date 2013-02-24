@@ -263,6 +263,14 @@ module Mbrao
       def self.extract_locales(metadata)
         locales = metadata.delete(:locales)
         locales = locales.ensure_string.split(/\s*,\s*/) if !locales.is_a?(::Array)
+        normalize_locales(locales)
+      end
+
+      # Normalize locales for further usage.
+      #
+      # @param locales [Array] The locales to normalize.
+      # @return [Array] The normalized locales.
+      def self.normalize_locales(locales)
         locales.flatten.collect(&:ensure_string).collect(&:strip).uniq
       end
 
