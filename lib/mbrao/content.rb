@@ -227,7 +227,7 @@ module Mbrao
       if metadata.is_a?(Hash) then
         metadata = metadata.symbolize_keys!
         locales = metadata.delete(:locales)
-        locales = locales.split(/\s*,\s*/) if locales.is_a?(::String)
+        locales = locales.ensure_string.split(/\s*,\s*/) if !locales.is_a?(::Array)
 
         rv.uid = metadata.delete(:uid)
         rv.title = metadata.delete(:title)
@@ -236,7 +236,7 @@ module Mbrao
         rv.more = metadata.delete(:more)
         rv.created_at = metadata.delete(:created_at)
         rv.updated_at = metadata.delete(:updated_at)
-        rv.locales = locales.collect(&:ensure_string).collect(&:strip)
+        rv.locales = locales.flatten.collect(&:ensure_string).collect(&:strip).uniq
         rv.metadata = metadata
       end
 
