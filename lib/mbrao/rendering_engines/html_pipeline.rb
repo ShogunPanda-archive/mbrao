@@ -50,12 +50,9 @@ module Mbrao
       def render(content, options = {}, context = {})
         options = sanitize_options(options)
         context = context.is_a?(Hash) ? context.symbolize_keys : {}
-        content = ::Mbrao::Content.create(nil, content.ensure_string) if !content.is_a?(::Mbrao::Content)
 
         begin
-          body = content.get_body(options.fetch(:locale, ::Mbrao::Parser.locale).ensure_string)
-          result = ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context)).call(body)
-          result[:output].to_s
+          create_pipeline(options, context).call(get_body(content, options))[:output].to_s
         rescue Mbrao::Exceptions::UnavailableLocalization => le
           raise le
         rescue Exception => e
@@ -99,6 +96,25 @@ module Mbrao
           options[:pipeline_options] = self.default_options.merge((options[:pipeline_options].is_a?(Hash) ? options[:pipeline_options] : {}).symbolize_keys)
 
           options
+        end
+
+        # Get body of a content.
+        #
+        # @param content [Content|String] The content to sanitize.
+        # @param options [Hash] A list of options for renderer.
+        # @return [Array] The body to parse.
+        def get_body(content, options)
+          content = ::Mbrao::Content.create(nil, content.ensure_string) if !content.is_a?(::Mbrao::Content)
+          content.get_body(options.fetch(:locale, ::Mbrao::Parser.locale).ensure_string)
+        end
+
+        # Creates the pipeline for rendering.
+        #
+        # @param options [Hash] A list of options for renderer.
+        # @param context [Hash] A context for rendering.
+        # @return [HTML::Pipeline] The pipeline
+        def create_pipeline(options, context)
+          ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context))
         end
 
         # Filters pipeline filters basing on the options provided.
