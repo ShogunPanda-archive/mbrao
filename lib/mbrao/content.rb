@@ -230,27 +230,42 @@ module Mbrao
     def self.create(metadata, body)
       rv = Mbrao::Content.new
       rv.body = body.ensure_string.strip
-
-      if metadata.is_a?(Hash) then
-        metadata = metadata.symbolize_keys!
-        locales = metadata.delete(:locales)
-        locales = locales.ensure_string.split(/\s*,\s*/) if !locales.is_a?(::Array)
-
-        rv.uid = metadata.delete(:uid)
-        rv.title = metadata.delete(:title)
-        rv.author = Mbrao::Author.create(metadata.delete(:author))
-        rv.tags = metadata.delete(:tags)
-        rv.more = metadata.delete(:more)
-        rv.created_at = metadata.delete(:created_at)
-        rv.updated_at = metadata.delete(:updated_at)
-        rv.locales = locales.flatten.collect(&:ensure_string).collect(&:strip).uniq
-        rv.metadata = metadata
-      end
-
+      assign_metadata(rv, metadata) if metadata.is_a?(Hash)
       rv
     end
 
     private
+      # Assigns metadata to a content
+      #
+      # @param content [Content] The content to manipulate.
+      # @param metadata [Hash] The metadata to assign.
+      # @return [Content] The content with metadata.
+      def self.assign_metadata(content, metadata)
+        metadata = metadata.symbolize_keys!
+
+        content.uid = metadata.delete(:uid)
+        content.title = metadata.delete(:title)
+        content.author = Mbrao::Author.create(metadata.delete(:author))
+        content.tags = metadata.delete(:tags)
+        content.more = metadata.delete(:more)
+        content.created_at = metadata.delete(:created_at)
+        content.updated_at = metadata.delete(:updated_at)
+        content.locales = extract_locales(metadata)
+        content.metadata = metadata
+
+        content
+      end
+
+      # Extract locales from metadata.
+      #
+      # @param metadata [Hash] The metadata that contains the locales.
+      # @return [Array] The locales.
+      def self.extract_locales(metadata)
+        locales = metadata.delete(:locales)
+        locales = locales.ensure_string.split(/\s*,\s*/) if !locales.is_a?(::Array)
+        locales.flatten.collect(&:ensure_string).collect(&:strip).uniq
+      end
+
       # Extracts a date and time from a value.
       #
       # @param value [String|DateTime|Fixnum] The value to parse.
