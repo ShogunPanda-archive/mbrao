@@ -5,6 +5,7 @@
 #
 
 # TODO: Support for Rails streaming
+# TODO: Understand why the template is not correctly reported in backtraces.
 
 if defined?(ActionView) then
   # Generic interface to multiple Ruby template engines.
