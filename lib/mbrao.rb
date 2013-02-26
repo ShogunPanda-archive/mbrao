@@ -18,6 +18,6 @@ require "mbrao/parsing_engines/base"
 require "mbrao/parsing_engines/plain_text"
 require "mbrao/rendering_engines/base"
 require "mbrao/rendering_engines/html_pipeline"
-require "mbrao/integrations/rails"
+require "mbrao/integrations/rails" if defined?(ActionView)
 
 Lazier.load!(:object)

@@ -8,10 +8,11 @@
 module HTML
   # A html-pipeline gem Pipeline.
   class Pipeline
+    # A filter to compile Markdown contents.
     class KramdownFilter < TextFilter
       # Creates a new filter.
       #
-      # @param text [String] The string to convert
+      # @param text [String] The string to convert.
       # @param context [Hash] The context of the conversion.
       # @param result [Hash] A result hash.
       def initialize(text, context = nil, result = nil)
@@ -19,7 +20,7 @@ module HTML
         @text = @text.gsub("\r", "")
       end
 
-      # Convert Markdown to HTML using Kramdown and convert into a DocumentFragment.
+      # Converts Markdown to HTML using Kramdown and converts into a DocumentFragment.
       #
       # @return [DocumentFragment] The converted fragment.
       def call
@@ -32,7 +33,7 @@ end
 module Mbrao
   # Engines used to render contents with metadata.
   module RenderingEngines
-    # A renders which use the {html-pipeline https://github.com/jch/html-pipeline} gem.
+    # A renders which use the {https://github.com/jch/html-pipeline html_pipeline} gem.
     #
     # @attribute default_pipeline.
     #   @return [Array] The default pipeline to use. It should be an array of pairs of `Symbol`, which the first element is the filter (in underscorized version and without the filter suffix) and the second is a shortcut to disable the pipeline via options. You can also specify a single element to disable shortcuts.
@@ -81,6 +82,9 @@ module Mbrao
         @default_options || {gfm: true, asset_root: "/"}
       end
 
+      # Sets the default options.
+      #
+      # @param value [Object] The new default options.
       def default_options=(value)
         @default_options = value.is_a?(Hash) ? value : {}
       end

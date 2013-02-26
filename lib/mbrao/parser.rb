@@ -18,17 +18,14 @@ module Mbrao
     #   @return [String] The default parsing engine.
     # @attribute rendering_engine
     #   @return [String] The default rendering engine.
-    # @attribute marker
-    #   @return [Array] The opening and closing markers used for looking for metadata and locale in elements. If a string or single element array, it will used for both. Default is `["---"]`.
     module ClassMethods
       attr_accessor :locale
       attr_accessor :parsing_engine
       attr_accessor :rendering_engine
-      attr_accessor :markers
 
       # Gets the default locale for Mbrao.
       #
-      # @return value [String] The default locale.
+      # @return [String] The default locale.
       def locale
         attribute_or_default(@locale, "en")
       end
@@ -84,7 +81,7 @@ module Mbrao
       #
       # @param cls [Symbol|String|Object] If a `String` or a `Symbol`, then it will be the class to instantiate. Otherwise the class of the object will returned.
       # @param scope [String] An additional scope to find the class. `%CLASS%` will be substituted with the class name.
-      # @param only_in_scope [Boolean] Only try to instantiate the class in the scope.
+      # @param only_in_scope [Boolean] If only try to instantiate the class in the scope.
       # @return [Class] The found class.
       def find_class(cls, scope = "::%CLASS%", only_in_scope = false)
         if cls.is_a?(String) || cls.is_a?(Symbol) then
@@ -180,7 +177,7 @@ module Mbrao
         end
       end
 
-      # Converts an object to a a flatten array with all values sanitize.
+      # Converts an object to a a flatten array with all values sanitized.
       #
       # @param object [Object] The object to convert.
       # @param uniq [Boolean] If to remove duplicates from the array before sanitizing.

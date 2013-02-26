@@ -27,7 +27,7 @@ module Mbrao
     # Gets the body returning only the portion which are available for the given locales.
     #
     # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
-    # @param engine [String|Symbol|Object] The engine to use to filter contents. @see {Parser.create_engine Parser.create_engine}.
+    # @param engine [String|Symbol|Object] The engine to use to filter contents.
     # @return [String|HashWithIndifferentAccess] Return the body of the content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
     def get_body(locales = [], engine = :plain_text)
       Mbrao::Parser.create_engine(engine).filter_content(self, locales)
@@ -69,7 +69,7 @@ module Mbrao
       # Adds an value on a hash if enable for requested locales.
       #
       # @param hash [Hash] The hash to handle.
-      # @param available_locales [String] The list of locale (separated by commas) for which the value is available.
+      # @param locale [String] The list of locale (separated by commas) for which the value is available.
       # @param locales [Array] The list of locale for which this value is requested. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
       # @param value [Object] The value to add.
       # @return [Hash] Return the original hash.
@@ -118,6 +118,9 @@ module Mbrao
     attr_accessor :updated_at
     attr_accessor :metadata
 
+    # Creates a new content.
+    #
+    # @param uid [String] The UID for this content.
     def initialize(uid = nil)
       @uid = uid
     end

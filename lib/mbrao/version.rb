@@ -4,16 +4,17 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
+# A content parser and renderer with embedded metadata support.
 module Mbrao
   # The current version of mbrao, according to semantic versioning.
   #
   # @see http://semver.org
   module Version
     # The major version.
-    MAJOR = 0
+    MAJOR = 1
 
     # The minor version.
-    MINOR = 5
+    MINOR = 0
 
     # The patch version.
     PATCH = 0
