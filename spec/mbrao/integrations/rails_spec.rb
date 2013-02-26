@@ -29,13 +29,31 @@ describe ActionView::Template::Handlers::MbraoTemplate do
     end
   end
 
-  describe ".call" do
-    it "should return a Ruby snippet" do
-      expect(ActionView::Template::Handlers::MbraoTemplate.call(DummyTemplate.new("CONTENT"))).to eq("ActionView::Template::Handlers::MbraoTemplate.render(self, \"CONTENT\")")
+  describe ".instance" do
+    it "should create a new instance" do
+      expect(ActionView::Template::Handlers::MbraoTemplate.instance).to be_a(ActionView::Template::Handlers::MbraoTemplate)
+    end
+
+    it "should always return the same instance" do
+      other = ActionView::Template::Handlers::MbraoTemplate.instance
+      ActionView::Template::Handlers::MbraoTemplate.should_not_receive(:new)
+      expect(ActionView::Template::Handlers::MbraoTemplate.instance).to eq(other)
+    end
+
+    it "should recreate an instance" do
+      other = ActionView::Template::Handlers::MbraoTemplate.instance
+      expect(ActionView::Template::Handlers::MbraoTemplate.instance(true)).not_to eq(other)
     end
   end
 
-  describe ".render" do
+
+  describe "#call" do
+    it "should return a Ruby snippet" do
+      expect(ActionView::Template::Handlers::MbraoTemplate.instance.call(DummyTemplate.new("CONTENT"))).to eq("ActionView::Template::Handlers::MbraoTemplate.instance.render(self, \"CONTENT\")")
+    end
+  end
+
+  describe "#render" do
     it "should initialize a Content and assign it to the controller" do
       controller = DummyController.new
       renderer = DummyRenderer.new
@@ -43,7 +61,7 @@ describe ActionView::Template::Handlers::MbraoTemplate do
 
       expect(controller.respond_to?(:mbrao_content)).to be_false
       ::Mbrao::Parser.should_receive(:parse).and_call_original
-      ActionView::Template::Handlers::MbraoTemplate.render(renderer, "CONTENT")
+      ActionView::Template::Handlers::MbraoTemplate.instance.render(renderer, "CONTENT")
 
       expect(controller.respond_to?(:mbrao_content)).to be_true
       expect(controller.mbrao_content.body).to eq("CONTENT")
@@ -58,7 +76,13 @@ describe ActionView::Template::Handlers::MbraoTemplate do
       ::Mbrao::Parser.stub(:parse).and_return(content)
 
       ::Mbrao::Parser.should_receive(:render).with(content, {engine: "ENGINE", locale: "LOCALE"})
-      ActionView::Template::Handlers::MbraoTemplate.render(DummyRenderer.new, "CONTENT")
+      ActionView::Template::Handlers::MbraoTemplate.instance.render(DummyRenderer.new, "CONTENT")
+    end
+  end
+
+  describe "#supports_streaming?" do
+    it "should be true" do
+      expect(ActionView::Template::Handlers::MbraoTemplate.instance.supports_streaming?).to be_true
     end
   end
 end
