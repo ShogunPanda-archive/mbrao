@@ -1,7 +1,8 @@
 # Introduction
 
-[![Build Status](https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master)](https://travis-ci.org/ShogunPanda/mbrao)
+[![Gem Version](https://badge.fury.io/rb/mbrao.png)](http://badge.fury.io/rb/mbrao)
 [![Dependency Status](https://gemnasium.com/ShogunPanda/mbrao.png?travis)](https://gemnasium.com/ShogunPanda/mbrao)
+[![Build Status](https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master)](https://travis-ci.org/ShogunPanda/mbrao)
 [![Code Climate](https://codeclimate.com/github/ShogunPanda/mbrao.png)](https://codeclimate.com/github/ShogunPanda/mbrao)
 
 A content parser and renderer with embedded metadata support.
@@ -9,6 +10,38 @@ A content parser and renderer with embedded metadata support.
 http://sw.cow.tc/mbrao
 
 http://rdoc.info/gems/mbrao
+
+# Introduction
+
+mbrao is a content parser and renderer framework for managing posts which have both metadata and content.
+
+First of all a big thanks to the [metadown](https://github.com/steveklabnik/metadown) project which gave me the final idea.
+
+## Usage
+
+Using mbrao is pretty simple. First of all you have to parse a file with a parsing engine:
+
+`content = Mbrao::Parser.parse(File.read("/your/content.txt")`
+
+The default is a plain text reader. This engine reads a text file and parse metadata embedded between `{{metadata}}` and `{{/metadata}}` tag in YAML format.
+
+The method above will return a `Content` object which you can use in your code. This object has builtin support for title, body and tags metadata; all with locale support.
+
+There is also locale filtering. See documentation for more information.
+
+At the end, you can render the content using any engine of your choice:
+
+`Mbrao::Parser.render(content)`
+
+The default is a [html-pipeline](https://github.com/jch/html-pipeline) renderer with [kramdown](http://kramdown.rubyforge.org/) support.
+
+## Ruby on Rails support
+
+mbrao has support for integrations with other frameworks. Builtin there is support for Ruby on Rails integration.
+
+By including `gem mbrao` in your `Gemfile` you'll get automatic rendering of `emt` file.
+
+You can customize the rendering engine used by including the `engine` metadata. Also, your controller will get a new `mbrao_content` helper method with the parsed content.
 
 ## Contributing to mbrao
  

@@ -18,7 +18,7 @@ module Mbrao
         raise Mbrao::Exceptions::Unimplemented.new
       end
 
-      # Parses metadata part and returns all valid metadata
+      # Parses metadata part and returns all valid metadata.
       #
       # @param content [Object] The content to parse.
       # @param options [Hash] Options to customize parsing.

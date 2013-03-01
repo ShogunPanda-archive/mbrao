@@ -4,9 +4,9 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-# Main module of the html-pipeline gem.
+# Main module of the [html-pipeline](https://github.com/jch/html-pipeline) gem.
 module HTML
-  # A html-pipeline gem Pipeline.
+  # A [html-pipeline](https://github.com/jch/html-pipeline) gem Pipeline.
   class Pipeline
     # A filter to compile Markdown contents.
     class KramdownFilter < TextFilter
@@ -33,11 +33,11 @@ end
 module Mbrao
   # Engines used to render contents with metadata.
   module RenderingEngines
-    # A renders which use the {https://github.com/jch/html-pipeline html_pipeline} gem.
+    # A renders which use the [html-pipeline](https://github.com/jch/html-pipeline) gem.
     #
-    # @attribute default_pipeline.
-    #   @return [Array] The default pipeline to use. It should be an array of pairs of `Symbol`, which the first element is the filter (in underscorized version and without the filter suffix) and the second is a shortcut to disable the pipeline via options. You can also specify a single element to disable shortcuts.
-    # @attribute default_options.
+    # @attribute default_pipeline
+    #   @return [Array] The default pipeline to use. It should be an array of pairs of `Symbol`, which the first element is the filter (in underscored version and without the filter suffix) and the second is a shortcut to disable the pipeline via options. You can also specify a single element to disable shortcuts.
+    # @attribute default_options
     #   @return [Hash] The default options for the renderer.
     class HtmlPipeline < Mbrao::RenderingEngines::Base
       attr_accessor :default_pipeline

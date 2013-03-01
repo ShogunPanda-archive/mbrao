@@ -8,6 +8,7 @@ require "lazier"
 require "html/pipeline"
 require "slim"
 require "kramdown"
+require "yaml"
 
 require "mbrao/version" if !defined?(Mbrao::Version)
 require "mbrao/exceptions"

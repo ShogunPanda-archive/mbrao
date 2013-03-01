@@ -29,7 +29,7 @@ module Mbrao
         [metadata.ensure_string.strip, content]
       end
 
-      # Parses metadata part and returns all valid metadata
+      # Parses metadata part and returns all valid metadata.
       #
       # @param content [String] The content to parse.
       # @param options [Hash] Options to customize parsing.
@@ -57,9 +57,7 @@ module Mbrao
         result = scan_content(body, options[:content_tags].first, options[:content_tags].last)
 
         # Now filter results
-        result = perform_filter_content(result, locales)
-
-        result
+        perform_filter_content(result, locales)
       end
 
       private
@@ -140,7 +138,7 @@ module Mbrao
 
           while (embedded_part = scanner.scan_until(end_tag)) do
             balance += embedded_part.scan(start_tag).count - 1 # -1 Because there is a closure
-            embedded_part = embedded_part.partition(end_tag).first if balance == 0 || !scanner.exist?(end_tag) # This is the last occurence.
+            embedded_part = embedded_part.partition(end_tag).first if balance == 0 || !scanner.exist?(end_tag) # This is the last occurrence.
             rv << embedded_part
             break if balance == 0
           end

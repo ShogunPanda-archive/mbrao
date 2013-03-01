@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.8.4.1
+    &mdash; Documentation by YARD 0.8.5.2
   
 </title>
 
@@ -63,8 +63,9 @@
 
     <div id="content"><div id='filecontents'><h1 id="introduction">Introduction</h1>
 
-<p><a href="https://travis-ci.org/ShogunPanda/mbrao"><img src="https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master" alt="Build Status" /></a>
+<p><a href="http://badge.fury.io/rb/mbrao"><img src="https://badge.fury.io/rb/mbrao.png" alt="Gem Version" /></a>
 <a href="https://gemnasium.com/ShogunPanda/mbrao"><img src="https://gemnasium.com/ShogunPanda/mbrao.png?travis" alt="Dependency Status" /></a>
+<a href="https://travis-ci.org/ShogunPanda/mbrao"><img src="https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master" alt="Build Status" /></a>
 <a href="https://codeclimate.com/github/ShogunPanda/mbrao"><img src="https://codeclimate.com/github/ShogunPanda/mbrao.png" alt="Code Climate" /></a></p>
 
 <p>A content parser and renderer with embedded metadata support.</p>
@@ -72,6 +73,38 @@
 <p>http://sw.cow.tc/mbrao</p>
 
 <p>http://rdoc.info/gems/mbrao</p>
+
+<h1 id="introduction-1">Introduction</h1>
+
+<p>mbrao is a content parser and renderer framework for managing posts which have both metadata and content.</p>
+
+<p>First of all a big thanks to the <a href="https://github.com/steveklabnik/metadown">metadown</a> project which gave me the final idea.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>Using mbrao is pretty simple. First of all you have to parse a file with a parsing engine:</p>
+
+<p><code>content = Mbrao::Parser.parse(File.read("/your/content.txt")</code></p>
+
+<p>The default is a plain text reader. This engine reads a text file and parse metadata embedded between <code>{{metadata}}</code> and <code>{{/metadata}}</code> tag in YAML format.</p>
+
+<p>The method above will return a <code>Content</code> object which you can use in your code. This object has builtin support for title, body and tags metadata; all with locale support.</p>
+
+<p>There is also locale filtering. See documentation for more information.</p>
+
+<p>At the end, you can render the content using any engine of your choice:</p>
+
+<p><code>Mbrao::Parser.render(content)</code></p>
+
+<p>The default is a <a href="https://github.com/jch/html-pipeline">html-pipeline</a> renderer with <a href="http://kramdown.rubyforge.org/">kramdown</a> support.</p>
+
+<h2 id="ruby-on-rails-support">Ruby on Rails support</h2>
+
+<p>mbrao has support for integrations with other frameworks. Builtin there is support for Ruby on Rails integration.</p>
+
+<p>By including <code>gem mbrao</code> in your <code>Gemfile</code> you&#8217;ll get automatic rendering of <code>emt</code> file.</p>
+
+<p>You can customize the rendering engine used by including the <code>engine</code> metadata. Also, your controller will get a new <code>mbrao_content</code> helper method with the parsed content.</p>
 
 <h2 id="contributing-to-mbrao">Contributing to mbrao</h2>
 
@@ -93,9 +126,9 @@
 </div></div>
 
     <div id="footer">
-  Generated on Mon Feb 25 20:00:16 2013 by
+  Generated on Fri Mar  1 08:53:28 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.4.1 (ruby-1.9.3).
+  0.8.5.2 (ruby-1.9.3).
 </div>
 
   </body>

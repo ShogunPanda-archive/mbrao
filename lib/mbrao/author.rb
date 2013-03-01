@@ -18,7 +18,7 @@ module Mbrao
   # @attribute image
   #   @return [String] The URL of the avatar of the author.
   # @attribute metadata
-  #   @return [HashWithIndifferentAccesss] The full list of metadata of this author.
+  #   @return [HashWithIndifferentAccess] The full list of metadata of this author.
   class Author
     attr_accessor :uid
     attr_accessor :name
@@ -33,7 +33,7 @@ module Mbrao
     # @param email [String] The email of the author.
     # @param website [String] The website of the author.
     # @param image [String] The URL of the avatar of the author.
-    # @param metadata [HashWithIndifferentAccesss] The full list of metadata of this author.
+    # @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
     # @param uid [String] A unique ID for this post. This is only for client uses.
     def initialize(name, email = nil, website = nil, image = nil, metadata = nil, uid = nil)
       @name = name.ensure_string
@@ -44,7 +44,7 @@ module Mbrao
       @uid = uid
     end
 
-    # Creates an author from a hash.
+    # Creates an author from a `Hash`.
     #
     # @param data [Hash] The data of the author
     # @return [Author] A new author.

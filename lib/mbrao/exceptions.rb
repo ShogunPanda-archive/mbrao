@@ -5,13 +5,13 @@
 #
 
 module Mbrao
-  # The exceptions which are triggered by the parser.
+  # The exceptions raised by mbrao.
   module Exceptions
-    # Exception raised when metadata are not invalid.
+    # Exception raised when metadata are not valid.
     class InvalidMetadata < ::Exception
     end
 
-    # Exception raised when a date is invalid.
+    # Exception raised when a date is valid.
     class InvalidDate < ::Exception
     end
 
@@ -27,7 +27,7 @@ module Mbrao
     class UnavailableLocalization < ::Exception
     end
 
-    # Exception raised when there a invalid parsing or rendering engine is requested.
+    # Exception raised when a invalid parsing or rendering engine is requested.
     class UnknownEngine < ::Exception
     end
 

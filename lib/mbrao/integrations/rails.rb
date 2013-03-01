@@ -26,6 +26,7 @@ module ActionView::Template::Handlers
       content = ::Mbrao::Parser.parse(template)
       renderer.controller.instance_variable_set(:@mbrao_content, content)
       renderer.controller.define_singleton_method(:mbrao_content) { @mbrao_content }
+      renderer.controller.send(:helper_method, :mbrao_content)
 
       ::Mbrao::Parser.render(content, {engine: content.metadata[:engine], locale: renderer.controller.params[:locale]})
     end

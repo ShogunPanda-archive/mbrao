@@ -13,7 +13,7 @@ module Mbrao
     # Class methods.
     #
     # @attribute default_locale
-    #   @return [String] The Mbrao default locale.
+    #   @return [String] The mbrao default locale.
     # @attribute parsing_engine
     #   @return [String] The default parsing engine.
     # @attribute rendering_engine
@@ -23,7 +23,7 @@ module Mbrao
       attr_accessor :parsing_engine
       attr_accessor :rendering_engine
 
-      # Gets the default locale for Mbrao.
+      # Gets the default locale for mbrao.
       #
       # @return [String] The default locale.
       def locale
@@ -39,7 +39,7 @@ module Mbrao
 
       # Gets the default rendering engine.
       #
-      # @return [String] The default rendering_engine.
+      # @return [String] The default rendering engine.
       def rendering_engine
         attribute_or_default(@rendering_engine, :html_pipeline, :to_sym)
       end
@@ -160,7 +160,7 @@ module Mbrao
 
       # Converts an object making sure that every `Hash` is converted to a `HashWithIndifferentAccess`.
       #
-      # @param object [Object] The object to convert. If the object is not an Hash or doesn't respond to `collect` then the original object is returned..
+      # @param object [Object] The object to convert. If the object is not an Hash or doesn't respond to `collect` then the original object is returned.
       # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
       # @param block [Proc] A block to sanitize entries. It must accept the value as unique argument.
       # @return [Object] The converted object.

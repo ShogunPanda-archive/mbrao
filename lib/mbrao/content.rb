@@ -9,7 +9,7 @@ module Mbrao
   module ContentPublicInterface
     # Checks if the content is available for at least one of the provided locales.
     #
-    # @param locales [Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+    # @param locales [Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @return [Boolean] `true` if the content is available for at least one of the desired locales, `false` otherwise.
     def enabled_for_locales?(*locales)
       locales = Mbrao::Parser.sanitized_array(locales).collect(&:strip).reject {|l| l == "*" }
@@ -18,7 +18,7 @@ module Mbrao
 
     # Gets the title of the content in the desired locales.
     #
-    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @return [String|HashWithIndifferentAccess] Return the title of the content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
     def get_title(locales = [])
       filter_attribute_for_locales(@title, locales)
@@ -26,7 +26,7 @@ module Mbrao
 
     # Gets the body returning only the portion which are available for the given locales.
     #
-    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @param engine [String|Symbol|Object] The engine to use to filter contents.
     # @return [String|HashWithIndifferentAccess] Return the body of the content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
     def get_body(locales = [], engine = :plain_text)
@@ -35,7 +35,7 @@ module Mbrao
 
     # Gets the tags of the content in the desired locales.
     #
-    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @return [Array|HashWithIndifferentAccess] Return the title of the content in the desired locales. If only one locale is required, then a `Array` is returned, else a `HashWithIndifferentAccess` with locales as keys.
     def get_tags(locales = [])
       filter_attribute_for_locales(@tags, locales)
@@ -43,7 +43,7 @@ module Mbrao
 
     # Gets the "more link" text of the content in the desired locales.
     #
-    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @return [String|HashWithIndifferentAccess] Return the label of the "more link" of the content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
     def get_more(locales = [])
       filter_attribute_for_locales(@more, locales)
@@ -53,7 +53,7 @@ module Mbrao
       # Filters an attribute basing a set of locales.
       #
       # @param attribute [Object|HashWithIndifferentAccess] The desired attribute.
-      # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+      # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
       # @return [String|HashWithIndifferentAccess] Return the object for desired locales. If only one locale is available, then only a object is returned, else a `HashWithIndifferentAccess` with locales as keys.
       def filter_attribute_for_locales(attribute, locales)
         locales = ::Mbrao::Content.validate_locales(locales, self)
@@ -70,12 +70,12 @@ module Mbrao
       #
       # @param hash [Hash] The hash to handle.
       # @param locale [String] The list of locale (separated by commas) for which the value is available.
-      # @param locales [Array] The list of locale for which this value is requested. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+      # @param locales [Array] The list of locale for which this value is requested. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
       # @param value [Object] The value to add.
       # @return [Hash] Return the original hash.
       def append_value_for_locale(hash, locale, locales, value)
-        locale.split(/\s*,\s*/).collect(&:strip).each do |locale|
-          hash[locale] = value if locales.include?("*") || locales.include?(locale)
+        locale.split(/\s*,\s*/).collect(&:strip).each do |l|
+          hash[l] = value if locales.include?("*") || locales.include?(l)
         end
 
         hash
@@ -141,7 +141,7 @@ module Mbrao
 
     # Sets the `body` attribute.
     #
-    # @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+    # @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
     def body=(value)
       @body = value.ensure_string
     end
@@ -215,7 +215,7 @@ module Mbrao
 
     # Validates locales for attribute retrieval.
     #
-    # @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+    # @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @param content [Content|nil] An optional content to check for availability
     # @return [Array] The validated list of locales.
     def self.validate_locales(locales, content = nil)
@@ -292,7 +292,7 @@ module Mbrao
           end
 
           value ? value.utc : nil
-        rescue ArgumentError => e
+        rescue ArgumentError => _
           raise Mbrao::Exceptions::InvalidDate.new
         end
       end

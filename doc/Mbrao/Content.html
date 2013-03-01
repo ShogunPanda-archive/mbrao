@@ -6,7 +6,7 @@
 <title>
   Class: Mbrao::Content
   
-    &mdash; Documentation by YARD 0.8.4.1
+    &mdash; Documentation by YARD 0.8.5.2
   
 </title>
 
@@ -834,7 +834,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -908,7 +908,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -985,7 +985,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -1273,7 +1273,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -1347,7 +1347,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -1424,7 +1424,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -1712,7 +1712,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -1786,7 +1786,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -1863,7 +1863,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -2151,7 +2151,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -2225,7 +2225,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -2302,7 +2302,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -2590,7 +2590,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -2664,7 +2664,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -2741,7 +2741,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -3071,7 +3071,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -3145,7 +3145,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -3222,7 +3222,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -3510,7 +3510,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -3584,7 +3584,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -3661,7 +3661,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -3949,7 +3949,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -4023,7 +4023,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -4100,7 +4100,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -4388,7 +4388,7 @@
 
   <span class='comment'># Sets the `body` attribute.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be intepreted using #get_body.
+</span>  <span class='comment'># @param value [String] The new value for the attribute. Can contain locales restriction (like !en), which will must be interpreted using #get_body.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_body='>body=</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
     <span class='ivar'>@body</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='kw'>end</span>
@@ -4462,7 +4462,7 @@
 
   <span class='comment'># Validates locales for attribute retrieval.
 </span>  <span class='comment'>#
-</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default Mbrao locale will be used.
+</span>  <span class='comment'># @param locales [Array] A list of desired locales for an attribute. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
 </span>  <span class='comment'># @param content [Content|nil] An optional content to check for availability
 </span>  <span class='comment'># @return [Array] The validated list of locales.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -4539,7 +4539,7 @@
         <span class='kw'>end</span>
 
         <span class='id identifier rubyid_value'>value</span> <span class='op'>?</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_utc'>utc</span> <span class='op'>:</span> <span class='kw'>nil</span>
-      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+      <span class='kw'>rescue</span> <span class='const'>ArgumentError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>InvalidDate</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
@@ -4683,7 +4683,7 @@
       
       
         &mdash;
-        <div class='inline'><p>A list of desired locales for an attribute. Can include <code>*</code> to match all. If none are specified, the default Mbrao locale will be used.</p>
+        <div class='inline'><p>A list of desired locales for an attribute. Can include <code>*</code> to match all. If none are specified, the default mbrao locale will be used.</p>
 </div>
       
     </li>
@@ -4770,9 +4770,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Feb 25 20:00:17 2013 by
+  Generated on Fri Mar  1 08:53:30 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.4.1 (ruby-1.9.3).
+  0.8.5.2 (ruby-1.9.3).
 </div>
 
   </body>
