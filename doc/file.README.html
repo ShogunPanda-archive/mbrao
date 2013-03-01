@@ -74,17 +74,17 @@
 
 <p>http://rdoc.info/gems/mbrao</p>
 
-<h1 id="introduction-1">Introduction</h1>
+<h2 id="usage">Usage</h2>
 
 <p>mbrao is a content parser and renderer framework for managing posts which have both metadata and content.</p>
 
 <p>First of all a big thanks to the <a href="https://github.com/steveklabnik/metadown">metadown</a> project which gave me the final idea.</p>
 
-<h2 id="usage">Usage</h2>
-
 <p>Using mbrao is pretty simple. First of all you have to parse a file with a parsing engine:</p>
 
-<p><code>content = Mbrao::Parser.parse(File.read("/your/content.txt")</code></p>
+<p><code>ruby
+content = Mbrao::Parser.parse(File.read("/your/content.txt")
+</code></p>
 
 <p>The default is a plain text reader. This engine reads a text file and parse metadata embedded between <code>{{metadata}}</code> and <code>{{/metadata}}</code> tag in YAML format.</p>
 
@@ -94,7 +94,9 @@
 
 <p>At the end, you can render the content using any engine of your choice:</p>
 
-<p><code>Mbrao::Parser.render(content)</code></p>
+<p><code>ruby
+Mbrao::Parser.render(content)
+</code></p>
 
 <p>The default is a <a href="https://github.com/jch/html-pipeline">html-pipeline</a> renderer with <a href="http://kramdown.rubyforge.org/">kramdown</a> support.</p>
 
@@ -126,7 +128,7 @@
 </div></div>
 
     <div id="footer">
-  Generated on Fri Mar  1 09:13:30 2013 by
+  Generated on Fri Mar  1 10:04:30 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.5.2 (ruby-1.9.3).
 </div>

@@ -11,17 +11,17 @@ http://sw.cow.tc/mbrao
 
 http://rdoc.info/gems/mbrao
 
-# Introduction
+## Usage
 
 mbrao is a content parser and renderer framework for managing posts which have both metadata and content.
 
 First of all a big thanks to the [metadown](https://github.com/steveklabnik/metadown) project which gave me the final idea.
 
-## Usage
-
 Using mbrao is pretty simple. First of all you have to parse a file with a parsing engine:
 
-`content = Mbrao::Parser.parse(File.read("/your/content.txt")`
+```ruby
+content = Mbrao::Parser.parse(File.read("/your/content.txt")
+```
 
 The default is a plain text reader. This engine reads a text file and parse metadata embedded between `{{metadata}}` and `{{/metadata}}` tag in YAML format.
 
@@ -31,7 +31,9 @@ There is also locale filtering. See documentation for more information.
 
 At the end, you can render the content using any engine of your choice:
 
-`Mbrao::Parser.render(content)`
+```ruby
+Mbrao::Parser.render(content)
+```
 
 The default is a [html-pipeline](https://github.com/jch/html-pipeline) renderer with [kramdown](http://kramdown.rubyforge.org/) support.
 
