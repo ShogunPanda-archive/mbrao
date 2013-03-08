@@ -22,7 +22,7 @@ describe ActionView::Template::Handlers::MbraoTemplate do
       {locale: "LOCALE"}
     end
 
-    def helper_method(method)
+    def self.helper_method(method)
     end
   end
 
@@ -64,7 +64,7 @@ describe ActionView::Template::Handlers::MbraoTemplate do
 
       expect(controller.respond_to?(:mbrao_content)).to be_false
       ::Mbrao::Parser.should_receive(:parse).and_call_original
-      controller.should_receive(:helper_method).with(:mbrao_content)
+      controller.class.should_receive(:helper_method).with(:mbrao_content)
       ActionView::Template::Handlers::MbraoTemplate.instance.render(renderer, "CONTENT")
 
       expect(controller.respond_to?(:mbrao_content)).to be_true
