@@ -97,6 +97,7 @@ describe Mbrao::Parser do
       expect(::Mbrao::Parser.find_class(1)).to eq(Fixnum)
       expect(::Mbrao::Parser.find_class(["A"])).to eq(Array)
       expect(::Mbrao::Parser.find_class({a: "b"})).to eq(Hash)
+      expect(::Mbrao::Parser.find_class(Hash)).to eq(Hash)
     end
   end
 
