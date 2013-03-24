@@ -11,11 +11,10 @@ gemspec
 # Testing
 gem "rspec", "~> 2.13.0"
 gem "rake", "~> 10.0.3"
-gem "actionpack", "~> 3.2.12"
+gem "actionpack", "~> 3.2.13"
 
 # Documentation
 gem "simplecov", ">= 0.7.1"
 gem "pry", ">= 0"
 gem "yard", ">= 0.8.5"
-gem "kramdown", ">= 0.14.2"
 gem "github-markup", ">= 0.7.5"

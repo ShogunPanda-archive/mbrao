@@ -118,7 +118,7 @@ module Mbrao
         # @param context [Hash] A context for rendering.
         # @return [HTML::Pipeline] The pipeline
         def create_pipeline(options, context)
-          ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context))
+          ::HTML::Pipeline.new(options[:pipeline].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context))
         end
 
         # Filters pipeline filters basing on the options provided.

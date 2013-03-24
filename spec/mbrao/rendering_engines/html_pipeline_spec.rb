@@ -28,7 +28,7 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
     end
 
     it "should have default options" do
-      filters = [:kramdown, :table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, {gfm: true, asset_root: "/"}).and_call_original
       reference.render("CONTENT")
     end
@@ -39,23 +39,23 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
     end
 
     it "should restrict filter used" do
-      filters = [:table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {kramdown: false})
 
-      filters = [:kramdown, :autolink, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :autolink, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {toc: false})
 
-      filters = [:kramdown, :table_of_contents, :emoji, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {links: false})
 
-      filters = [:kramdown, :table_of_contents, :autolink, :image_max_width].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :autolink, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {emoji: false})
 
-      filters = [:kramdown, :table_of_contents, :autolink, :emoji].collect {|f| ::Mbrao::Parser.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
+      filters = [:kramdown, :table_of_contents, :autolink, :emoji].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
       ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {image_max_width: false})
     end

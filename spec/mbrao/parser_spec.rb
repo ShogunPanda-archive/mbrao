@@ -58,46 +58,19 @@ describe Mbrao::Parser do
   end
 
   describe ".create_engine" do
-    it "should create an engine via .find_class" do
+    it "should create an engine via Lazier.find_class" do
       reference = ::Mbrao::ParsingEngines::ScopedParser.new
       cls = ::Mbrao::ParsingEngines::ScopedParser
       cls.should_receive(:new).exactly(2).and_return(reference)
 
-      ::Mbrao::Parser.should_receive(:find_class).with(:scoped_parser, "::Mbrao::ParsingEngines::%CLASS%").and_return(cls)
+      ::Lazier.should_receive(:find_class).with(:scoped_parser, "::Mbrao::ParsingEngines::%CLASS%").and_return(cls)
       expect(::Mbrao::Parser.create_engine(:scoped_parser)).to eq(reference)
-      ::Mbrao::Parser.should_receive(:find_class).with(:scoped_parser, "::Mbrao::RenderingEngines::%CLASS%").and_return(cls)
+      ::Lazier.should_receive(:find_class).with(:scoped_parser, "::Mbrao::RenderingEngines::%CLASS%").and_return(cls)
       expect(::Mbrao::Parser.create_engine(:scoped_parser, :rendering)).to eq(reference)
     end
 
     it "should raise an exception if the engine class is not found" do
       expect { ::Mbrao::Parser.create_engine(:invalid) }.to raise_error(::Mbrao::Exceptions::UnknownEngine)
-    end
-  end
-
-  describe ".find_class" do
-    it "should return a valid class" do
-      expect(::Mbrao::Parser.find_class("String")).to eq(String)
-      expect(::Mbrao::Parser.find_class("ScopedParser", "::Mbrao::ParsingEngines::%CLASS%")).to eq(::Mbrao::ParsingEngines::ScopedParser)
-    end
-
-    it "should raise an exception if the class is not found" do
-      expect { ::Mbrao::Parser.find_class(:invalid) }.to raise_error(::Mbrao::Exceptions::Unimplemented)
-    end
-
-    it "should not expand engine scope if the class starts with ::" do
-      expect { ::Mbrao::Parser.find_class("::ScopedParser", "::Mbrao::ParsingEngines::%CLASS%") }.to raise_error(::Mbrao::Exceptions::Unimplemented)
-    end
-
-    it "should only use scope if requested to" do
-      expect { ::Mbrao::Parser.find_class("::Fixnum", "::Mbrao::ParsingEngines::%CLASS%", true) }.to raise_error(::Mbrao::Exceptions::Unimplemented)
-    end
-
-    it "should return anything but string or symbol as their class" do
-      expect(::Mbrao::Parser.find_class(nil)).to eq(NilClass)
-      expect(::Mbrao::Parser.find_class(1)).to eq(Fixnum)
-      expect(::Mbrao::Parser.find_class(["A"])).to eq(Array)
-      expect(::Mbrao::Parser.find_class({a: "b"})).to eq(Hash)
-      expect(::Mbrao::Parser.find_class(Hash)).to eq(Hash)
     end
   end
 
