@@ -244,29 +244,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#find_class-instance_method" title="#find_class (instance method)">- (Class) <strong>find_class</strong>(cls, scope = &quot;::%CLASS%&quot;, only_in_scope = false) </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>Finds a class to instantiate.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#instance-instance_method" title="#instance (instance method)">- (Parser) <strong>instance</strong>(force = false) </a>
     
 
@@ -465,31 +442,7 @@
 99
 100
 101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126</pre>
+102</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 21</span>
@@ -547,37 +500,13 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_create_engine'>create_engine</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span><span class='rparen'>)</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span> <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>!=</span> <span class='symbol'>:rendering</span>
-      <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-    <span class='kw'>rescue</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span>
+      <span class='op'>::</span><span class='const'>Lazier</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='kw'>rescue</span> <span class='const'>NameError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Finds a class to instantiate.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param cls [Symbol|String|Object] If a `String` or a `Symbol` or a `Class`, then it will be the class to instantiate. Otherwise the class of the object will returned.
-</span>  <span class='comment'># @param scope [String] An additional scope to find the class. `%CLASS%` will be substituted with the class name.
-</span>  <span class='comment'># @param only_in_scope [Boolean] If only try to instantiate the class in the scope.
-</span>  <span class='comment'># @return [Class] The found class.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_scope'>scope</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span> <span class='kw'>then</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
-      <span class='id identifier rubyid_cls'>cls</span> <span class='op'>=</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_camelize'>camelize</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='kw'>then</span>
-        <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-      <span class='kw'>end</span>
-
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_rv'>rv</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cls'>cls</span> <span class='op'>!~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>||</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_cls'>cls</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
 
   <span class='comment'># Returns a unique (singleton) instance of the parser.
 </span>  <span class='comment'>#
@@ -789,31 +718,7 @@
 99
 100
 101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126</pre>
+102</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 21</span>
@@ -871,37 +776,13 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_create_engine'>create_engine</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span><span class='rparen'>)</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span> <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>!=</span> <span class='symbol'>:rendering</span>
-      <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-    <span class='kw'>rescue</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span>
+      <span class='op'>::</span><span class='const'>Lazier</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='kw'>rescue</span> <span class='const'>NameError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Finds a class to instantiate.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param cls [Symbol|String|Object] If a `String` or a `Symbol` or a `Class`, then it will be the class to instantiate. Otherwise the class of the object will returned.
-</span>  <span class='comment'># @param scope [String] An additional scope to find the class. `%CLASS%` will be substituted with the class name.
-</span>  <span class='comment'># @param only_in_scope [Boolean] If only try to instantiate the class in the scope.
-</span>  <span class='comment'># @return [Class] The found class.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_scope'>scope</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span> <span class='kw'>then</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
-      <span class='id identifier rubyid_cls'>cls</span> <span class='op'>=</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_camelize'>camelize</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='kw'>then</span>
-        <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-      <span class='kw'>end</span>
-
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_rv'>rv</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cls'>cls</span> <span class='op'>!~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>||</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_cls'>cls</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
 
   <span class='comment'># Returns a unique (singleton) instance of the parser.
 </span>  <span class='comment'>#
@@ -1054,31 +935,7 @@
 99
 100
 101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126</pre>
+102</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 21</span>
@@ -1136,37 +993,13 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_create_engine'>create_engine</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span><span class='rparen'>)</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span> <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>!=</span> <span class='symbol'>:rendering</span>
-      <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-    <span class='kw'>rescue</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span>
+      <span class='op'>::</span><span class='const'>Lazier</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='kw'>rescue</span> <span class='const'>NameError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Finds a class to instantiate.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param cls [Symbol|String|Object] If a `String` or a `Symbol` or a `Class`, then it will be the class to instantiate. Otherwise the class of the object will returned.
-</span>  <span class='comment'># @param scope [String] An additional scope to find the class. `%CLASS%` will be substituted with the class name.
-</span>  <span class='comment'># @param only_in_scope [Boolean] If only try to instantiate the class in the scope.
-</span>  <span class='comment'># @return [Class] The found class.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_scope'>scope</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span> <span class='kw'>then</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='kw'>nil</span>
 
-      <span class='id identifier rubyid_cls'>cls</span> <span class='op'>=</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_camelize'>camelize</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='kw'>then</span>
-        <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-      <span class='kw'>else</span>
-        <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-      <span class='kw'>end</span>
-
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_rv'>rv</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cls'>cls</span> <span class='op'>!~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>||</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='rparen'>)</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_cls'>cls</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
 
   <span class='comment'># Returns a unique (singleton) instance of the parser.
 </span>  <span class='comment'>#
@@ -1294,151 +1127,9 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_create_engine'>create_engine</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span><span class='rparen'>)</span>
   <span class='kw'>begin</span>
     <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='symbol'>:parsing</span> <span class='kw'>if</span> <span class='id identifier rubyid_type'>type</span> <span class='op'>!=</span> <span class='symbol'>:rendering</span>
-    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='kw'>rescue</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span>
+    <span class='op'>::</span><span class='const'>Lazier</span><span class='period'>.</span><span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::Mbrao::</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='rbrace'>}</span><span class='tstring_content'>Engines::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='kw'>rescue</span> <span class='const'>NameError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid__'>_</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="find_class-instance_method">
-  
-    - (<tt>Class</tt>) <strong>find_class</strong>(cls, scope = &quot;::%CLASS%&quot;, only_in_scope = false) 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>Finds a class to instantiate.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>cls</span>
-      
-      
-        <span class='type'>(<tt>Symbol|String|Object</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>If a <code>String</code> or a <code>Symbol</code> or a <code>Class</code>, then it will be the class to instantiate. Otherwise the class of the object will returned.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>scope</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&quot;::%CLASS%&quot;</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>An additional scope to find the class. <code>%CLASS%</code> will be substituted with the class name.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>only_in_scope</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>false</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>If only try to instantiate the class in the scope.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Class</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The found class.</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 86</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_find_class'>find_class</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='comma'>,</span> <span class='id identifier rubyid_scope'>scope</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span> <span class='kw'>then</span>
-    <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='kw'>nil</span>
-
-    <span class='id identifier rubyid_cls'>cls</span> <span class='op'>=</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_camelize'>camelize</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_only_in_scope'>only_in_scope</span> <span class='kw'>then</span>
-      <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_gsub!'>gsub!</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%CLASS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span> <span class='kw'>rescue</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_rv'>rv</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_cls'>cls</span> <span class='op'>!~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^::</span><span class='regexp_end'>/</span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_scope'>scope</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='id identifier rubyid_rv'>rv</span> <span class='op'>||</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>Unimplemented</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_cls'>cls</span><span class='rparen'>)</span><span class='rparen'>)</span>
-  <span class='kw'>elsif</span> <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_cls'>cls</span>
-  <span class='kw'>else</span>
-    <span class='id identifier rubyid_cls'>cls</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1509,13 +1200,13 @@
       <pre class="lines">
 
 
-110
-111
-112
-113</pre>
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_instance'>instance</span><span class='lparen'>(</span><span class='id identifier rubyid_force'>force</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@instance</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_force'>force</span>
@@ -1734,7 +1425,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Mar  8 09:15:24 2013 by
+  Generated on Sun Mar 24 11:07:07 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.5.2 (ruby-1.9.3).
 </div>

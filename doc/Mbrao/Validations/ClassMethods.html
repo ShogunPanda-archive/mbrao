@@ -271,13 +271,13 @@
       <pre class="lines">
 
 
-139
-140
-141
-142</pre>
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^([a-z0-9_\.\-\+]+)@([\da-z\.\-]+)\.([a-z\.]{2,6})$</span><span class='regexp_end'>/i</span></span>
@@ -349,23 +349,23 @@
       <pre class="lines">
 
 
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161</pre>
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 148</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_regex'>regex</span> <span class='op'>=</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>
@@ -513,24 +513,24 @@
       <pre class="lines">
 
 
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204</pre>
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 166</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sanitized_array'>sanitized_array</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_uniq'>uniq</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='id identifier rubyid_compact'>compact</span> <span class='op'>=</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='id identifier rubyid_sanitize_method'>sanitize_method</span> <span class='op'>=</span> <span class='symbol'>:ensure_string</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -645,21 +645,21 @@
       <pre class="lines">
 
 
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180</pre>
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sanitized_hash'>sanitized_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='comma'>,</span> <span class='id identifier rubyid_sanitize_method'>sanitize_method</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>HashWithIndifferentAccess</span><span class='rparen'>)</span> <span class='kw'>then</span>
@@ -683,7 +683,7 @@
 </div>
 
     <div id="footer">
-  Generated on Fri Mar  8 09:15:24 2013 by
+  Generated on Sun Mar 24 11:07:07 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.5.2 (ruby-1.9.3).
 </div>
