@@ -56,7 +56,7 @@ module Mbrao
           create_pipeline(options, context).call(get_body(content, options))[:output].to_s
         rescue Mbrao::Exceptions::UnavailableLocalization => le
           raise le
-        rescue Exception => e
+        rescue => e
           raise ::Mbrao::Exceptions::Rendering.new(e.to_s)
         end
       end

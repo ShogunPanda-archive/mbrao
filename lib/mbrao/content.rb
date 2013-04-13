@@ -292,7 +292,7 @@ module Mbrao
           end
 
           value ? value.utc : nil
-        rescue ArgumentError => _
+        rescue ArgumentError
           raise Mbrao::Exceptions::InvalidDate.new
         end
       end

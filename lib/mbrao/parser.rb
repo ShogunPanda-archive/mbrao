@@ -72,7 +72,7 @@ module Mbrao
         begin
           type = :parsing if type != :rendering
           ::Lazier.find_class(cls, "::Mbrao::#{type.to_s.classify}Engines::%CLASS%").new
-        rescue NameError => _
+        rescue NameError
           raise Mbrao::Exceptions::UnknownEngine.new
         end
       end
