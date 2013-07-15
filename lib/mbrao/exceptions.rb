@@ -8,31 +8,31 @@ module Mbrao
   # The exceptions raised by mbrao.
   module Exceptions
     # Exception raised when metadata are not valid.
-    class InvalidMetadata < StandardError
+    class InvalidMetadata < RuntimeError
     end
 
     # Exception raised when a date is valid.
-    class InvalidDate < StandardError
+    class InvalidDate < RuntimeError
     end
 
     # Exception raised when there is a parsing error.
-    class Parsing < StandardError
+    class Parsing < RuntimeError
     end
 
     # Exception raised when there is a rendering error.
-    class Rendering < StandardError
+    class Rendering < RuntimeError
     end
 
     # Exception raised when a requested object is not available in any of the desired locales.
-    class UnavailableLocalization < StandardError
+    class UnavailableLocalization < RuntimeError
     end
 
     # Exception raised when a invalid parsing or rendering engine is requested.
-    class UnknownEngine < StandardError
+    class UnknownEngine < RuntimeError
     end
 
     # Exception raised when a requested method must be overridden by a subclass.
-    class Unimplemented < StandardError
+    class Unimplemented < RuntimeError
     end
   end
 end

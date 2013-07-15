@@ -50,7 +50,7 @@ module Mbrao
       # @param options [Hash] A list of options for parsing.
       # @return [Content] The parsed data.
       def parse(content, options = {})
-        self.instance.parse(content, options)
+        instance.parse(content, options)
       end
 
       # Renders a content.
@@ -60,7 +60,7 @@ module Mbrao
       # @param context [Hash] A context for rendering.
       # @return [String] The rendered content.
       def render(content, options = {}, context = {})
-        self.instance.render(content, options, context)
+        instance.render(content, options, context)
       end
 
       # Instantiates a new engine for rendering or parsing.
@@ -231,7 +231,7 @@ module Mbrao
       # @param options [Hash] The options to sanitize.
       # @return [HashWithIndifferentAccess] The sanitized options.
       def sanitize_parsing_options(options)
-        options = (options.is_a?(Hash) ? options : {}).symbolize_keys
+        options = options.ensure_hash.symbolize_keys
 
         options[:engine] ||= Mbrao::Parser.parsing_engine
         options[:metadata] = options.fetch(:metadata, true).to_boolean
@@ -245,7 +245,7 @@ module Mbrao
       # @param options [Hash] The options to sanitize.
       # @return [HashWithIndifferentAccess] The sanitized options.
       def sanitize_rendering_options(options)
-        options = (options.is_a?(Hash) ? options : {}).symbolize_keys
+        options = options.ensure_hash.symbolize_keys
 
         options[:engine] ||= Mbrao::Parser.rendering_engine
 

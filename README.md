@@ -4,6 +4,7 @@
 [![Dependency Status](https://gemnasium.com/ShogunPanda/mbrao.png?travis)](https://gemnasium.com/ShogunPanda/mbrao)
 [![Build Status](https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master)](https://travis-ci.org/ShogunPanda/mbrao)
 [![Code Climate](https://codeclimate.com/github/ShogunPanda/mbrao.png)](https://codeclimate.com/github/ShogunPanda/mbrao)
+[![Coverage Status](https://coveralls.io/repos/ShogunPanda/mbrao/badge.png)](https://coveralls.io/r/ShogunPanda/mbrao)
 
 A content parser and renderer with embedded metadata support.
 

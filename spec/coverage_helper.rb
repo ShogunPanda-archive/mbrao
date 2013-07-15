@@ -5,7 +5,10 @@
 #
 
 require "pathname"
-require "simplecov"  
+require "simplecov"
+require "coveralls"
+
+Coveralls.wear!
 
 SimpleCov.start do
   root = Pathname.new(File.dirname(__FILE__)) + ".."

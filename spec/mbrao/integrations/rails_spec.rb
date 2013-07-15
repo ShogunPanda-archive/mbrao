@@ -22,7 +22,7 @@ describe ActionView::Template::Handlers::MbraoTemplate do
       {locale: "LOCALE"}
     end
 
-    def self.helper_method(method)
+    def self.helper_method(_)
     end
   end
 

@@ -51,7 +51,7 @@ describe Mbrao::Content do
     it "should raise an exception if not available for that locale" do
       reference.locales = [:en, :it, :es]
       reference.send("#{attribute}=", v1)
-      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error(Mbrao::Exceptions::UnavailableLocalization)
+      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error
       expect { reference.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Exceptions::UnavailableLocalization)
     end
 
