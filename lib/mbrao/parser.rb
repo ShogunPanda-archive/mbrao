@@ -77,8 +77,6 @@ module Mbrao
         end
       end
 
-
-
       # Returns a unique (singleton) instance of the parser.
       #
       # @param force [Boolean] If to force recreation of the instance.
@@ -142,6 +140,7 @@ module Mbrao
       # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
       # @param block [Proc] A block to sanitize entries. It must accept the value as unique argument.
       # @return [Object] The converted object.
+      # TODO@PI: Replace with the lazier one.
       def sanitized_hash(object, sanitize_method = nil, &block)
         if object.is_a?(Hash) || object.is_a?(HashWithIndifferentAccess) then
           object.inject(HashWithIndifferentAccess.new) do |hash, pair|
@@ -163,6 +162,7 @@ module Mbrao
       # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
       # @param block [Proc] A block to sanitize entries. It must accept the value as unique argument.
       # @return [Array] An flattened array whose all values are strings.
+      # TODO@PI: Replace with the lazier one
       def sanitized_array(object, uniq = true, compact = false, sanitize_method = :ensure_string, &block)
         rv = object.ensure_array.flatten
         rv.uniq! if uniq
@@ -185,6 +185,7 @@ module Mbrao
         # @param value [Object] The value to sanitize.
         # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize the value. Ignored if a block is present.
         # @param block [Proc] A block to sanitize the value. It must accept the value as unique argument.
+        # TODO@PI: Remove me
         def sanitized_hash_entry(value, sanitize_method = :ensure_string, &block)
           if block
             block.call(value)
