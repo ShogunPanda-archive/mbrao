@@ -24,8 +24,8 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = ">= 1.9.3"
 
-  gem.add_dependency("lazier", "~> 3.2.5")
-  gem.add_dependency("html-pipeline", "~> 0.0.14")
+  gem.add_dependency("lazier", "~> 3.3.3")
+  gem.add_dependency("html-pipeline", "~> 0.1.0")
   gem.add_dependency("slim", "~> 2.0.0")
   gem.add_dependency("kramdown", "~> 1.1.0")
 end

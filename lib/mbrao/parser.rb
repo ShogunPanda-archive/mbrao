@@ -133,68 +133,6 @@ module Mbrao
 
         text.ensure_string.strip =~ regex
       end
-
-      # Converts an object making sure that every `Hash` is converted to a `HashWithIndifferentAccess`.
-      #
-      # @param object [Object] The object to convert. If the object is not an Hash or doesn't respond to `collect` then the original object is returned.
-      # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
-      # @param block [Proc] A block to sanitize entries. It must accept the value as unique argument.
-      # @return [Object] The converted object.
-      # TODO@PI: Replace with the lazier one.
-      def sanitized_hash(object, sanitize_method = nil, &block)
-        if object.is_a?(Hash) || object.is_a?(HashWithIndifferentAccess) then
-          object.inject(HashWithIndifferentAccess.new) do |hash, pair|
-            hash[pair[0]] = Mbrao::Parser.sanitized_hash(pair[1], sanitize_method, &block)
-            hash
-          end
-        elsif object.respond_to?(:collect) then
-          object.collect {|item| Mbrao::Parser.sanitized_hash(item, sanitize_method, &block) }
-        else
-          sanitized_hash_entry(object, sanitize_method, &block)
-        end
-      end
-
-      # Converts an object to a a flatten array with all values sanitized.
-      #
-      # @param object [Object] The object to convert.
-      # @param uniq [Boolean] If to remove duplicates from the array before sanitizing.
-      # @param compact [Boolean] If to compact the array before sanitizing.
-      # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize entries. Ignored if a block is present.
-      # @param block [Proc] A block to sanitize entries. It must accept the value as unique argument.
-      # @return [Array] An flattened array whose all values are strings.
-      # TODO@PI: Replace with the lazier one
-      def sanitized_array(object, uniq = true, compact = false, sanitize_method = :ensure_string, &block)
-        rv = object.ensure_array.flatten
-        rv.uniq! if uniq
-        rv.compact! if compact
-
-        if block then
-          rv = rv.collect(&block)
-        elsif sanitize_method then
-          rv = rv.collect(&sanitize_method)
-        end
-
-        rv.uniq! if uniq
-        rv.compact! if compact
-        rv
-      end
-
-      private
-        # Sanitizes an value for an hash.
-        #
-        # @param value [Object] The value to sanitize.
-        # @param sanitize_method [Symbol|nil] If not `nil`, the method to use to sanitize the value. Ignored if a block is present.
-        # @param block [Proc] A block to sanitize the value. It must accept the value as unique argument.
-        # TODO@PI: Remove me
-        def sanitized_hash_entry(value, sanitize_method = :ensure_string, &block)
-          if block
-            block.call(value)
-          elsif sanitize_method
-            value.send(sanitize_method)
-          else
-            value
-          end
-        end
     end
   end
 
@@ -231,7 +169,7 @@ module Mbrao
       # @param options [Hash] The options to sanitize.
       # @return [HashWithIndifferentAccess] The sanitized options.
       def sanitize_parsing_options(options)
-        options = options.ensure_hash.symbolize_keys
+        options = options.ensure_hash(:symbols)
 
         options[:engine] ||= Mbrao::Parser.parsing_engine
         options[:metadata] = options.fetch(:metadata, true).to_boolean
@@ -245,7 +183,7 @@ module Mbrao
       # @param options [Hash] The options to sanitize.
       # @return [HashWithIndifferentAccess] The sanitized options.
       def sanitize_rendering_options(options)
-        options = options.ensure_hash.symbolize_keys
+        options = options.ensure_hash(:symbols)
 
         options[:engine] ||= Mbrao::Parser.rendering_engine
 

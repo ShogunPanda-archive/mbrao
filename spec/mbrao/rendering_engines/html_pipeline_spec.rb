@@ -12,8 +12,8 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
   describe "#render" do
     it "should forward everything to the html-pipeline" do
       pipeline = Object.new
-      pipeline.should_receive(:call).with("CONTENT").and_return({output: ""})
-      ::HTML::Pipeline.should_receive(:new).with(an_instance_of(Array), an_instance_of(Hash)).and_return(pipeline)
+      expect(pipeline).to receive(:call).with("CONTENT").and_return({output: ""})
+      expect(::HTML::Pipeline).to receive(:new).with(an_instance_of(Array), an_instance_of(Hash)).and_return(pipeline)
       reference.render("CONTENT")
     end
 
@@ -22,40 +22,40 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
     end
 
       it "should raise an exception if anything goes wrong" do
-      ::HTML::Pipeline.stub(:new).and_raise(ArgumentError.new("ERROR"))
+      allow(::HTML::Pipeline).to receive(:new).and_raise(ArgumentError.new("ERROR"))
       expect { reference.render("CONTENT") }.to raise_error(::Mbrao::Exceptions::Rendering)
     end
 
     it "should have default options" do
       filters = [:kramdown, :table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
-      ::HTML::Pipeline.should_receive(:new).with(filters, {gfm: true, asset_root: "/"}).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(filters, {gfm: true, asset_root: "/"}).and_call_original
       reference.render("CONTENT")
     end
 
     it "should merge context to options" do
-      ::HTML::Pipeline.should_receive(:new).with(an_instance_of(Array), {gfm: true, asset_root: "/", additional: true}).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(an_instance_of(Array), {gfm: true, asset_root: "/", additional: true}).and_call_original
       reference.render("CONTENT", {}, {additional: true})
     end
 
     it "should restrict filter used" do
       filters = [:table_of_contents, :autolink, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
-      ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {kramdown: false})
 
       filters = [:kramdown, :autolink, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
-      ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {toc: false})
 
       filters = [:kramdown, :table_of_contents, :emoji, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
-      ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {links: false})
 
       filters = [:kramdown, :table_of_contents, :autolink, :image_max_width].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
-      ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {emoji: false})
 
       filters = [:kramdown, :table_of_contents, :autolink, :emoji].collect {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }
-      ::HTML::Pipeline.should_receive(:new).with(filters, an_instance_of(Hash)).and_call_original
+      expect(::HTML::Pipeline).to receive(:new).with(filters, an_instance_of(Hash)).and_call_original
       reference.render("CONTENT", {image_max_width: false})
     end
   end
@@ -108,7 +108,7 @@ end
 describe HTML::Pipeline::KramdownFilter do
   describe "#initialize" do
     it "should call the parent constructor" do
-      HTML::Pipeline::TextFilter.should_receive(:new).with("\rCONTENT\r", {a: "b"}, {c: "d"})
+      expect(HTML::Pipeline::TextFilter).to receive(:new).with("\rCONTENT\r", {a: "b"}, {c: "d"})
       HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"})
     end
 
@@ -119,8 +119,8 @@ describe HTML::Pipeline::KramdownFilter do
 
     it "should use Kramdown with given options for building the result" do
       object = Object.new
-      Kramdown::Document.should_receive(:new).with("CONTENT", {a: "b"}).and_return(object)
-      object.should_receive(:to_html)
+      expect(Kramdown::Document).to receive(:new).with("CONTENT", {a: "b"}).and_return(object)
+      expect(object).to receive(:to_html)
       HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"}).call
     end
   end

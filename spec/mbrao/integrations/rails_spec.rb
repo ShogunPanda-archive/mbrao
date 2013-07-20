@@ -39,7 +39,7 @@ describe ActionView::Template::Handlers::MbraoTemplate do
 
     it "should always return the same instance" do
       other = ActionView::Template::Handlers::MbraoTemplate.instance
-      ActionView::Template::Handlers::MbraoTemplate.should_not_receive(:new)
+      expect(ActionView::Template::Handlers::MbraoTemplate).not_to receive(:new)
       expect(ActionView::Template::Handlers::MbraoTemplate.instance).to eq(other)
     end
 
@@ -60,11 +60,11 @@ describe ActionView::Template::Handlers::MbraoTemplate do
     it "should initialize a Content and assign it to the controller" do
       controller = DummyController.new
       renderer = DummyRenderer.new
-      renderer.stub(:controller).and_return(controller)
+      allow(renderer).to receive(:controller).and_return(controller)
 
       expect(controller.respond_to?(:mbrao_content)).to be_false
-      ::Mbrao::Parser.should_receive(:parse).and_call_original
-      controller.class.should_receive(:helper_method).with(:mbrao_content)
+      expect(::Mbrao::Parser).to receive(:parse).and_call_original
+      expect(controller.class).to receive(:helper_method).with(:mbrao_content)
       ActionView::Template::Handlers::MbraoTemplate.instance.render(renderer, "CONTENT")
 
       expect(controller.respond_to?(:mbrao_content)).to be_true
@@ -74,12 +74,12 @@ describe ActionView::Template::Handlers::MbraoTemplate do
     it "should render contents, using specified engine and locale" do
       controller = DummyController.new
       renderer = DummyRenderer.new
-      renderer.stub(:controller).and_return(controller)
+      allow(renderer).to receive(:controller).and_return(controller)
 
       content = ::Mbrao::Content.create({engine: "ENGINE"}, "CONTENT")
-      ::Mbrao::Parser.stub(:parse).and_return(content)
+      allow(::Mbrao::Parser).to receive(:parse).and_return(content)
 
-      ::Mbrao::Parser.should_receive(:render).with(content, {engine: "ENGINE", locale: "LOCALE"})
+      expect(::Mbrao::Parser).to receive(:render).with(content, {engine: "ENGINE", locale: "LOCALE"})
       ActionView::Template::Handlers::MbraoTemplate.instance.render(DummyRenderer.new, "CONTENT")
     end
   end

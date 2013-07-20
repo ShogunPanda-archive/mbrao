@@ -21,4 +21,4 @@ require "mbrao/rendering_engines/base"
 require "mbrao/rendering_engines/html_pipeline"
 require "mbrao/integrations/rails" if defined?(ActionView)
 
-Lazier.load!(:object)
+Lazier.load!(:object, :hash)

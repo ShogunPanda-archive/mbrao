@@ -6,13 +6,13 @@
 <title>
   Module: Mbrao::PublicInterface::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.5.2
+    &mdash; Documentation by YARD 0.8.6.2
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
   hasFrames = window.top.frames.main ? true : false;
@@ -440,9 +440,7 @@
 97
 98
 99
-100
-101
-102</pre>
+100</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 21</span>
@@ -479,7 +477,7 @@
 </span>  <span class='comment'># @param options [Hash] A list of options for parsing.
 </span>  <span class='comment'># @return [Content] The parsed data.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Renders a content.
@@ -489,7 +487,7 @@
 </span>  <span class='comment'># @param context [Hash] A context for rendering.
 </span>  <span class='comment'># @return [String] The rendered content.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Instantiates a new engine for rendering or parsing.
@@ -505,8 +503,6 @@
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-
-
 
   <span class='comment'># Returns a unique (singleton) instance of the parser.
 </span>  <span class='comment'>#
@@ -716,9 +712,7 @@
 97
 98
 99
-100
-101
-102</pre>
+100</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 21</span>
@@ -755,7 +749,7 @@
 </span>  <span class='comment'># @param options [Hash] A list of options for parsing.
 </span>  <span class='comment'># @return [Content] The parsed data.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Renders a content.
@@ -765,7 +759,7 @@
 </span>  <span class='comment'># @param context [Hash] A context for rendering.
 </span>  <span class='comment'># @return [String] The rendered content.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Instantiates a new engine for rendering or parsing.
@@ -781,8 +775,6 @@
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-
-
 
   <span class='comment'># Returns a unique (singleton) instance of the parser.
 </span>  <span class='comment'>#
@@ -933,9 +925,7 @@
 97
 98
 99
-100
-101
-102</pre>
+100</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 21</span>
@@ -972,7 +962,7 @@
 </span>  <span class='comment'># @param options [Hash] A list of options for parsing.
 </span>  <span class='comment'># @return [Content] The parsed data.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Renders a content.
@@ -982,7 +972,7 @@
 </span>  <span class='comment'># @param context [Hash] A context for rendering.
 </span>  <span class='comment'># @return [String] The rendered content.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Instantiates a new engine for rendering or parsing.
@@ -998,8 +988,6 @@
       <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnknownEngine</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-
-
 
   <span class='comment'># Returns a unique (singleton) instance of the parser.
 </span>  <span class='comment'>#
@@ -1200,13 +1188,13 @@
       <pre class="lines">
 
 
+84
+85
 86
-87
-88
-89</pre>
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_instance'>instance</span><span class='lparen'>(</span><span class='id identifier rubyid_force'>force</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@instance</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_force'>force</span>
@@ -1303,7 +1291,7 @@
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1413,7 +1401,7 @@
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1425,9 +1413,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sat Apr 13 15:59:17 2013 by
+  Generated on Sat Jul 20 12:17:49 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.5.2 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

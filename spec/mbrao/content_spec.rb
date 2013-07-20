@@ -229,8 +229,8 @@ describe Mbrao::Content do
     it "should create a parsing engine and use it for filtering" do
       reference.body = "BODY"
       engine = ::Mbrao::ParsingEngines::Base.new
-      engine.should_receive(:filter_content).with(reference, ["it", "en"])
-      ::Mbrao::Parser.should_receive(:create_engine).with("ENGINE").and_return(engine)
+      expect(engine).to receive(:filter_content).with(reference, ["it", "en"])
+      expect(::Mbrao::Parser).to receive(:create_engine).with("ENGINE").and_return(engine)
       reference.get_body(["it", "en"], "ENGINE")
     end
   end

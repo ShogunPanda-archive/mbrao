@@ -31,21 +31,21 @@ describe Mbrao::ParsingEngines::Base do
     let(:reference) { ::Mbrao::ParsingEngines::Base.new }
 
     it "should forward to ::Mbrao::Content.create" do
-      reference.should_receive(:separate_components).with("CONTENT", {a: "b"}).and_return([{a: "b"}, "BODY"])
-      reference.stub(:parse_metadata).and_return({a: "b"})
-      ::Mbrao::Content.should_receive(:create).with({a: "b"}, "BODY")
+      expect(reference).to receive(:separate_components).with("CONTENT", {a: "b"}).and_return([{a: "b"}, "BODY"])
+      allow(reference).to receive(:parse_metadata).and_return({a: "b"})
+      expect(::Mbrao::Content).to receive(:create).with({a: "b"}, "BODY")
       reference.parse("CONTENT", {a: "b"})
     end
 
     it "should return a Content object" do
-      reference.stub(:separate_components).with("CONTENT", {a: "b"}).and_return([])
-      reference.stub(:parse_metadata).and_return({})
+      allow(reference).to receive(:separate_components).with("CONTENT", {a: "b"}).and_return([])
+      allow(reference).to receive(:parse_metadata).and_return({})
       expect(reference.parse("CONTENT", {a: "b"})).to be_a(::Mbrao::Content)
     end
 
     it "should separate_components" do
-      reference.should_receive(:separate_components).with("CONTENT", {a: "b"})
-      reference.stub(:parse_metadata).and_return({})
+      expect(reference).to receive(:separate_components).with("CONTENT", {a: "b"})
+      allow(reference).to receive(:parse_metadata).and_return({})
       reference.parse("CONTENT", {a: "b"})
     end
   end

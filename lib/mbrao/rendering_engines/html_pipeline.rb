@@ -50,7 +50,7 @@ module Mbrao
       # @param context [Hash] A context for rendering.
       def render(content, options = {}, context = {})
         options = sanitize_options(options)
-        context = context.ensure_hash.symbolize_keys
+        context = context.ensure_hash(:symbols)
 
         begin
           create_pipeline(options, context).call(get_body(content, options))[:output].to_s
@@ -72,7 +72,7 @@ module Mbrao
       #
       # @return [Array] The default pipeline.
       def default_pipeline=(value)
-        @default_pipeline = value.ensure_array(nil, false, false) {|v| v.ensure_array.flatten.compact.collect { |p| p.ensure_string.to_sym } }
+        @default_pipeline = value.ensure_array(nil, false, false) {|v| v.ensure_array(nil, true, true, true) { |p| p.ensure_string.to_sym } }
       end
 
       # Gets the default options.
@@ -95,9 +95,9 @@ module Mbrao
         # @param options [Hash] The options to sanitize.
         # @return [Hash] The sanitized options.
         def sanitize_options(options)
-          options = options.ensure_hash.symbolize_keys
+          options = options.ensure_hash(:symbols)
           options = filter_filters(options)
-          options[:pipeline_options] = self.default_options.merge(options[:pipeline_options].ensure_hash.symbolize_keys)
+          options[:pipeline_options] = self.default_options.merge(options[:pipeline_options].ensure_hash(:symbols))
 
           options
         end

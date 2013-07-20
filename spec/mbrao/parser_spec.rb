@@ -45,14 +45,14 @@ describe Mbrao::Parser do
 
   describe ".parse" do
     it "should forward to the instance" do
-      ::Mbrao::Parser.instance.should_receive(:parse).with("TEXT", {options: {}})
+      expect(::Mbrao::Parser.instance).to receive(:parse).with("TEXT", {options: {}})
       ::Mbrao::Parser.parse("TEXT", {options: {}})
     end
   end
 
   describe ".render" do
     it "should forward to the instance" do
-      ::Mbrao::Parser.instance.should_receive(:render).with("TEXT", {options: {}}, {content: {}})
+      expect(::Mbrao::Parser.instance).to receive(:render).with("TEXT", {options: {}}, {content: {}})
       ::Mbrao::Parser.render("TEXT", {options: {}}, {content: {}})
     end
   end
@@ -61,11 +61,11 @@ describe Mbrao::Parser do
     it "should create an engine via Lazier.find_class" do
       reference = ::Mbrao::ParsingEngines::ScopedParser.new
       cls = ::Mbrao::ParsingEngines::ScopedParser
-      cls.should_receive(:new).exactly(2).and_return(reference)
+      expect(cls).to receive(:new).exactly(2).and_return(reference)
 
-      ::Lazier.should_receive(:find_class).with(:scoped_parser, "::Mbrao::ParsingEngines::%CLASS%").and_return(cls)
+      expect(::Lazier).to receive(:find_class).with(:scoped_parser, "::Mbrao::ParsingEngines::%CLASS%").and_return(cls)
       expect(::Mbrao::Parser.create_engine(:scoped_parser)).to eq(reference)
-      ::Lazier.should_receive(:find_class).with(:scoped_parser, "::Mbrao::RenderingEngines::%CLASS%").and_return(cls)
+      expect(::Lazier).to receive(:find_class).with(:scoped_parser, "::Mbrao::RenderingEngines::%CLASS%").and_return(cls)
       expect(::Mbrao::Parser.create_engine(:scoped_parser, :rendering)).to eq(reference)
     end
 
@@ -77,19 +77,19 @@ describe Mbrao::Parser do
   describe ".instance" do
     it("should call .new") do
       ::Mbrao::Parser.instance_variable_set(:@instance, nil)
-      ::Mbrao::Parser.should_receive(:new)
+      expect(::Mbrao::Parser).to receive(:new)
       ::Mbrao::Parser.instance
     end
 
     it("should return the same instance") do
-      ::Mbrao::Parser.stub(:new) do Time.now end
+      allow(::Mbrao::Parser).to receive(:new) do Time.now end
       instance = ::Mbrao::Parser.instance
       expect(::Mbrao::Parser.instance).to be(instance)
       ::Mbrao::Parser.instance_variable_set(:@instance, nil)
     end
 
     it("should return a new instance if requested to") do
-      ::Mbrao::Parser.stub(:new) do Time.now end
+      allow(::Mbrao::Parser).to receive(:new) do Time.now end
       instance = ::Mbrao::Parser.instance
       expect(::Mbrao::Parser.instance(true)).not_to be(instance)
       ::Mbrao::Parser.instance_variable_set(:@instance, nil)
@@ -123,11 +123,11 @@ describe Mbrao::Parser do
   describe "#parse" do
     it "should sanitize options" do
       reference = BlankParser.new
-      ::Mbrao::Parser.should_receive(:create_engine).exactly(3).and_return(reference)
+      expect(::Mbrao::Parser).to receive(:create_engine).exactly(3).and_return(reference)
 
-      reference.should_receive(:parse).with("CONTENT", {"metadata" => true, "content" => true, "engine" => :blank_parser})
-      reference.should_receive(:parse).with("CONTENT", {"metadata" => true, "content" => false, "engine" => :blank_parser})
-      reference.should_receive(:parse).with("CONTENT", {"metadata" => false, "content" => false, "engine" => :blank_parser})
+      expect(reference).to receive(:parse).with("CONTENT", {"metadata" => true, "content" => true, "engine" => :blank_parser})
+      expect(reference).to receive(:parse).with("CONTENT", {"metadata" => true, "content" => false, "engine" => :blank_parser})
+      expect(reference).to receive(:parse).with("CONTENT", {"metadata" => false, "content" => false, "engine" => :blank_parser})
 
       ::Mbrao::Parser.new.parse("CONTENT", {engine: :blank_parser})
       ::Mbrao::Parser.new.parse("CONTENT", {engine: :blank_parser, content: 2})
@@ -136,9 +136,9 @@ describe Mbrao::Parser do
 
     it "should call .create_engine call its #parse method" do
       reference = BlankParser.new
-      ::Mbrao::Parser.should_receive(:create_engine).and_return(reference)
+      expect(::Mbrao::Parser).to receive(:create_engine).and_return(reference)
 
-      reference.should_receive(:parse).with("CONTENT", {"metadata" => true, "content" => true, "engine" => :blank_parser, "other" => "OK"})
+      expect(reference).to receive(:parse).with("CONTENT", {"metadata" => true, "content" => true, "engine" => :blank_parser, "other" => "OK"})
       ::Mbrao::Parser.new.parse("CONTENT", {engine: :blank_parser, other: "OK"})
     end
   end
@@ -146,10 +146,10 @@ describe Mbrao::Parser do
   describe "#render" do
     it "should sanitize options" do
       reference = Object.new
-      ::Mbrao::Parser.should_receive(:create_engine).exactly(2).and_return(reference)
+      expect(::Mbrao::Parser).to receive(:create_engine).exactly(2).and_return(reference)
 
-      reference.should_receive(:render).with("CONTENT", {"engine" => :blank_rendered}, {content: "OK"})
-      reference.should_receive(:render).with("CONTENT", {"engine" => :html_pipeline}, {content: "OK"})
+      expect(reference).to receive(:render).with("CONTENT", {"engine" => :blank_rendered}, {content: "OK"})
+      expect(reference).to receive(:render).with("CONTENT", {"engine" => :html_pipeline}, {content: "OK"})
 
       ::Mbrao::Parser.new.render("CONTENT", {engine: :blank_rendered}, {content: "OK"})
       ::Mbrao::Parser.new.render("CONTENT", {engine: :html_pipeline}, {content: "OK"})
@@ -157,9 +157,9 @@ describe Mbrao::Parser do
 
     it "should call .create_engine call its #parse method" do
       reference = Object.new
-      ::Mbrao::Parser.should_receive(:create_engine).with(:blank_rendered, :rendering).and_return(reference)
+      expect(::Mbrao::Parser).to receive(:create_engine).with(:blank_rendered, :rendering).and_return(reference)
 
-      reference.should_receive(:render).with("CONTENT", {"engine" => :blank_rendered}, {content: "OK"})
+      expect(reference).to receive(:render).with("CONTENT", {"engine" => :blank_rendered}, {content: "OK"})
       ::Mbrao::Parser.new.render("CONTENT", {engine: :blank_rendered}, {content: "OK"})
     end
   end

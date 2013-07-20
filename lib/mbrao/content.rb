@@ -12,7 +12,7 @@ module Mbrao
     # @param locales [Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @return [Boolean] `true` if the content is available for at least one of the desired locales, `false` otherwise.
     def enabled_for_locales?(*locales)
-      locales = Mbrao::Parser.sanitized_array(locales).collect(&:strip).reject {|l| l == "*" }
+      locales = locales.flatten.ensure_array(nil, false, false, true) {|l| l.ensure_string.strip }.reject {|l| l == "*" }
       @locales.blank? || locales.blank? || (@locales & locales).present?
     end
 
@@ -127,16 +127,16 @@ module Mbrao
 
     # Sets the `locales` attribute.
     #
-    # @param value [Array] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas. A empty or "*" will be the default value.
+    # @param value [Array] The new value for the attribute. A empty or "*" will be the default value.
     def locales=(value)
-      @locales = Mbrao::Parser.sanitized_array(value)
+      @locales = value.ensure_array(nil, true, true, true) {|l| l.ensure_string.strip }
     end
 
     # Sets the `title` attribute.
     #
     # @param value [String|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas. A empty or "*" will be the default value.
     def title=(value)
-      @title = value.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(value, :ensure_string) : value.ensure_string
+      @title = value.is_a?(Hash) ? value.ensure_hash(:indifferent, nil, :ensure_string) : value.ensure_string
     end
 
     # Sets the `body` attribute.
@@ -151,11 +151,9 @@ module Mbrao
     # @param value [Array|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas. A empty or "*" will be the default value.
     def tags=(value)
       @tags = if value.is_a?(Hash) then
-        values = Mbrao::Parser.sanitized_hash(value)
-        values.each {|k, v| values[k] = Mbrao::Parser.sanitized_array(v, true, true) }
-        @tags = values
+        value.ensure_hash(:indifferent) { |v| v.ensure_array(nil, true, true, true, :ensure_string) }
       else
-        Mbrao::Parser.sanitized_array(value, true, true)
+        value.ensure_array(nil, true, true, true, :ensure_string)
       end
     end
 
@@ -163,7 +161,7 @@ module Mbrao
     #
     # @param value [String|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas. A empty or "*" will be the default value.
     def more=(value)
-      @more = value.is_a?(Hash) ? Mbrao::Parser.sanitized_hash(value, :ensure_string) : value.ensure_string
+      @more = value.is_a?(Hash) ? value.ensure_hash(:indifferent, nil, :ensure_string) : value.ensure_string
     end
 
     # Sets the `author` attribute.
@@ -173,7 +171,7 @@ module Mbrao
       if value.is_a?(Mbrao::Author) then
         @author = value
       elsif value.is_a?(Hash) then
-        value = Mbrao::Parser.sanitized_hash(value, nil)
+        value = value.ensure_hash(:indifferent)
         @author = Mbrao::Author.new(value["name"], value["email"], value["website"], value["image"], value["metadata"], value["uid"])
       else
         @author = Mbrao::Author.new(value.ensure_string)
@@ -207,7 +205,7 @@ module Mbrao
     # @param value [Hash] The new value for the attribute.
     def metadata=(value)
       if value.is_a?(Hash) then
-        @metadata = Mbrao::Parser.sanitized_hash(value)
+        @metadata = value.ensure_hash(:indifferent)
       else
         @metadata = HashWithIndifferentAccess.new({raw: value})
       end
@@ -219,7 +217,7 @@ module Mbrao
     # @param content [Content|nil] An optional content to check for availability
     # @return [Array] The validated list of locales.
     def self.validate_locales(locales, content = nil)
-      locales = Mbrao::Parser.sanitized_array(locales).collect(&:strip)
+      locales = locales.ensure_array(nil, true, true, true) {|l| l.ensure_string.strip }
       locales = (locales.empty? ? [Mbrao::Parser.locale] : locales)
       raise Mbrao::Exceptions::UnavailableLocalization.new if content && !content.enabled_for_locales?(locales)
       locales
