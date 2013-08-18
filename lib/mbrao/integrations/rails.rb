@@ -1,6 +1,6 @@
 # encoding: utf-8
 #
-# This file is part of the mbrao gem. Copyright (C) 2013 and above Shogun <shogun_panda@cowtech.it>.
+# This file is part of the mbrao gem. Copyright (C) 2013 and above Shogun <shogun@cowtech.it>.
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
@@ -48,4 +48,4 @@ module ActionView::Template::Handlers
   end
 end
 
-ActionView::Template.register_template_handler "emt", ActionView::Template::Handlers::MbraoTemplate.instance if defined?(ActionView) && defined?(Rails) && Rails.version =~ /^[34]/
+ActionView::Template.register_template_handler("emt", ActionView::Template::Handlers::MbraoTemplate.instance) if defined?(ActionView) && defined?(Rails) && Rails.version =~ /^[34]/
