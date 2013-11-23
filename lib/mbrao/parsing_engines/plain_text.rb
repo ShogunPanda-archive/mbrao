@@ -78,8 +78,8 @@ module Mbrao
         # @param tag [Array|String] The tag to sanitize.
         # @return [Array] Sanitized tags.
         def sanitize_tags(tag, default = ["---"])
-          tag = tag.ensure_string.split(/\s*,\s*/).collect(&:strip) if tag && !tag.is_a?(Array)
-          (tag.present? ? tag : default).slice(0, 2).collect {|t| /#{Regexp.quote(t).gsub("%ARGS%", "\\s*(?<args>[^\\n\\}]+,?)*")}/ }
+          tag = tag.ensure_string.split(/\s*,\s*/).map(&:strip) if tag && !tag.is_a?(Array)
+          (tag.present? ? tag : default).slice(0, 2).map {|t| /#{Regexp.quote(t).gsub("%ARGS%", "\\s*(?<args>[^\\n\\}]+,?)*")}/ }
         end
 
         # Scans a text and content section.
@@ -152,7 +152,7 @@ module Mbrao
         # @param locales [Array] The desired locales. Can include `*` to match all.
         # @return [String|nil] Return the filtered content or `nil` if the content must be hidden.
         def perform_filter_content(content, locales)
-          content.collect { |part|
+          content.map { |part|
             part_locales = parse_locales(part[1])
 
             if locales_valid?(locales, part_locales) then
@@ -168,9 +168,9 @@ module Mbrao
         # @param locales [String] The desired locales. Can include `*` to match all. Note that `!*` is ignored.
         # @return [Hash] An hash with valid and invalid locales.
         def parse_locales(locales)
-          types = locales.split(/\s*,\s*/).collect(&:strip).group_by {|l| l !~ /^!/ ? "valid" : "invalid" }
+          types = locales.split(/\s*,\s*/).map(&:strip).group_by {|l| l !~ /^!/ ? "valid" : "invalid" }
           types["valid"] ||= []
-          types["invalid"] = types.fetch("invalid", []).reject {|l| l == "!*" }.collect {|l| l.gsub(/^!/, "") }
+          types["invalid"] = types.fetch("invalid", []).reject {|l| l == "!*" }.map {|l| l.gsub(/^!/, "") }
           types
         end
 

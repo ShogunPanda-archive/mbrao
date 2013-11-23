@@ -59,7 +59,7 @@ module Mbrao
         locales = ::Mbrao::Content.validate_locales(locales, self)
 
         if attribute.is_a?(HashWithIndifferentAccess) then
-          rv = attribute.inject(HashWithIndifferentAccess.new) { |hash, pair| append_value_for_locale(hash, pair[0], locales, pair[1]) }
+          rv = attribute.reduce(HashWithIndifferentAccess.new) { |hash, pair| append_value_for_locale(hash, pair[0], locales, pair[1]) }
           rv.keys.length == 1 ? rv.values.first : rv
         else
           attribute
@@ -74,7 +74,7 @@ module Mbrao
       # @param value [Object] The value to add.
       # @return [Hash] Return the original hash.
       def append_value_for_locale(hash, locale, locales, value)
-        locale.split(/\s*,\s*/).collect(&:strip).each do |l|
+        locale.split(/\s*,\s*/).map(&:strip).each do |l|
           hash[l] = value if locales.include?("*") || locales.include?(l)
         end
 
@@ -272,7 +272,7 @@ module Mbrao
       # @param locales [Array] The locales to normalize.
       # @return [Array] The normalized locales.
       def self.normalize_locales(locales)
-        locales.flatten.collect(&:ensure_string).collect(&:strip).uniq
+        locales.flatten.map(&:ensure_string).map(&:strip).uniq
       end
 
       # Extracts a date and time from a value.

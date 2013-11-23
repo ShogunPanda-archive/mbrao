@@ -105,7 +105,7 @@ EOS4
 
   describe "#filter_content" do
     def parse_content(content)
-      content.split("\n").collect(&:strip).select {|l| l.present? }
+      content.split("\n").map(&:strip).select {|l| l.present? }
     end
 
     it "should return the original content if locales contains *" do
