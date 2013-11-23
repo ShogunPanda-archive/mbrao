@@ -6,7 +6,7 @@
 <title>
   Class: Mbrao::Content
   
-    &mdash; Documentation by YARD 0.8.7
+    &mdash; Documentation by YARD 0.8.7.3
   
 </title>
 
@@ -963,7 +963,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -1398,7 +1398,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -1833,7 +1833,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -2268,7 +2268,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -2703,7 +2703,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -3180,7 +3180,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -3615,7 +3615,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -4050,7 +4050,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -4485,7 +4485,7 @@
 </span>    <span class='comment'># @param locales [Array] The locales to normalize.
 </span>    <span class='comment'># @return [Array] The normalized locales.
 </span>    <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_normalize_locales'>normalize_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+      <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:ensure_string</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
     <span class='kw'>end</span>
 
     <span class='comment'># Extracts a date and time from a value.
@@ -4734,9 +4734,9 @@
 </div>
 
     <div id="footer">
-  Generated on Sun Aug 18 16:37:01 2013 by
+  Generated on Sat Nov 23 13:44:02 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7 (ruby-2.0.0).
+  0.8.7.3 (ruby-2.0.0).
 </div>
 
   </body>
