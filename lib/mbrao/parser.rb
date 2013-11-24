@@ -63,6 +63,29 @@ module Mbrao
         instance.render(content, options, context)
       end
 
+      # Returns an object as a JSON compatible hash
+      #
+      # @param target [Object] The target to serialize.
+      # @param keys [Array] The attributes to include in the serialization
+      # @param options [Hash] Options to modify behavior of the serialization.
+      #   The only supported value are:
+      #
+      #   * `:exclude`, an array of attributes to skip.
+      #   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+      # @return [Hash] An hash with all attributes.
+      def as_json(target, keys, options = {})
+        include_empty = !options[:exclude_empty].to_boolean
+        exclude = options[:exclude].ensure_array(nil, true, true, true, :ensure_string)
+        keys = keys.ensure_array(nil, true, true, true, :ensure_string)
+
+        (keys - exclude).reduce({}) {|rv, key|
+          value = target.send(key)
+          value = value.as_json if value && value.respond_to?(:as_json)
+          rv[key] = value if include_empty || !value.is_a?(NilClass)
+          rv
+        }.deep_stringify_keys
+      end
+
       # Instantiates a new engine for rendering or parsing.
       #
       # @param cls [String|Symbol|Object] If a `String` or a `Symbol`, then it will be the class of the engine.

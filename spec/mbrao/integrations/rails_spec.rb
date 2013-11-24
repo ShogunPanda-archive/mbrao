@@ -8,7 +8,14 @@ require "spec_helper"
 require "action_view"
 require "mbrao/integrations/rails"
 
+
 describe ActionView::Template::Handlers::MbraoTemplate do
+  class Rails
+    def self.version
+      "3"
+    end
+  end
+
   class DummyTemplate
     def initialize(content)
       @content = content
@@ -31,6 +38,13 @@ describe ActionView::Template::Handlers::MbraoTemplate do
   class DummyRenderer
     def controller
       @controller ||= DummyController.new
+    end
+  end
+
+  describe ".register" do
+    it "should register template" do
+      expect(ActionView::Template).to receive(:register_template_handler).with("emt", an_instance_of(ActionView::Template::Handlers::MbraoTemplate))
+      ActionView::Template::Handlers::MbraoTemplate.register
     end
   end
 

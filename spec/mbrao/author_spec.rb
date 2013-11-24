@@ -23,40 +23,56 @@ describe Mbrao::Author do
     end
 
     it "creates a author from a hash" do
-      expect(Mbrao::Author).to receive(:new).with("NAME", "EMAIL", "WEBSITE", "IMAGE", {"other" => "OTHER"}, "UID")
+      expect(Mbrao::Author).to receive(:new).with("NAME", "EMAIL", "WEBSITE", "IMAGE", {"other" => "OTHER"}).and_call_original
+      expect_any_instance_of(Mbrao::Author).to receive("uid=").with("UID")
       Mbrao::Author.create({name: "NAME", email: "EMAIL", website: "WEBSITE", image: "IMAGE", other: "OTHER", uid: "UID"})
     end
   end
 
   describe "#initialize" do
     it "create a new object" do
-      reference = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
-      expect(reference.name).to eq("NAME")
-      expect(reference.email).to eq("name@example.com")
-      expect(reference.website).to eq("http://example.com")
-      expect(reference.image).to eq("http://example.com/image.jpg")
-      expect(reference.metadata).to eq({"a" => {"b" => :c}})
+      subject = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
+      expect(subject.name).to eq("NAME")
+      expect(subject.email).to eq("name@example.com")
+      expect(subject.website).to eq("http://example.com")
+      expect(subject.image).to eq("http://example.com/image.jpg")
+      expect(subject.metadata).to eq({"a" => {"b" => :c}})
     end
 
     it "make sure that email is valid" do
-      reference = Mbrao::Author.new("NAME", "INVALID", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
-      expect(reference.email).to be_nil
+      subject = Mbrao::Author.new("NAME", "INVALID", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
+      expect(subject.email).to be_nil
     end
 
     it "make sure that website is a valid URL" do
-      reference = Mbrao::Author.new("NAME", "name@example.com", "INVALID", "http://example.com/image.jpg", {a: {b: :c}})
-      expect(reference.website).to be_nil
+      subject = Mbrao::Author.new("NAME", "name@example.com", "INVALID", "http://example.com/image.jpg", {a: {b: :c}})
+      expect(subject.website).to be_nil
     end
 
     it "make sure that image is a valid URL" do
-      reference = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "INVALID", {a: {b: :c}})
-      expect(reference.image).to be_nil
+      subject = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "INVALID", {a: {b: :c}})
+      expect(subject.image).to be_nil
     end
 
     it "make sure that hash is a recursively a HashWithIndifferentAccess" do
-      reference = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
-      expect(reference.metadata).to be_a(HashWithIndifferentAccess)
-      expect(reference.metadata["a"]).to be_a(HashWithIndifferentAccess)
+      subject = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
+      expect(subject.metadata).to be_a(HashWithIndifferentAccess)
+      expect(subject.metadata["a"]).to be_a(HashWithIndifferentAccess)
+    end
+  end
+
+  describe "#as_json" do
+    it "should return the content as a JSON hash" do
+      subject = Mbrao::Author.new("NAME", "name@example.com", "http://example.com", "http://example.com/image.jpg", {a: {b: :c}})
+
+      expect(subject.as_json).to eq({
+        "email" => "name@example.com",
+        "image" => "http://example.com/image.jpg",
+        "metadata" => {"a" => {"b" => :c}},
+        "name" => "NAME",
+        "uid" => nil,
+        "website" => "http://example.com"
+      })
     end
   end
 end

@@ -320,7 +320,30 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Author) <strong>initialize</strong>(name, email = nil, website = nil, image = nil, metadata = nil, uid = nil) </a>
+      <a href="#as_json-instance_method" title="#as_json (instance method)">- (Hash) <strong>as_json</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the author as an Hash.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Author) <strong>initialize</strong>(name, email = nil, website = nil, image = nil, metadata = nil) </a>
     
 
     
@@ -351,7 +374,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    - (<tt><span class='object_link'><a href="" title="Mbrao::Author (class)">Author</a></span></tt>) <strong>initialize</strong>(name, email = nil, website = nil, image = nil, metadata = nil, uid = nil) 
+    - (<tt><span class='object_link'><a href="" title="Mbrao::Author (class)">Author</a></span></tt>) <strong>initialize</strong>(name, email = nil, website = nil, image = nil, metadata = nil) 
   
 
   
@@ -451,23 +474,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>uid</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>A unique ID for this post. This is only for client uses.</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 
@@ -477,25 +483,23 @@
       <pre class="lines">
 
 
+37
 38
 39
 40
 41
 42
-43
-44
-45</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 37</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
   <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
   <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
   <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
   <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-  <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -589,7 +593,21 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 22</span>
@@ -609,14 +627,25 @@
 </span>  <span class='comment'># @param website [String] The website of the author.
 </span>  <span class='comment'># @param image [String] The URL of the avatar of the author.
 </span>  <span class='comment'># @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-</span>  <span class='comment'># @param uid [String] A unique ID for this post. This is only for client uses.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-    <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Returns the author as an Hash.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param options [Hash] Options to modify behavior of the serialization.
+</span>  <span class='comment'>#   The only supported value are:
+</span>  <span class='comment'>#
+</span>  <span class='comment'>#   * `:exclude`, an array of attributes to skip.
+</span>  <span class='comment'>#   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Creates an author from a `Hash`.
@@ -627,7 +656,10 @@
     <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
       <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-      <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+      <span class='id identifier rubyid_author'>author</span>
     <span class='kw'>else</span>
       <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -720,7 +752,21 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 22</span>
@@ -740,14 +786,25 @@
 </span>  <span class='comment'># @param website [String] The website of the author.
 </span>  <span class='comment'># @param image [String] The URL of the avatar of the author.
 </span>  <span class='comment'># @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-</span>  <span class='comment'># @param uid [String] A unique ID for this post. This is only for client uses.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-    <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Returns the author as an Hash.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param options [Hash] Options to modify behavior of the serialization.
+</span>  <span class='comment'>#   The only supported value are:
+</span>  <span class='comment'>#
+</span>  <span class='comment'>#   * `:exclude`, an array of attributes to skip.
+</span>  <span class='comment'>#   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Creates an author from a `Hash`.
@@ -758,7 +815,10 @@
     <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
       <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-      <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+      <span class='id identifier rubyid_author'>author</span>
     <span class='kw'>else</span>
       <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -851,7 +911,21 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 22</span>
@@ -871,14 +945,25 @@
 </span>  <span class='comment'># @param website [String] The website of the author.
 </span>  <span class='comment'># @param image [String] The URL of the avatar of the author.
 </span>  <span class='comment'># @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-</span>  <span class='comment'># @param uid [String] A unique ID for this post. This is only for client uses.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-    <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Returns the author as an Hash.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param options [Hash] Options to modify behavior of the serialization.
+</span>  <span class='comment'>#   The only supported value are:
+</span>  <span class='comment'>#
+</span>  <span class='comment'>#   * `:exclude`, an array of attributes to skip.
+</span>  <span class='comment'>#   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Creates an author from a `Hash`.
@@ -889,7 +974,10 @@
     <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
       <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-      <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+      <span class='id identifier rubyid_author'>author</span>
     <span class='kw'>else</span>
       <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -982,7 +1070,21 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 22</span>
@@ -1002,14 +1104,25 @@
 </span>  <span class='comment'># @param website [String] The website of the author.
 </span>  <span class='comment'># @param image [String] The URL of the avatar of the author.
 </span>  <span class='comment'># @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-</span>  <span class='comment'># @param uid [String] A unique ID for this post. This is only for client uses.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-    <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Returns the author as an Hash.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param options [Hash] Options to modify behavior of the serialization.
+</span>  <span class='comment'>#   The only supported value are:
+</span>  <span class='comment'>#
+</span>  <span class='comment'>#   * `:exclude`, an array of attributes to skip.
+</span>  <span class='comment'>#   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Creates an author from a `Hash`.
@@ -1020,7 +1133,10 @@
     <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
       <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-      <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+      <span class='id identifier rubyid_author'>author</span>
     <span class='kw'>else</span>
       <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -1113,7 +1229,21 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 22</span>
@@ -1133,14 +1263,25 @@
 </span>  <span class='comment'># @param website [String] The website of the author.
 </span>  <span class='comment'># @param image [String] The URL of the avatar of the author.
 </span>  <span class='comment'># @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-</span>  <span class='comment'># @param uid [String] A unique ID for this post. This is only for client uses.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-    <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Returns the author as an Hash.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param options [Hash] Options to modify behavior of the serialization.
+</span>  <span class='comment'>#   The only supported value are:
+</span>  <span class='comment'>#
+</span>  <span class='comment'>#   * `:exclude`, an array of attributes to skip.
+</span>  <span class='comment'>#   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Creates an author from a `Hash`.
@@ -1151,7 +1292,10 @@
     <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
       <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-      <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+      <span class='id identifier rubyid_author'>author</span>
     <span class='kw'>else</span>
       <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -1244,7 +1388,21 @@
 57
 58
 59
-60</pre>
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 22</span>
@@ -1264,14 +1422,25 @@
 </span>  <span class='comment'># @param website [String] The website of the author.
 </span>  <span class='comment'># @param image [String] The URL of the avatar of the author.
 </span>  <span class='comment'># @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-</span>  <span class='comment'># @param uid [String] A unique ID for this post. This is only for client uses.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span>
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_email?'>is_email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_is_url?'>is_url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
-    <span class='ivar'>@uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Returns the author as an Hash.
+</span>  <span class='comment'>#
+</span>  <span class='comment'># @param options [Hash] Options to modify behavior of the serialization.
+</span>  <span class='comment'>#   The only supported value are:
+</span>  <span class='comment'>#
+</span>  <span class='comment'>#   * `:exclude`, an array of attributes to skip.
+</span>  <span class='comment'>#   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+    <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Creates an author from a `Hash`.
@@ -1282,7 +1451,10 @@
     <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
       <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-      <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+      <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+      <span class='id identifier rubyid_author'>author</span>
     <span class='kw'>else</span>
       <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -1361,24 +1533,30 @@
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
-56
-57
-58
-59</pre>
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span> <span class='kw'>then</span>
     <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:uid</span><span class='rparen'>)</span>
-    <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='comma'>,</span> <span class='id identifier rubyid_uid'>uid</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_metadata'>metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:metadata</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='id identifier rubyid_author'>author</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:email</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:website</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:image</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_author'>author</span><span class='period'>.</span><span class='id identifier rubyid_uid'>uid</span> <span class='op'>=</span> <span class='id identifier rubyid_uid'>uid</span>
+    <span class='id identifier rubyid_author'>author</span>
   <span class='kw'>else</span>
     <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Author</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -1390,10 +1568,102 @@
     
   </div>
 
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="as_json-instance_method">
+  
+    - (<tt>Hash</tt>) <strong>as_json</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the author as an Hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Options to modify behavior of the serialization.
+The only supported value are:</p>
+
+<ul>
+  <li><code>:exclude</code>, an array of attributes to skip.</li>
+  <li><code>:exclude_empty</code>, if to exclude nil values. Default is <code>false</code>.</li>
+</ul>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>An hash with all attributes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/mbrao/author.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:uid</span><span class='comma'>,</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:email</span><span class='comma'>,</span> <span class='symbol'>:website</span><span class='comma'>,</span> <span class='symbol'>:image</span><span class='comma'>,</span> <span class='symbol'>:metadata</span><span class='rbracket'>]</span>
+  <span class='op'>::</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 </div>
 
     <div id="footer">
-  Generated on Sat Nov 23 13:44:01 2013 by
+  Generated on Sun Nov 24 13:51:54 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.3 (ruby-2.0.0).
 </div>

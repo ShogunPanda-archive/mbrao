@@ -17,6 +17,11 @@ module ActionView::Template::Handlers
       @instance ||= ActionView::Template::Handlers::MbraoTemplate.new
     end
 
+    # Register Mbrao into Rails.
+    def self.register
+      ActionView::Template.register_template_handler("emt", instance) if defined?(ActionView) && defined?(Rails) && Rails.version =~ /^[34]/
+    end
+
     # Renders a template into a renderer context.
     #
     # @param renderer [Object] The renderer context.
@@ -24,11 +29,13 @@ module ActionView::Template::Handlers
     # @return [String] The rendered template.
     def render(renderer, template)
       content = ::Mbrao::Parser.parse(template)
-      renderer.controller.instance_variable_set(:@mbrao_content, content)
-      renderer.controller.define_singleton_method(:mbrao_content) { @mbrao_content }
-      renderer.controller.class.send(:helper_method, :mbrao_content)
+      controller = renderer.controller
 
-      ::Mbrao::Parser.render(content, {engine: content.metadata[:engine], locale: renderer.controller.params[:locale]})
+      controller.instance_variable_set(:@mbrao_content, content)
+      controller.define_singleton_method(:mbrao_content) { @mbrao_content }
+      controller.class.send(:helper_method, :mbrao_content)
+
+      ::Mbrao::Parser.render(content, {engine: content.metadata[:engine], locale: controller.params[:locale]})
     end
 
     # Declares support for streaming.
@@ -48,4 +55,4 @@ module ActionView::Template::Handlers
   end
 end
 
-ActionView::Template.register_template_handler("emt", ActionView::Template::Handlers::MbraoTemplate.instance) if defined?(ActionView) && defined?(Rails) && Rails.version =~ /^[34]/
+ActionView::Template::Handlers::MbraoTemplate.register

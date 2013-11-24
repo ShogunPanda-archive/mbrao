@@ -11,10 +11,10 @@ module Mbrao
     class Base
       # Renders a content.
       #
-      # @param content [Content|String] The content to parse.
-      # @param options [Hash] A list of options for renderer.
-      # @param context [Hash] A context for rendering.
-      def render(content, options = {}, context = {})
+      # @param _content [Content|String] The content to parse.
+      # @param _options [Hash] A list of options for renderer.
+      # @param _context [Hash] A context for rendering.
+      def render(_content, _options = {}, _context = {})
         raise Mbrao::Exceptions::Unimplemented.new
       end
     end

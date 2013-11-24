@@ -15,15 +15,15 @@ module Mbrao
       # @param options [Hash] Options to customize parsing.
       # @return [Array] An array of metadata and contents parts.
       def separate_components(content, options = {})
-        metadata = nil
-        content = content.ensure_string.strip
-        options = sanitize_options(options)
-        scanner = StringScanner.new(content)
-        end_tag = options[:meta_tags].last
+        metadata, content, scanner, start_tag, end_tag = prepare_for_separation(content, options)
 
-        if scanner.scan_until(options[:meta_tags].first) && (metadata = scanner.scan_until(end_tag)) then
-          metadata = metadata.partition(end_tag).first
-          content = scanner.rest.strip
+        if scanner.scan_until(start_tag) then
+          metadata = scanner.scan_until(end_tag)
+
+          if metadata then
+            metadata = metadata.partition(end_tag).first
+            content = scanner.rest.strip
+          end
         end
 
         [metadata.ensure_string.strip, content]
@@ -47,30 +47,31 @@ module Mbrao
       # @param content [Content] The content to filter.
       # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default Mbrao locale will be requested.
       # @param options [Hash] Options to customize parsing.
-      # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
+      # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is
+      #   returned, else a `HashWithIndifferentAccess` with locales as keys.
       def filter_content(content, locales = [], options = {})
         body = content.body.ensure_string.strip
-        options = sanitize_options(options)
+        content_tags = sanitize_tags(options[:content_tags], ["{{content: %ARGS%}}", "{{/content}}"])
         locales = ::Mbrao::Content.validate_locales(locales, content)
 
         # Split the content
-        result = scan_content(body, options[:content_tags].first, options[:content_tags].last)
+        result = scan_content(body, content_tags.first, content_tags.last)
 
         # Now filter results
         perform_filter_content(result, locales)
       end
 
       private
-        # Sanitizes options.
+        # Prepare arguments for separation.
         #
+        # @param content [String] The content to separate.
         # @param options [Hash] The options to sanitize.
-        # @return [HashWithIndifferentAccess] The sanitized options.
-        def sanitize_options(options)
-          # Tags
-          options[:meta_tags] = sanitize_tags(options[:meta_tags], ["{{metadata}}", "{{/metadata}}"])
-          options[:content_tags] = sanitize_tags(options[:content_tags], ["{{content: %ARGS%}}", "{{/content}}"])
+        # @return [Array] The sanitized arguments.
+        def prepare_for_separation(content, options)
+          content = content.ensure_string.strip
+          meta_tags = sanitize_tags(options[:meta_tags], ["{{metadata}}", "{{/metadata}}"])
 
-          options
+          [nil, content.ensure_string.strip, StringScanner.new(content), meta_tags.first, meta_tags.last]
         end
 
         # Sanitizes tag markers.
@@ -135,12 +136,13 @@ module Mbrao
         def parse_embedded_content(scanner, start_tag, end_tag)
           rv = ""
           balance = 1
+          embedded_part = scanner.scan_until(end_tag)
 
-          while (embedded_part = scanner.scan_until(end_tag)) do
+          while balance > 0 && embedded_part do
             balance += embedded_part.scan(start_tag).count - 1 # -1 Because there is a closure
             embedded_part = embedded_part.partition(end_tag).first if balance == 0 || !scanner.exist?(end_tag) # This is the last occurrence.
             rv << embedded_part
-            break if balance == 0
+            embedded_part = scanner.scan_until(end_tag) if balance > 0
           end
 
           rv
@@ -153,10 +155,11 @@ module Mbrao
         # @return [String|nil] Return the filtered content or `nil` if the content must be hidden.
         def perform_filter_content(content, locales)
           content.map { |part|
+            part_content = part[0]
             part_locales = parse_locales(part[1])
 
             if locales_valid?(locales, part_locales) then
-              part[0].is_a?(Array) ? perform_filter_content(part[0], locales) : part[0]
+              part_content.is_a?(Array) ? perform_filter_content(part_content, locales) : part_content
             else
               nil
             end
@@ -180,7 +183,10 @@ module Mbrao
         # @param part_locales[Hash] An hash with valid and invalid locales.
         # @return [Boolean] `true` if the locales are valid, `false` otherwise.
         def locales_valid?(locales, part_locales)
-          locales.include?("*") || part_locales["valid"].include?("*") || ((part_locales["valid"].empty? || (locales & part_locales["valid"]).present?) && (locales & part_locales["invalid"]).blank?)
+          valid = part_locales["valid"]
+          invalid = part_locales["invalid"]
+
+          locales.include?("*") || valid.include?("*") || ((valid.empty? || (locales & valid).present?) && (locales & invalid).blank?)
         end
     end
   end

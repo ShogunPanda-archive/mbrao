@@ -7,11 +7,11 @@
 require "spec_helper"
 
 describe Mbrao::RenderingEngines::Base do
-  let(:reference) { Mbrao::RenderingEngines::Base.new }
+  subject{ Mbrao::RenderingEngines::Base.new }
 
   describe "#render" do
     it "should raise an exception" do
-      expect { reference.render("CONTENT", {}, {}) }.to raise_error(Mbrao::Exceptions::Unimplemented)
+      expect { subject.render("CONTENT", {}, {}) }.to raise_error(Mbrao::Exceptions::Unimplemented)
     end
   end
 end

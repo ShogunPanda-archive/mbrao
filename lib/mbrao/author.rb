@@ -34,14 +34,25 @@ module Mbrao
     # @param website [String] The website of the author.
     # @param image [String] The URL of the avatar of the author.
     # @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
-    # @param uid [String] A unique ID for this post. This is only for client uses.
-    def initialize(name, email = nil, website = nil, image = nil, metadata = nil, uid = nil)
+    def initialize(name, email = nil, website = nil, image = nil, metadata = nil)
       @name = name.ensure_string
       @email = Mbrao::Parser.is_email?(email) ? email : nil
       @website = Mbrao::Parser.is_url?(website) ? website : nil
       @image = Mbrao::Parser.is_url?(image) ? image : nil
       @metadata = metadata.ensure_hash(:indifferent)
-      @uid = uid
+    end
+
+    # Returns the author as an Hash.
+    #
+    # @param options [Hash] Options to modify behavior of the serialization.
+    #   The only supported value are:
+    #
+    #   * `:exclude`, an array of attributes to skip.
+    #   * `:exclude_empty`, if to exclude nil values. Default is `false`.
+    # @return [Hash] An hash with all attributes.
+    def as_json(options = {})
+      keys = [:uid, :name, :email, :website, :image, :metadata]
+      ::Mbrao::Parser.as_json(self, keys, options)
     end
 
     # Creates an author from a `Hash`.
@@ -52,7 +63,10 @@ module Mbrao
       if data.is_a?(Hash) then
         data = HashWithIndifferentAccess.new(data)
         uid = data.delete(:uid)
-        Mbrao::Author.new(data.delete(:name), data.delete(:email), data.delete(:website), data.delete(:image), data, uid)
+        metadata = data.delete(:metadata) || {}
+        author = Mbrao::Author.new(data.delete(:name), data.delete(:email), data.delete(:website), data.delete(:image), metadata.merge(data))
+        author.uid = uid
+        author
       else
         Mbrao::Author.new(data)
       end

@@ -7,39 +7,39 @@
 require "spec_helper"
 
 describe Mbrao::Content do
-  let(:reference) { Mbrao::Content.new("UID") }
+  subject { Mbrao::Content.new("UID") }
 
   describe "#initialize" do
     it "store the uid" do
-      reference = Mbrao::Content.new("SAMPLE")
-      expect(reference.uid).to eq("SAMPLE")
+      subject = Mbrao::Content.new("SAMPLE")
+      expect(subject.uid).to eq("SAMPLE")
     end
   end
 
   describe "#locales=" do
     it "correctly assign a string, a symbol or an array" do
-      reference.locales = :it
-      expect(reference.locales).to eq(["it"])
-      reference.locales = "en"
-      expect(reference.locales).to eq(["en"])
-      reference.locales = ["en", [:it, :es]]
-      expect(reference.locales).to eq(["en", "it", "es"])
+      subject.locales = :it
+      expect(subject.locales).to eq(["it"])
+      subject.locales = "en"
+      expect(subject.locales).to eq(["en"])
+      subject.locales = ["en", [:it, :es]]
+      expect(subject.locales).to eq(["en", "it", "es"])
     end
   end
 
   shared_examples_for("localized setter") do |attribute|
     it "should assign a single string" do
-      reference.send("#{attribute}=", "ABC")
-      expect(reference.send(attribute)).to eq("ABC")
-      reference.send("#{attribute}=", 1)
-      expect(reference.send(attribute)).to eq("1")
-      reference.send("#{attribute}=", nil)
-      expect(reference.send(attribute)).to eq("")
+      subject.send("#{attribute}=", "ABC")
+      expect(subject.send(attribute)).to eq("ABC")
+      subject.send("#{attribute}=", 1)
+      expect(subject.send(attribute)).to eq("1")
+      subject.send("#{attribute}=", nil)
+      expect(subject.send(attribute)).to eq("")
     end
 
     it "should assign a string with locales and sanitized entries" do
-      reference.send("#{attribute}=", {en: nil, es: "ABC", it: 1})
-      value = reference.send(attribute)
+      subject.send("#{attribute}=", {en: nil, es: "ABC", it: 1})
+      value = subject.send(attribute)
       expect(value).to be_a(::HashWithIndifferentAccess)
       expect(value["en"]).to eq("")
       expect(value[:es]).to eq("ABC")
@@ -49,80 +49,80 @@ describe Mbrao::Content do
 
   shared_examples_for("localized getter") do |attribute, v1, v2|
     it "should raise an exception if not available for that locale" do
-      reference.locales = [:en, :it, :es]
-      reference.send("#{attribute}=", v1)
-      expect { reference.send("get_#{attribute}", [:de, :it]) }.not_to raise_error
-      expect { reference.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Exceptions::UnavailableLocalization)
+      subject.locales = [:en, :it, :es]
+      subject.send("#{attribute}=", v1)
+      expect { subject.send("get_#{attribute}", [:de, :it]) }.not_to raise_error
+      expect { subject.send("get_#{attribute}", [:de]) }.to raise_error(Mbrao::Exceptions::UnavailableLocalization)
     end
 
     it "should return the attribute itself if not localized" do
-      reference.locales = [:en, :it, :es]
-      reference.send("#{attribute}=", v1)
-      expect(reference.send("get_#{attribute}", [:de, :it])).to eq(v1)
+      subject.locales = [:en, :it, :es]
+      subject.send("#{attribute}=", v1)
+      expect(subject.send("get_#{attribute}", [:de, :it])).to eq(v1)
     end
 
     it "should return the default locale if no locales are specified" do
       Mbrao::Parser.locale = :it
-      reference.send("#{attribute}=", {en: v1, it: v2})
-      expect(reference.send("get_#{attribute}")).to eq(v2)
+      subject.send("#{attribute}=", {en: v1, it: v2})
+      expect(subject.send("get_#{attribute}")).to eq(v2)
     end
 
     it "should return only the subset of valid and request locales" do
       Mbrao::Parser.locale = :it
-      reference.send("#{attribute}=", {en: v1, it: v2, de: v1, es: v2})
+      subject.send("#{attribute}=", {en: v1, it: v2, de: v1, es: v2})
 
-      value = reference.send("get_#{attribute}", [:de, :es])
+      value = subject.send("get_#{attribute}", [:de, :es])
       expect(value).to be_a(::HashWithIndifferentAccess)
       expect(value.keys).to eq(["de", "es"])
 
-      value = reference.send("get_#{attribute}", [:it, :de, :pt, :fr])
+      value = subject.send("get_#{attribute}", [:it, :de, :pt, :fr])
       expect(value.keys.sort).to eq(["de", "it"])
 
-      reference.locales = [:en, :it, :es]
-      value = reference.send("get_#{attribute}", "*")
+      subject.locales = [:en, :it, :es]
+      value = subject.send("get_#{attribute}", "*")
       expect(value.keys.sort).to eq(["de", "en", "es", "it"])
 
-      reference.send("#{attribute}=", {en: v1, "it,es" => v2, " de,    fr " => v1})
-      value = reference.send("get_#{attribute}", [:it, :fr])
+      subject.send("#{attribute}=", {en: v1, "it,es" => v2, " de,    fr " => v1})
+      value = subject.send("get_#{attribute}", [:it, :fr])
       expect(value.keys.sort).to eq(["fr", "it"])
     end
   end
 
   shared_examples_for("date setter") do |attribute|
     it "should correctly parse a datetime classes" do
-      reference.send("#{attribute}=", Date.civil(2012, 8, 8))
-      value = reference.send(attribute)
+      subject.send("#{attribute}=", Date.civil(2012, 8, 8))
+      value = subject.send(attribute)
       expect(value).to be_a(DateTime)
       expect(value.strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T000000+0000")
 
-      reference.send("#{attribute}=", DateTime.civil(2012, 8, 8, 11, 30, 45))
-      value = reference.send(attribute)
+      subject.send("#{attribute}=", DateTime.civil(2012, 8, 8, 11, 30, 45))
+      value = subject.send(attribute)
       expect(value).to be_a(DateTime)
       expect(value.strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T113045+0000")
 
       Time.zone = 'Europe/Rome'
       date = Time.at(1344421800)
-      reference.send("#{attribute}=", date)
-      value = reference.send(attribute)
+      subject.send("#{attribute}=", date)
+      value = subject.send(attribute)
       expect(value).to be_a(DateTime)
       expect(value.strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103000+0000")
     end
 
     it "should correctly parse a timestamp" do
-      reference.send("#{attribute}=", 1344421800)
-      value = reference.send(attribute)
+      subject.send("#{attribute}=", 1344421800)
+      value = subject.send(attribute)
       expect(value).to be_a(DateTime)
       expect(value.strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103000+0000")
     end
 
     it "should try to parse everything else as a ISO8601 format" do
-      reference.send("#{attribute}=", "20120808T083000-0200")
-      value = reference.send(attribute)
+      subject.send("#{attribute}=", "20120808T083000-0200")
+      value = subject.send(attribute)
       expect(value).to be_a(DateTime)
       expect(value.strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103000+0000")
 
-      expect { reference.send("#{attribute}=", "ABC") }.to raise_error(Mbrao::Exceptions::InvalidDate)
-      expect { reference.send("#{attribute}=", []) }.to raise_error(Mbrao::Exceptions::InvalidDate)
+      expect { subject.send("#{attribute}=", "ABC") }.to raise_error(Mbrao::Exceptions::InvalidDate)
+      expect { subject.send("#{attribute}=", []) }.to raise_error(Mbrao::Exceptions::InvalidDate)
     end
   end
 
@@ -132,30 +132,37 @@ describe Mbrao::Content do
 
   describe "#body=" do
     it "should set the content as string" do
-      reference.body = "A"
-      expect(reference.body).to eq("A")
-      reference.body = 1
-      expect(reference.body).to eq("1")
-      reference.body = nil
-      expect(reference.body).to eq("")
+      subject.body = "A"
+      expect(subject.body).to eq("A")
+      subject.body = 1
+      expect(subject.body).to eq("1")
+      subject.body = nil
+      expect(subject.body).to eq("")
     end
   end
 
   describe "#tags=" do
     it "should assign a single value" do
-      reference.tags = "ABC"
-      expect(reference.tags).to eq(["ABC"])
-      reference.tags = ["ABC", [1, nil]]
-      expect(reference.tags).to eq(["ABC", "1"])
+      subject.tags = "ABC"
+      expect(subject.tags).to eq(["ABC"])
+      subject.tags = ["ABC", [1, nil]]
+      expect(subject.tags).to eq(["ABC", "1"])
     end
 
     it "should assign values with locales and sanitized entries" do
-      reference.tags = {en: nil, es: "ABC", it: [1, [2, 3]]}
-      value = reference.tags
+      subject.tags = {en: nil, es: "ABC", it: [1, [2, 3]]}
+      value = subject.tags
       expect(value).to be_a(::HashWithIndifferentAccess)
       expect(value["en"]).to eq([])
       expect(value[:es]).to eq(["ABC"])
       expect(value["it"]).to eq(["1", "2", "3"])
+    end
+
+    it "should split, flatten and uniquize tags" do
+      subject.tags = ["1", ["2", "3"], "3, 4,5"]
+      expect(subject.tags).to eq(["1","2","3","4","5"])
+      subject.tags = "1,2,3,4,5"
+      expect(subject.tags).to eq(["1","2","3","4","5"])
     end
   end
 
@@ -166,26 +173,26 @@ describe Mbrao::Content do
   describe "#author=" do
     it "should assign an existing author" do
       author = ::Mbrao::Author.new("NAME")
-      reference.author = author
-      expect(reference.author).to be(author)
+      subject.author = author
+      expect(subject.author).to be(author)
     end
 
     it "should only assign a name" do
-      reference.author = "NAME"
-      expect(reference.author).to be_a(::Mbrao::Author)
-      expect(reference.author.name).to eq("NAME")
+      subject.author = "NAME"
+      expect(subject.author).to be_a(::Mbrao::Author)
+      expect(subject.author.name).to eq("NAME")
     end
 
     it "should assign by an hash" do
-      reference.author = {name: "NAME", email: "EMAIL@email.com", "website" => "http://WEBSITE.TLD", "image" => "http://IMAGE.TLD", metadata: {a: "b"}, uid: "UID"}
-      expect(reference.author).to be_a(::Mbrao::Author)
-      expect(reference.author.name).to eq("NAME")
-      expect(reference.author.email).to eq("EMAIL@email.com")
-      expect(reference.author.website).to eq("http://WEBSITE.TLD")
-      expect(reference.author.image).to eq("http://IMAGE.TLD")
-      expect(reference.author.metadata).to be_a(::HashWithIndifferentAccess)
-      expect(reference.author.metadata["a"]).to eq("b")
-      expect(reference.author.uid).to eq("UID")
+      subject.author = {name: "NAME", email: "EMAIL@email.com", "website" => "http://WEBSITE.TLD", "image" => "http://IMAGE.TLD", metadata: {a: "b"}, uid: "UID"}
+      expect(subject.author).to be_a(::Mbrao::Author)
+      expect(subject.author.name).to eq("NAME")
+      expect(subject.author.email).to eq("EMAIL@email.com")
+      expect(subject.author.website).to eq("http://WEBSITE.TLD")
+      expect(subject.author.image).to eq("http://IMAGE.TLD")
+      expect(subject.author.metadata).to be_a(::HashWithIndifferentAccess)
+      expect(subject.author.metadata["a"]).to eq("b")
+      expect(subject.author.uid).to eq("UID")
     end
   end
 
@@ -199,25 +206,25 @@ describe Mbrao::Content do
 
   describe "#metadata=" do
     it "correctly set a non hash value" do
-      reference.metadata = "RAW"
-      expect(reference.metadata).to be_a(::HashWithIndifferentAccess)
-      expect(reference.metadata["raw"]).to eq("RAW")
+      subject.metadata = "RAW"
+      expect(subject.metadata).to be_a(::HashWithIndifferentAccess)
+      expect(subject.metadata["raw"]).to eq("RAW")
     end
 
     it "correctly set a hash value" do
-      reference.metadata = {en: nil, es: "ABC", it: [1, [2, 3]]}
-      expect(reference.metadata).to be_a(::HashWithIndifferentAccess)
-      expect(reference.metadata["es"]).to eq("ABC")
+      subject.metadata = {en: nil, es: "ABC", it: [1, [2, 3]]}
+      expect(subject.metadata).to be_a(::HashWithIndifferentAccess)
+      expect(subject.metadata["es"]).to eq("ABC")
     end
   end
 
   describe "#enabled_for_locales?" do
     it "correctly check availability for certain locales" do
-      reference.locales = [:en, :it]
-      expect(reference.enabled_for_locales?).to be_true
-      expect(reference.enabled_for_locales?(:en)).to be_true
-      expect(reference.enabled_for_locales?(:it, :es)).to be_true
-      expect(reference.enabled_for_locales?(:es, :de)).to be_false
+      subject.locales = [:en, :it]
+      expect(subject.enabled_for_locales?).to be_true
+      expect(subject.enabled_for_locales?(:en)).to be_true
+      expect(subject.enabled_for_locales?(:it, :es)).to be_true
+      expect(subject.enabled_for_locales?(:es, :de)).to be_false
     end
   end
 
@@ -227,11 +234,11 @@ describe Mbrao::Content do
 
   describe "#get_body" do
     it "should create a parsing engine and use it for filtering" do
-      reference.body = "BODY"
+      subject.body = "BODY"
       engine = ::Mbrao::ParsingEngines::Base.new
-      expect(engine).to receive(:filter_content).with(reference, ["it", "en"])
+      expect(engine).to receive(:filter_content).with(subject, ["it", "en"])
       expect(::Mbrao::Parser).to receive(:create_engine).with("ENGINE").and_return(engine)
-      reference.get_body(["it", "en"], "ENGINE")
+      subject.get_body(["it", "en"], "ENGINE")
     end
   end
 
@@ -241,6 +248,58 @@ describe Mbrao::Content do
 
   describe "#get_more" do
     it_should_behave_like "localized getter", :more, "ABC", "123"
+  end
+
+  describe "#as_json" do
+    subject {
+      @created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
+      metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: @created_at, locales: ["it", ["en"]], other: ["OTHER"]}
+      ::Mbrao::Content.create(metadata, "BODY")
+    }
+
+    it "should return the content as a JSON hash" do
+      expect(subject.as_json).to eq({
+        "author" => {"uid" => nil, "name" => "AUTHOR", "email" => nil, "website" => nil, "image" => nil, "metadata" => {}},
+        "body" => "BODY",
+        "created_at" => @created_at,
+        "locales" => ["it", "en"],
+        "metadata" => {"other" => ["OTHER"]},
+        "more" => "MORE",
+        "tags" => {"it" => ["IT"], "en"=>["EN"]},
+        "title" => {"it" => "IT", "en" => "EN"},
+        "uid" => "UID",
+        "updated_at" => @created_at
+      })
+    end
+
+    it "should filter out keys if asked to" do
+      expect(subject.as_json(exclude: [:author, :uid])).to eq({
+        "body" => "BODY",
+        "created_at" => @created_at,
+        "locales" => ["it", "en"],
+        "metadata" => {"other" => ["OTHER"]},
+        "more" => "MORE",
+        "tags" => {"it" => ["IT"], "en"=>["EN"]},
+        "title" => {"it" => "IT", "en" => "EN"},
+        "updated_at" => @created_at
+      })
+    end
+
+    it "should filter out empty values if asked to" do
+      subject.author = nil
+      subject.uid = nil
+
+      expect(subject.as_json(exclude_empty: true)).to eq({
+        "body" => "BODY",
+        "created_at" => @created_at,
+        "locales" => ["it", "en"],
+        "metadata" => {"other" => ["OTHER"]},
+        "more" => "MORE",
+        "tags" => {"it" => ["IT"], "en"=>["EN"]},
+        "title" => {"it" => "IT", "en" => "EN"},
+        "updated_at" => @created_at
+      })
+    end
   end
 
   describe ".create" do

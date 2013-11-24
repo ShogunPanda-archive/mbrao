@@ -11,29 +11,30 @@ module Mbrao
     class Base
       # Parses a whole post content and return its metadata and content parts.
       #
-      # @param content [Object] The content to parse.
-      # @param options [Hash] Options to customize parsing.
+      # @param _content [Object] The content to parse.
+      # @param _options [Hash] Options to customize parsing.
       # @return [Array] An array of metadata and contents parts.
-      def separate_components(content, options = {})
+      def separate_components(_content, _options = {})
         raise Mbrao::Exceptions::Unimplemented.new
       end
 
       # Parses metadata part and returns all valid metadata.
       #
-      # @param content [Object] The content to parse.
-      # @param options [Hash] Options to customize parsing.
+      # @param _content [Object] The content to parse.
+      # @param _options [Hash] Options to customize parsing.
       # @return [Hash] All valid metadata for the content.
-      def parse_metadata(content, options = {})
+      def parse_metadata(_content, _options = {})
         raise Mbrao::Exceptions::Unimplemented.new
       end
 
       # Filters content of a post by locale.
       #
-      # @param content [Content] The content to filter.
-      # @param locales [String|Array] The desired locales. Can include `*` to match all.
-      # @param options [Hash] Options to customize parsing.
-      # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is returned, else a `HashWithIndifferentAccess` with locales as keys.
-      def filter_content(content, locales = [], options = {})
+      # @param _content [Content] The content to filter.
+      # @param _locales [String|Array] The desired locales. Can include `*` to match all.
+      # @param _options [Hash] Options to customize parsing.
+      # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is
+      #   returned, else a `HashWithIndifferentAccess` with locales as keys.
+      def filter_content(_content, _locales = [], _options = {})
         raise Mbrao::Exceptions::Unimplemented.new
       end
 

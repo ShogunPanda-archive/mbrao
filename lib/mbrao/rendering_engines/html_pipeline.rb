@@ -36,7 +36,9 @@ module Mbrao
     # A renders which use the [html-pipeline](https://github.com/jch/html-pipeline) gem.
     #
     # @attribute default_pipeline
-    #   @return [Array] The default pipeline to use. It should be an array of pairs of `Symbol`, which the first element is the filter (in underscored version and without the filter suffix) and the second is a shortcut to disable the pipeline via options. You can also specify a single element to disable shortcuts.
+    #   @return [Array] The default pipeline to use. It should be an array of pairs of `Symbol`, which the first element is the filter (in underscored version
+    #     and without the filter suffix) and the second is a shortcut to disable the pipeline via options.
+    #     You can also specify a single element to disable shortcuts.
     # @attribute default_options
     #   @return [Hash] The default options for the renderer.
     class HtmlPipeline < Mbrao::RenderingEngines::Base
@@ -118,7 +120,10 @@ module Mbrao
         # @param context [Hash] A context for rendering.
         # @return [HTML::Pipeline] The pipeline
         def create_pipeline(options, context)
-          ::HTML::Pipeline.new(options[:pipeline].map {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) }, options[:pipeline_options].merge(context))
+          ::HTML::Pipeline.new(
+            options[:pipeline].map {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) },
+            options[:pipeline_options].merge(context)
+          )
         end
 
         # Filters pipeline filters basing on the options provided.
