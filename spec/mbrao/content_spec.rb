@@ -130,6 +130,10 @@ describe Mbrao::Content do
     it_should_behave_like "localized setter", :title
   end
 
+  describe "#summary=" do
+    it_should_behave_like "localized setter", :summary
+  end
+
   describe "#body=" do
     it "should set the content as string" do
       subject.body = "A"
@@ -253,13 +257,14 @@ describe Mbrao::Content do
   describe "#as_json" do
     subject {
       @created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
-      metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: @created_at, locales: ["it", ["en"]], other: ["OTHER"]}
+      metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "summary" => "SUMMARY", "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: @created_at, locales: ["it", ["en"]], other: ["OTHER"]}
       ::Mbrao::Content.create(metadata, "BODY")
     }
 
     it "should return the content as a JSON hash" do
       expect(subject.as_json).to eq({
         "author" => {"uid" => nil, "name" => "AUTHOR", "email" => nil, "website" => nil, "image" => nil, "metadata" => {}},
+        "summary" => "SUMMARY",
         "body" => "BODY",
         "created_at" => @created_at,
         "locales" => ["it", "en"],
@@ -274,6 +279,7 @@ describe Mbrao::Content do
 
     it "should filter out keys if asked to" do
       expect(subject.as_json(exclude: [:author, :uid])).to eq({
+        "summary" => "SUMMARY",
         "body" => "BODY",
         "created_at" => @created_at,
         "locales" => ["it", "en"],
@@ -290,6 +296,7 @@ describe Mbrao::Content do
       subject.uid = nil
 
       expect(subject.as_json(exclude_empty: true)).to eq({
+        "summary" => "SUMMARY",
         "body" => "BODY",
         "created_at" => @created_at,
         "locales" => ["it", "en"],
@@ -313,11 +320,12 @@ describe Mbrao::Content do
 
     it "should assign metadata if present" do
       created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
-      metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: created_at, locales: ["it", ["en"]], other: ["OTHER"]}
+      metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "summary" => {it: "IT", en: "EN"}, "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: created_at, locales: ["it", ["en"]], other: ["OTHER"]}
       content = ::Mbrao::Content.create(metadata, "BODY")
 
       expect(content.uid).to eq("UID")
       expect(content.title).to eq({"it" => "IT", "en" => "EN"})
+      expect(content.summary).to eq({"it" => "IT", "en" => "EN"})
       expect(content.author).to be_a(::Mbrao::Author)
       expect(content.author.name).to eq("AUTHOR")
       expect(content.body).to eq("BODY")

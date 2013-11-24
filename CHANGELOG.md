@@ -1,3 +1,7 @@
+### 1.4.0 / 2013-11-24
+
+* Added support for summary in Content.
+
 ### 1.3.0 / 2013-11-24
 
 * Added #as_json methods for Content and Author.

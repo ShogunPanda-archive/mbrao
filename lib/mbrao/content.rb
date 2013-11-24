@@ -95,11 +95,13 @@ module Mbrao
   # @attribute locales
   #   @return [Array] A list of locales for this content should be visible. An empty list means that there are no limitations.
   # @attribute title
-  #   @return [String|HashWithIndifferentAccess] The content's title. Can be a `String` or an `HashWithIndifferentAccess`, if multiple title are specified for
+  #   @return [String|HashWithIndifferentAccess] The content's title. Can be a `String` or an `HashWithIndifferentAccess`, if multiple titles are specified for
   #     multiple locales.
-  # @attribute body
-  #   @return [String|HashWithIndifferentAccess] The content's body. Can be a `String` or an `HashWithIndifferentAccess`, if multiple contents are specified
+  # @attribute summary
+  #   @return [String|HashWithIndifferentAccess] The content's summary. Can be a `String` or an `HashWithIndifferentAccess`, if multiple summaries are specified
   #     for multiple locales.
+  # @attribute body
+  #   @return [String] The content's body.
   # @attribute tags
   #   @return [String|HashWithIndifferentAccess] The content's "more link" label. Can be a `String` or an `HashWithIndifferentAccess`, if multiple labels are
   #     specified for multiple locales.
@@ -120,6 +122,7 @@ module Mbrao
     attr_accessor :uid
     attr_accessor :locales
     attr_accessor :title
+    attr_accessor :summary
     attr_accessor :body
     attr_accessor :tags
     attr_accessor :more
@@ -148,6 +151,14 @@ module Mbrao
     #   A empty or "*" will be the default value.
     def title=(new_title)
       @title = is_hash?(new_title) ? new_title.ensure_hash(:indifferent, nil, :ensure_string) : new_title.ensure_string
+    end
+
+    # Sets the `summary` attribute.
+    #
+    # @param new_summary [String|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas.
+    #   A empty or "*" will be the default value.
+    def summary=(new_summary)
+      @summary = is_hash?(new_summary) ? new_summary.ensure_hash(:indifferent, nil, :ensure_string) : new_summary.ensure_string
     end
 
     # Sets the `body` attribute.
@@ -210,7 +221,7 @@ module Mbrao
     #
     # @return The metadata attribute.
     def metadata
-      @metadata || {}
+      @metadata ||= HashWithIndifferentAccess.new
     end
 
     # Sets the `metadata` attribute.
@@ -233,7 +244,7 @@ module Mbrao
     #   * `:exclude_empty`, if to exclude nil values. Default is `false`.
     # @return [Hash] An hash with all attributes.
     def as_json(options = {})
-      keys = [:uid, :locales, :title, :body, :tags, :more, :author, :created_at, :updated_at, :metadata]
+      keys = [:uid, :locales, :title, :summary, :body, :tags, :more, :author, :created_at, :updated_at, :metadata]
       ::Mbrao::Parser.as_json(self, keys, options)
     end
 
@@ -258,7 +269,7 @@ module Mbrao
     def self.create(metadata, body)
       rv = Mbrao::Content.new
       rv.body = body.ensure_string.strip
-      assign_metadata(rv, metadata) if metadata.is_a?(Hash)
+      assign_metadata(rv, metadata.symbolize_keys) if metadata.is_a?(Hash)
       rv
     end
 
@@ -269,10 +280,9 @@ module Mbrao
       # @param metadata [Hash] The metadata to assign.
       # @return [Content] The content with metadata.
       def self.assign_metadata(content, metadata)
-        metadata = metadata.symbolize_keys!
-
         content.uid = metadata.delete(:uid)
         content.title = metadata.delete(:title)
+        content.summary = metadata.delete(:summary)
         content.author = Mbrao::Author.create(metadata.delete(:author))
         content.tags = metadata.delete(:tags)
         content.more = metadata.delete(:more)
