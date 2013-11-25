@@ -1,3 +1,7 @@
+### 1.4.1 / 2013-11-24
+
+* Improved Parser#as_json.
+
 ### 1.4.0 / 2013-11-24
 
 * Added support for summary in Content.
