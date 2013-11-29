@@ -1,3 +1,7 @@
+### 1.4.2 / 2013-11-29
+
+* Improved datetime parsing.
+
 ### 1.4.1 / 2013-11-24
 
 * Improved Parser#as_json.

@@ -131,6 +131,14 @@ module Mbrao
     attr_accessor :updated_at
     attr_accessor :metadata
 
+    # The allowed string format for a datetime.
+    ALLOWED_DATETIME_FORMATS = [
+      "%Y%m%dT%H%M%S%z", "%Y%m%dT%H%M%S%Z",
+      "%FT%T%z", "%FT%T%Z", "%F %T %Z", "%F %T %z",
+      "%F %T", "%F %H:%M", "%F",
+      "%d/%m/%Y %T", "%d/%m/%Y %H:%M", "%d/%m/%Y"
+    ]
+
     # Creates a new content.
     #
     # @param uid [String] The UID for this content.
@@ -294,7 +302,7 @@ module Mbrao
         content
       end
 
-      # Extract locales from metadata.
+      # Extracts locales from metadata.
       #
       # @param metadata [Hash] The metadata that contains the locales.
       # @return [Array] The locales.
@@ -304,7 +312,7 @@ module Mbrao
         normalize_locales(locales)
       end
 
-      # Normalize locales for further usage.
+      # Normalizes locales for further usage.
       #
       # @param locales [Array] The locales to normalize.
       # @return [Array] The normalized locales.
@@ -325,7 +333,8 @@ module Mbrao
         end
       end
 
-      # Parse a datetime
+      # Parses a datetime.
+      #
       # @param value [String|DateTime|Fixnum] The value to parse.
       # @return [DateTime] The extracted value.
       def parse_datetime(value)
@@ -333,12 +342,29 @@ module Mbrao
           when "DateTime" then value
           when "Date", "Time" then value.to_datetime
           when "Float", "Fixnum" then
-            value.to_float > 0 ? Time.at(value.to_float).to_datetime : nil
-          else DateTime.strptime(value.ensure_string, "%Y%m%dT%H%M%S%z")
+            value.to_float > 0 ? Time.at(value.to_float).to_datetime : raise(ArgumentError.new)
+          else parse_datetime_string(value)
         end
       end
 
-      # Extract tags from an array, making sure all the comma separated strings are evaluated.
+      # Parses a datetime string.
+      #
+      # @param value [String] The value to parse.
+      # @return [DateTime] The extracted value.
+      def parse_datetime_string(value)
+        value = value.ensure_string
+
+        catch(:parsed) do
+          ALLOWED_DATETIME_FORMATS.each do |format|
+            rv = DateTime.strptime(value, format) rescue nil
+            throw(:parsed, rv) if rv
+          end
+
+          raise(ArgumentError.new)
+        end
+      end
+
+      # Extracts tags from an array, making sure all the comma separated strings are evaluated.
       #
       # @param value [String|Array] The string or array to parse.
       # @return [Array] The list of tags.
