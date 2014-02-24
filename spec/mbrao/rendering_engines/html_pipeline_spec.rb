@@ -69,7 +69,7 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
   describe "#default_pipeline=" do
     it "should set a correct pipeline" do
       subject.default_pipeline = nil
-      expect(subject.default_pipeline).to eq([[]])
+      expect(subject.default_pipeline).to eq([])
 
       subject.default_pipeline = "A"
       expect(subject.default_pipeline).to eq([[:A]])

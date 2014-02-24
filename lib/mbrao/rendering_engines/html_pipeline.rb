@@ -111,7 +111,7 @@ module Mbrao
         # @return [Array] The body to parse.
         def get_body(content, options)
           content = ::Mbrao::Content.create(nil, content.ensure_string) if !content.is_a?(::Mbrao::Content)
-          content.get_body(options.fetch(:locale, ::Mbrao::Parser.locale).ensure_string)
+          content.get_body(options.fetch(:locales, ::Mbrao::Parser.locale).ensure_string)
         end
 
         # Creates the pipeline for rendering.

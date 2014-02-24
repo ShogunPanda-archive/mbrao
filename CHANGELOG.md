@@ -1,3 +1,7 @@
+### 1.4.3 / 2014-02-23
+
+* Updated dependencies.
+
 ### 1.4.2 / 2013-11-29
 
 * Improved datetime parsing.

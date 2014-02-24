@@ -290,6 +290,7 @@ describe Mbrao::Content do
   describe "#as_json" do
     subject {
       @created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
+      @created_at_s = @created_at.strftime("%FT%T.%L%Z")
       metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "summary" => "SUMMARY", "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: @created_at, locales: ["it", ["en"]], other: ["OTHER"]}
       ::Mbrao::Content.create(metadata, "BODY")
     }
@@ -299,14 +300,14 @@ describe Mbrao::Content do
         "author" => {"uid" => nil, "name" => "AUTHOR", "email" => nil, "website" => nil, "image" => nil, "metadata" => {}},
         "summary" => "SUMMARY",
         "body" => "BODY",
-        "created_at" => @created_at,
+        "created_at" => @created_at_s,
         "locales" => ["it", "en"],
         "metadata" => {"other" => ["OTHER"]},
         "more" => "MORE",
         "tags" => {"it" => ["IT"], "en"=>["EN"]},
         "title" => {"it" => "IT", "en" => "EN"},
         "uid" => "UID",
-        "updated_at" => @created_at
+        "updated_at" => @created_at_s
       })
     end
 
@@ -314,13 +315,13 @@ describe Mbrao::Content do
       expect(subject.as_json(exclude: [:author, :uid])).to eq({
         "summary" => "SUMMARY",
         "body" => "BODY",
-        "created_at" => @created_at,
+        "created_at" => @created_at_s,
         "locales" => ["it", "en"],
         "metadata" => {"other" => ["OTHER"]},
         "more" => "MORE",
         "tags" => {"it" => ["IT"], "en"=>["EN"]},
         "title" => {"it" => "IT", "en" => "EN"},
-        "updated_at" => @created_at
+        "updated_at" => @created_at_s
       })
     end
 
@@ -331,13 +332,13 @@ describe Mbrao::Content do
       expect(subject.as_json(exclude_empty: true)).to eq({
         "summary" => "SUMMARY",
         "body" => "BODY",
-        "created_at" => @created_at,
+        "created_at" => @created_at_s,
         "locales" => ["it", "en"],
         "metadata" => {"other" => ["OTHER"]},
         "more" => "MORE",
         "tags" => {"it" => ["IT"], "en"=>["EN"]},
         "title" => {"it" => "IT", "en" => "EN"},
-        "updated_at" => @created_at
+        "updated_at" => @created_at_s
       })
     end
   end

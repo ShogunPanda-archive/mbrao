@@ -21,4 +21,10 @@ require "mbrao/rendering_engines/base"
 require "mbrao/rendering_engines/html_pipeline"
 require "mbrao/integrations/rails" if defined?(ActionView)
 
+if !defined?(ActiveSupport.use_standard_json_time_format) then
+  def ActiveSupport.use_standard_json_time_format
+    true
+  end
+end
+
 Lazier.load!(:object, :hash)

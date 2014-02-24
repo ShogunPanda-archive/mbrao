@@ -8,7 +8,6 @@ require "spec_helper"
 require "action_view"
 require "mbrao/integrations/rails"
 
-
 describe ActionView::Template::Handlers::MbraoTemplate do
   class Rails
     def self.version

@@ -80,7 +80,7 @@ module Mbrao
 
         (keys - exclude).reduce({}) {|rv, key|
           value = target.send(key)
-          value = value.as_json if value && value.respond_to?(:as_json)
+          value = value.as_json if value && value.respond_to?(:as_json) && !value.is_a?(Symbol)
           rv[key] = value if include_empty || value.present?
           rv
         }.deep_stringify_keys
