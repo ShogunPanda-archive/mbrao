@@ -12,5 +12,5 @@ gemspec
 gem "rspec", "~> 2.14.1"
 gem "rake", "~> 10.1.1"
 gem "simplecov", ">= 0.8.2"
-gem "actionpack", ">= 4.0.0"
+gem "actionpack", "~> 4.0.3"
 gem "coveralls", ">= 0.7.0", require: false

@@ -68,7 +68,7 @@ describe Mbrao::Author do
       expect(subject.as_json).to eq({
         "email" => "name@example.com",
         "image" => "http://example.com/image.jpg",
-        "metadata" => {"a" => {"b" => "c"}},
+        "metadata" => {"a" => {"b" => :c}},
         "name" => "NAME",
         "uid" => nil,
         "website" => "http://example.com"
