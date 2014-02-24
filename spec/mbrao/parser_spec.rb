@@ -19,6 +19,10 @@ describe Mbrao::Parser do
     end
   end
 
+  it "should correctly setup datetime JSON serialization" do
+    expect(ActiveSupport.use_standard_json_time_format).to be_true
+  end
+
   shared_examples_for("attribute_with_default") do |attribute, default, sanitizer|
     it "should return the default value" do
       ::Mbrao::Parser.send("#{attribute}=", nil)
