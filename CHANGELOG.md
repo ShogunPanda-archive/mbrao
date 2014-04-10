@@ -1,3 +1,7 @@
+### 1.4.4 / 2014-04-09
+
+* Date parsing bugfix.
+
 ### 1.4.3 / 2014-02-23
 
 * Updated dependencies.

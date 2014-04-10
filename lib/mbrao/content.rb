@@ -134,9 +134,13 @@ module Mbrao
     # The allowed string format for a datetime.
     ALLOWED_DATETIME_FORMATS = [
       "%Y%m%dT%H%M%S%z", "%Y%m%dT%H%M%S%Z",
-      "%FT%T.%L.%z", "%FT%T%z", "%FT%T%Z", "%F %T %Z", "%F %T %z",
-      "%F %T", "%F %H:%M", "%F",
-      "%d/%m/%Y %T", "%d/%m/%Y %H:%M", "%d/%m/%Y"
+      "%FT%T.%L%z", "%FT%T.%L%Z",
+      "%FT%T%z", "%FT%T%Z",
+      "%F %T %z", "%F %T %Z",
+      "%F %T.%L %z", "%F %T.%L %Z",
+
+      "%F %T.%L", "%F %T", "%F %H:%M", "%F",
+      "%d/%m/%Y %T.%L", "%d/%m/%Y %T", "%d/%m/%Y %H:%M", "%d/%m/%Y"
     ]
 
     # Creates a new content.

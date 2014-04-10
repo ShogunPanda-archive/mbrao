@@ -116,6 +116,7 @@ describe Mbrao::Content do
     end
 
     it "should try to parse everything else as a ISO8601 format" do
+      # "%Y%m%dT%H%M%S%z", "%Y%m%dT%H%M%S%Z"
       subject.send("#{attribute}=", "20120808T083045-0200")
       value = subject.send(attribute)
       expect(value).to be_a(DateTime)
@@ -124,20 +125,37 @@ describe Mbrao::Content do
       subject.send("#{attribute}=", "20120808T083045-02:00")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103045+0000")
 
+      # "%FT%T.%L%z", "%FT%T.%L%Z"
+      subject.send("#{attribute}=", "2012-08-08T08:30:45.123-0200")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%L%z")).to eq("20120808T103045123+0000")
+
+      subject.send("#{attribute}=", "2012-08-08T08:30:45.123-02:00")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%L%z")).to eq("20120808T103045123+0000")
+
+      # "%FT%T%z", "%FT%T%Z"
       subject.send("#{attribute}=", "2012-08-08T08:30:45-0200")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103045+0000")
 
       subject.send("#{attribute}=", "2012-08-08T08:30:45-02:00")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103045+0000")
 
+      # "%F %T %z", "%F %T %Z"
       subject.send("#{attribute}=", "2012-08-08 08:30:45 -0200")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103045+0000")
 
       subject.send("#{attribute}=", "2012-08-08 08:30:45 -02:00")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T103045+0000")
 
-      subject.send("#{attribute}=", "2012-08-08")
-      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T000000+0000")
+      # "%F %T.%L %z", "%F %T.%L %Z"
+      subject.send("#{attribute}=", "2012-08-08 08:30:45.123 -0200")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%L%z")).to eq("20120808T103045123+0000")
+
+      subject.send("#{attribute}=", "2012-08-08 08:30:45.123 -02:00")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%L%z")).to eq("20120808T103045123+0000")
+
+      # "%F %T%.L", "%F %T", "%F %H:%M", "%F"
+      subject.send("#{attribute}=", "2012-08-08 08:30:45.123")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%L%z")).to eq("20120808T083045123+0000")
 
       subject.send("#{attribute}=", "2012-08-08 08:30:45")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T083045+0000")
@@ -145,14 +163,21 @@ describe Mbrao::Content do
       subject.send("#{attribute}=", "2012-08-08 08:30")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T083000+0000")
 
-      subject.send("#{attribute}=", "08/09/2012")
-      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120908T000000+0000")
+      subject.send("#{attribute}=", "2012-08-08")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120808T000000+0000")
+
+      # "%d/%m/%Y %T.%L", "%d/%m/%Y %T", "%d/%m/%Y %H:%M", "%d/%m/%Y"
+      subject.send("#{attribute}=", "08/09/2012 08:30:45.123")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%L%z")).to eq("20120908T083045123+0000")
 
       subject.send("#{attribute}=", "08/09/2012 08:30:45")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120908T083045+0000")
 
       subject.send("#{attribute}=", "08/09/2012 08:30")
       expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120908T083000+0000")
+
+      subject.send("#{attribute}=", "08/09/2012")
+      expect(subject.send(attribute).strftime("%Y%m%dT%H%M%S%z")).to eq("20120908T000000+0000")
 
       expect { subject.send("#{attribute}=", "ABC") }.to raise_error(Mbrao::Exceptions::InvalidDate)
       expect { subject.send("#{attribute}=", []) }.to raise_error(Mbrao::Exceptions::InvalidDate)
