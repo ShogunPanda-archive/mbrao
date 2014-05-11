@@ -14,10 +14,10 @@ module Mbrao
     MAJOR = 1
 
     # The minor version.
-    MINOR = 4
+    MINOR = 5
 
     # The patch version.
-    PATCH = 4
+    PATCH = 0
 
     # The current version of mbrao.
     STRING = [MAJOR, MINOR, PATCH].compact.join(".")

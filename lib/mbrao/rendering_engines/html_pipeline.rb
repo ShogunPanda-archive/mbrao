@@ -4,32 +4,6 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-# Main module of the [html-pipeline](https://github.com/jch/html-pipeline) gem.
-module HTML
-  # A [html-pipeline](https://github.com/jch/html-pipeline) gem Pipeline.
-  class Pipeline
-    # A filter to compile Markdown contents.
-    class KramdownFilter < TextFilter
-      # Creates a new filter.
-      #
-      # @param text [String] The string to convert.
-      # @param context [Hash] The context of the conversion.
-      # @param result [Hash] A result hash.
-      def initialize(text, context = nil, result = nil)
-        super(text, context, result)
-        @text = @text.gsub("\r", "")
-      end
-
-      # Converts Markdown to HTML using Kramdown and converts into a DocumentFragment.
-      #
-      # @return [DocumentFragment] The converted fragment.
-      def call
-        Kramdown::Document.new(@text, @context).to_html
-      end
-    end
-  end
-end
-
 module Mbrao
   # Engines used to render contents with metadata.
   module RenderingEngines
@@ -59,7 +33,7 @@ module Mbrao
         rescue Mbrao::Exceptions::UnavailableLocalization => le
           raise le
         rescue => e
-          raise ::Mbrao::Exceptions::Rendering.new(e.to_s)
+          raise ::Mbrao::Exceptions::Rendering, e.to_s
         end
       end
 
@@ -74,7 +48,7 @@ module Mbrao
       #
       # @return [Array] The default pipeline.
       def default_pipeline=(value)
-        @default_pipeline = value.ensure_array(nil, false, false) {|v| v.ensure_array(nil, true, true, true) { |p| p.ensure_string.to_sym } }
+        @default_pipeline = value.ensure_array(nil, false, false) { |v| v.ensure_array(nil, true, true, true) { |p| p.ensure_string.to_sym } }
       end
 
       # Gets the default options.
@@ -92,61 +66,62 @@ module Mbrao
       end
 
       private
-        # Sanitizes options.
-        #
-        # @param options [Hash] The options to sanitize.
-        # @return [Hash] The sanitized options.
-        def sanitize_options(options)
-          options = options.ensure_hash(:symbols)
-          options = filter_filters(options)
-          options[:pipeline_options] = self.default_options.merge(options[:pipeline_options].ensure_hash(:symbols))
 
-          options
+      # Sanitizes options.
+      #
+      # @param options [Hash] The options to sanitize.
+      # @return [Hash] The sanitized options.
+      def sanitize_options(options)
+        options = options.ensure_hash(:symbols)
+        options = filter_filters(options)
+        options[:pipeline_options] = default_options.merge(options[:pipeline_options].ensure_hash(:symbols))
+
+        options
+      end
+
+      # Get body of a content.
+      #
+      # @param content [Content|String] The content to sanitize.
+      # @param options [Hash] A list of options for renderer.
+      # @return [Array] The body to parse.
+      def get_body(content, options)
+        content = ::Mbrao::Content.create(nil, content.ensure_string) unless content.is_a?(::Mbrao::Content)
+        content.get_body(options.fetch(:locales, ::Mbrao::Parser.locale).ensure_string)
+      end
+
+      # Creates the pipeline for rendering.
+      #
+      # @param options [Hash] A list of options for renderer.
+      # @param context [Hash] A context for rendering.
+      # @return [HTML::Pipeline] The pipeline
+      def create_pipeline(options, context)
+        ::HTML::Pipeline.new(
+          options[:pipeline].map { |f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) },
+          options[:pipeline_options].merge(context)
+        )
+      end
+
+      # Filters pipeline filters basing on the options provided.
+      #
+      # @param options [Hash] The original options.
+      # @return [Hash] The options with the new set of filters.
+      def filter_filters(options)
+        options[:pipeline] = get_pipeline(options)
+
+        default_pipeline.each do |f|
+          options[:pipeline].delete(f.first) unless options.fetch(f.last, true)
         end
 
-        # Get body of a content.
-        #
-        # @param content [Content|String] The content to sanitize.
-        # @param options [Hash] A list of options for renderer.
-        # @return [Array] The body to parse.
-        def get_body(content, options)
-          content = ::Mbrao::Content.create(nil, content.ensure_string) if !content.is_a?(::Mbrao::Content)
-          content.get_body(options.fetch(:locales, ::Mbrao::Parser.locale).ensure_string)
-        end
+        options
+      end
 
-        # Creates the pipeline for rendering.
-        #
-        # @param options [Hash] A list of options for renderer.
-        # @param context [Hash] A context for rendering.
-        # @return [HTML::Pipeline] The pipeline
-        def create_pipeline(options, context)
-          ::HTML::Pipeline.new(
-            options[:pipeline].map {|f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) },
-            options[:pipeline_options].merge(context)
-          )
-        end
-
-        # Filters pipeline filters basing on the options provided.
-        #
-        # @param options [Hash] The original options.
-        # @return [Hash] The options with the new set of filters.
-        def filter_filters(options)
-          options[:pipeline] = get_pipeline(options)
-
-          self.default_pipeline.each do |f|
-            options[:pipeline].delete(f.first) if !options.fetch(f.last, true)
-          end
-
-          options
-        end
-
-        # Gets the pipeline for the current options.
-        #
-        # @param options [Hash] The options to parse.
-        # @return [Array] The pipeline to process.
-        def get_pipeline(options)
-          options.fetch(:pipeline, self.default_pipeline.map(&:first)).map(&:to_sym)
-        end
+      # Gets the pipeline for the current options.
+      #
+      # @param options [Hash] The options to parse.
+      # @return [Array] The pipeline to process.
+      def get_pipeline(options)
+        options.fetch(:pipeline, default_pipeline.map(&:first)).map(&:to_sym)
+      end
     end
   end
 end

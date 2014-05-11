@@ -15,7 +15,7 @@ module Mbrao
       # @param _options [Hash] Options to customize parsing.
       # @return [Array] An array of metadata and contents parts.
       def separate_components(_content, _options = {})
-        raise Mbrao::Exceptions::Unimplemented.new
+        raise Mbrao::Exceptions::Unimplemented
       end
 
       # Parses metadata part and returns all valid metadata.
@@ -24,7 +24,7 @@ module Mbrao
       # @param _options [Hash] Options to customize parsing.
       # @return [Hash] All valid metadata for the content.
       def parse_metadata(_content, _options = {})
-        raise Mbrao::Exceptions::Unimplemented.new
+        raise Mbrao::Exceptions::Unimplemented
       end
 
       # Filters content of a post by locale.
@@ -35,7 +35,7 @@ module Mbrao
       # @return [String|HashWithIndifferentAccess] Return the filtered content in the desired locales. If only one locale is required, then a `String` is
       #   returned, else a `HashWithIndifferentAccess` with locales as keys.
       def filter_content(_content, _locales = [], _options = {})
-        raise Mbrao::Exceptions::Unimplemented.new
+        raise Mbrao::Exceptions::Unimplemented
       end
 
       # Parses a content and return a {Content Content} object.

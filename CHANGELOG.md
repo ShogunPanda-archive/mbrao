@@ -1,3 +1,8 @@
+### 1.5.0 / 2014-05-11
+
+* Metrics and code style fixes.
+* Dropped support for Ruby < 2.1, even though the code is compatible yet.
+
 ### 1.4.4 / 2014-04-09
 
 * Date parsing bugfix.

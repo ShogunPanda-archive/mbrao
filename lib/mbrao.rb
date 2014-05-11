@@ -9,16 +9,21 @@ require "html/pipeline"
 require "slim"
 require "kramdown"
 require "yaml"
+require "active_support/json/encoding"
 
-require "mbrao/version" if !defined?(Mbrao::Version)
+require "mbrao/version" unless defined?(Mbrao::Version)
 require "mbrao/exceptions"
+require "mbrao/content_interface"
 require "mbrao/content"
 require "mbrao/author"
+require "mbrao/parser_interface"
+require "mbrao/parser_validations"
 require "mbrao/parser"
 require "mbrao/parsing_engines/base"
 require "mbrao/parsing_engines/plain_text"
+require "mbrao/rendering_engines/html_pipeline/kramdown_filter"
 require "mbrao/rendering_engines/base"
 require "mbrao/rendering_engines/html_pipeline"
 require "mbrao/integrations/rails" if defined?(ActionView)
 
-Lazier.load!(:object, :hash)
+Lazier.load!(:object, :hash, :boolean)

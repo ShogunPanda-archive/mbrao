@@ -25,10 +25,10 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = ">= 1.9.3"
 
-  gem.add_dependency("lazier", "~> 3.5.1")
-  gem.add_dependency("html-pipeline", "~> 1.6.0")
+  gem.add_dependency("lazier", "~> 3.5.5")
+  gem.add_dependency("html-pipeline", "~> 1.8.0")
   gem.add_dependency("slim", "~> 2.0.2")
-  gem.add_dependency("kramdown", "~> 1.3.2")
+  gem.add_dependency("kramdown", "~> 1.3.3")
   gem.add_dependency("rinku", "~> 1.7.3")
   gem.add_dependency("gemoji", "~> 1.5.0")
 end

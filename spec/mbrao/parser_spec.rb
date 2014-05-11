@@ -100,27 +100,27 @@ describe Mbrao::Parser do
     end
   end
 
-  describe ".is_email?" do
+  describe ".email?" do
     it "should check for valid emails" do
-      expect(Mbrao::Parser.is_email?("valid@email.com")).to be_true
-      expect(Mbrao::Parser.is_email?("valid@localhost")).to be_false
-      expect(Mbrao::Parser.is_email?("this.is.9@email.com")).to be_true
-      expect(Mbrao::Parser.is_email?("INVALID")).to be_false
-      expect(Mbrao::Parser.is_email?(nil)).to be_false
-      expect(Mbrao::Parser.is_email?([])).to be_false
-      expect(Mbrao::Parser.is_email?("this.is.9@email.com.uk")).to be_true
+      expect(Mbrao::Parser.email?("valid@email.com")).to be_true
+      expect(Mbrao::Parser.email?("valid@localhost")).to be_false
+      expect(Mbrao::Parser.email?("this.is.9@email.com")).to be_true
+      expect(Mbrao::Parser.email?("INVALID")).to be_false
+      expect(Mbrao::Parser.email?(nil)).to be_false
+      expect(Mbrao::Parser.email?([])).to be_false
+      expect(Mbrao::Parser.email?("this.is.9@email.com.uk")).to be_true
     end
   end
 
-  describe ".is_url?" do
+  describe ".url?" do
     it "should check for valid URLs" do
-      expect(Mbrao::Parser.is_url?("http://google.it")).to be_true
-      expect(Mbrao::Parser.is_url?("ftp://ftp.google.com")).to be_true
-      expect(Mbrao::Parser.is_url?("http://google.it/?q=FOO+BAR")).to be_true
-      expect(Mbrao::Parser.is_url?("INVALID")).to be_false
-      expect(Mbrao::Parser.is_url?([])).to be_false
-      expect(Mbrao::Parser.is_url?(nil)).to be_false
-      expect(Mbrao::Parser.is_url?({})).to be_false
+      expect(Mbrao::Parser.url?("http://google.it")).to be_true
+      expect(Mbrao::Parser.url?("ftp://ftp.google.com")).to be_true
+      expect(Mbrao::Parser.url?("http://google.it/?q=FOO+BAR")).to be_true
+      expect(Mbrao::Parser.url?("INVALID")).to be_false
+      expect(Mbrao::Parser.url?([])).to be_false
+      expect(Mbrao::Parser.url?(nil)).to be_false
+      expect(Mbrao::Parser.url?({})).to be_false
     end
   end
 

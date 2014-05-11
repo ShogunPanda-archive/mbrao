@@ -36,9 +36,9 @@ module Mbrao
     # @param metadata [HashWithIndifferentAccess] The full list of metadata of this author.
     def initialize(name, email = nil, website = nil, image = nil, metadata = nil)
       @name = name.ensure_string
-      @email = Mbrao::Parser.is_email?(email) ? email : nil
-      @website = Mbrao::Parser.is_url?(website) ? website : nil
-      @image = Mbrao::Parser.is_url?(image) ? image : nil
+      @email = Mbrao::Parser.email?(email) ? email : nil
+      @website = Mbrao::Parser.url?(website) ? website : nil
+      @image = Mbrao::Parser.url?(image) ? image : nil
       @metadata = metadata.ensure_hash(:indifferent)
     end
 
@@ -60,7 +60,7 @@ module Mbrao
     # @param data [Hash] The data of the author
     # @return [Author] A new author.
     def self.create(data)
-      if data.is_a?(Hash) then
+      if data.is_a?(Hash)
         data = HashWithIndifferentAccess.new(data)
         uid = data.delete(:uid)
         metadata = data.delete(:metadata) || {}

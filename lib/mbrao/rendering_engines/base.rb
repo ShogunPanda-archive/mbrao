@@ -15,7 +15,7 @@ module Mbrao
       # @param _options [Hash] A list of options for renderer.
       # @param _context [Hash] A context for rendering.
       def render(_content, _options = {}, _context = {})
-        raise Mbrao::Exceptions::Unimplemented.new
+        raise Mbrao::Exceptions::Unimplemented
       end
     end
   end

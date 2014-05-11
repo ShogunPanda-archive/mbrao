@@ -10,8 +10,8 @@ gemspec
 
 # Testing
 gem "rspec", "~> 2.14.1"
-gem "rake", "~> 10.1.0"
-gem "actionpack", "~> 4.0.3"
+gem "rake", "~> 10.3.1"
+gem "actionpack", ">= 3.2.18"
 
 # Documentation
 gem "simplecov", ">= 0.8.2"
@@ -19,4 +19,4 @@ gem "coveralls", ">= 0.7.0", require: false
 gem "pry", ">= 0"
 gem "yard", ">= 0.8.7"
 gem "kramdown", ">= 1.3.2"
-gem "github-markup", ">= 1.0.2"
+gem "github-markup", ">= 1.2.1"

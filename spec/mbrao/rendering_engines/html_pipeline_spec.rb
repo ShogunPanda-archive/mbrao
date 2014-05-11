@@ -104,24 +104,3 @@ describe Mbrao::RenderingEngines::HtmlPipeline do
     end
   end
 end
-
-describe HTML::Pipeline::KramdownFilter do
-  describe "#initialize" do
-    it "should call the parent constructor" do
-      expect(HTML::Pipeline::TextFilter).to receive(:new).with("\rCONTENT\r", {a: "b"}, {c: "d"})
-      HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"})
-    end
-
-    it "should remove \r from the text" do
-      subject = HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"})
-      expect(subject.instance_variable_get(:@text)).to eq("CONTENT")
-    end
-
-    it "should use Kramdown with given options for building the result" do
-      object = Object.new
-      expect(Kramdown::Document).to receive(:new).with("CONTENT", {a: "b"}).and_return(object)
-      expect(object).to receive(:to_html)
-      HTML::Pipeline::KramdownFilter.new("\rCONTENT\r", {a: "b"}, {c: "d"}).call
-    end
-  end
-end
