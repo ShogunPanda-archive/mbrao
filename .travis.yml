@@ -1,7 +1,6 @@
 language: ruby
 rvm:
   - 2.1.2
-  - jruby-head
   - rbx-2.2.6
 script: bundle exec rake spec:coverage
 gemfile: .travis-gemfile

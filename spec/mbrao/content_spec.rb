@@ -315,7 +315,7 @@ describe Mbrao::Content do
   describe "#as_json" do
     subject {
       @created_at = DateTime.civil(1984, 7, 7, 11, 30, 0)
-      @created_at_s = @created_at.strftime("%FT%T.%L%Z")
+      @created_at_s = @created_at.as_json
       metadata = {"uid" => "UID", "title" => {it: "IT", en: "EN"}, "summary" => "SUMMARY", "author" => "AUTHOR", "tags" => {it: "IT", en: "EN"}, "more" => "MORE", created_at: @created_at, locales: ["it", ["en"]], other: ["OTHER"]}
       ::Mbrao::Content.create(metadata, "BODY")
     }
