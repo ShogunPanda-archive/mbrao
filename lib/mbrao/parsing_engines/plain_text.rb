@@ -35,7 +35,10 @@ module Mbrao
       # @param options [Hash] Options to customize parsing.
       # @return [Hash] All valid metadata for the content.
       def parse_metadata(content, options = {})
-        YAML.load(content)
+        rv = YAML.load(content)
+        rv ||= {}
+        raise ArgumentError unless rv.is_a?(Hash)
+        rv
       rescue => e
         if options[:default]
           options[:default]
