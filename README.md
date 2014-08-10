@@ -9,7 +9,7 @@
 
 A content parser and renderer with embedded metadata support.
 
-http://sw.cow.tc/mbrao
+http://sw.cowtech.it/mbrao
 
 http://rdoc.info/gems/mbrao
 

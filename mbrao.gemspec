@@ -9,7 +9,7 @@ require File.expand_path('../lib/mbrao/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name = "mbrao"
   gem.version = Mbrao::Version::STRING
-  gem.homepage = "http://github.com/ShogunPanda/mbrao"
+  gem.homepage = "http://sw.cowtech.it/mbrao"
   gem.summary = "A content parser and renderer with embedded metadata support."
   gem.description = "A content parser and renderer with embedded metadata support."
   gem.rubyforge_project = "mbrao"
