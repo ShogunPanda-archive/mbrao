@@ -6,7 +6,7 @@
 <title>
   Module: Mbrao::ParserInterface::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -468,17 +468,7 @@
 128
 129
 130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141</pre>
+131</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser_interface.rb', line 21</span>
@@ -540,8 +530,8 @@
 </span>  <span class='comment'># @return [Hash] An hash with all attributes.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude_empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_boolean'>to_boolean</span>
-    <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -569,35 +559,25 @@
 
   <span class='id identifier rubyid_private'>private</span>
 
-  <span class='comment'># Returns an attribute or a default value.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param attr [Object ]The attribute to return.
-</span>  <span class='comment'># @param default_value [Object] The value to return if `attr` is blank.
-</span>  <span class='comment'># @param sanitizer [Symbol] An optional method to sanitize the returned value.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_attribute_or_default'>attribute_or_default</span><span class='lparen'>(</span><span class='id identifier rubyid_attr'>attr</span><span class='comma'>,</span> <span class='id identifier rubyid_default_value'>default_value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_sanitizer'>sanitizer</span> <span class='op'>=</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_attr'>attr</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>?</span> <span class='id identifier rubyid_attr'>attr</span> <span class='op'>:</span> <span class='id identifier rubyid_default_value'>default_value</span>
     <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_rv'>rv</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_sanitizer'>sanitizer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_sanitizer'>sanitizer</span>
     <span class='id identifier rubyid_rv'>rv</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Perform the mapping to JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param target [Object] The target to serialize.
-</span>  <span class='comment'># @param keys [Array] The attributes to include in the serialization.
-</span>  <span class='comment'># @param include_empty [Boolean], if to include nil values.
-</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_rv'>rv</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+    <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rv'>rv</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_get_json_field'>get_json_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_rv'>rv</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
       <span class='id identifier rubyid_rv'>rv</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_deep_stringify_keys'>deep_stringify_keys</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_json'>json</span><span class='period'>.</span><span class='id identifier rubyid_deep_stringify_keys'>deep_stringify_keys</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Get a field as JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param target [Object] The object containing the value.
-</span>  <span class='comment'># @param method [Symbol] The method containing the value.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_get_json_field'>get_json_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:as_json</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
@@ -763,17 +743,7 @@
 128
 129
 130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141</pre>
+131</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser_interface.rb', line 21</span>
@@ -835,8 +805,8 @@
 </span>  <span class='comment'># @return [Hash] An hash with all attributes.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude_empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_boolean'>to_boolean</span>
-    <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -864,35 +834,25 @@
 
   <span class='id identifier rubyid_private'>private</span>
 
-  <span class='comment'># Returns an attribute or a default value.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param attr [Object ]The attribute to return.
-</span>  <span class='comment'># @param default_value [Object] The value to return if `attr` is blank.
-</span>  <span class='comment'># @param sanitizer [Symbol] An optional method to sanitize the returned value.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_attribute_or_default'>attribute_or_default</span><span class='lparen'>(</span><span class='id identifier rubyid_attr'>attr</span><span class='comma'>,</span> <span class='id identifier rubyid_default_value'>default_value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_sanitizer'>sanitizer</span> <span class='op'>=</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_attr'>attr</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>?</span> <span class='id identifier rubyid_attr'>attr</span> <span class='op'>:</span> <span class='id identifier rubyid_default_value'>default_value</span>
     <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_rv'>rv</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_sanitizer'>sanitizer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_sanitizer'>sanitizer</span>
     <span class='id identifier rubyid_rv'>rv</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Perform the mapping to JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param target [Object] The target to serialize.
-</span>  <span class='comment'># @param keys [Array] The attributes to include in the serialization.
-</span>  <span class='comment'># @param include_empty [Boolean], if to include nil values.
-</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_rv'>rv</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+    <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rv'>rv</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_get_json_field'>get_json_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_rv'>rv</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
       <span class='id identifier rubyid_rv'>rv</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_deep_stringify_keys'>deep_stringify_keys</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_json'>json</span><span class='period'>.</span><span class='id identifier rubyid_deep_stringify_keys'>deep_stringify_keys</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Get a field as JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param target [Object] The object containing the value.
-</span>  <span class='comment'># @param method [Symbol] The method containing the value.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_get_json_field'>get_json_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:as_json</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
@@ -1058,17 +1018,7 @@
 128
 129
 130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141</pre>
+131</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/mbrao/parser_interface.rb', line 21</span>
@@ -1130,8 +1080,8 @@
 </span>  <span class='comment'># @return [Hash] An hash with all attributes.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude_empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_boolean'>to_boolean</span>
-    <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -1159,35 +1109,25 @@
 
   <span class='id identifier rubyid_private'>private</span>
 
-  <span class='comment'># Returns an attribute or a default value.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param attr [Object ]The attribute to return.
-</span>  <span class='comment'># @param default_value [Object] The value to return if `attr` is blank.
-</span>  <span class='comment'># @param sanitizer [Symbol] An optional method to sanitize the returned value.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_attribute_or_default'>attribute_or_default</span><span class='lparen'>(</span><span class='id identifier rubyid_attr'>attr</span><span class='comma'>,</span> <span class='id identifier rubyid_default_value'>default_value</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_sanitizer'>sanitizer</span> <span class='op'>=</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_attr'>attr</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>?</span> <span class='id identifier rubyid_attr'>attr</span> <span class='op'>:</span> <span class='id identifier rubyid_default_value'>default_value</span>
     <span class='id identifier rubyid_rv'>rv</span> <span class='op'>=</span> <span class='id identifier rubyid_rv'>rv</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_sanitizer'>sanitizer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_sanitizer'>sanitizer</span>
     <span class='id identifier rubyid_rv'>rv</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Perform the mapping to JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param target [Object] The target to serialize.
-</span>  <span class='comment'># @param keys [Array] The attributes to include in the serialization.
-</span>  <span class='comment'># @param include_empty [Boolean], if to include nil values.
-</span>  <span class='comment'># @return [Hash] An hash with all attributes.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_rv'>rv</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
+    <span class='id identifier rubyid_json'>json</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reduce'>reduce</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rv'>rv</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_get_json_field'>get_json_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_rv'>rv</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
       <span class='id identifier rubyid_rv'>rv</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_deep_stringify_keys'>deep_stringify_keys</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_json'>json</span><span class='period'>.</span><span class='id identifier rubyid_deep_stringify_keys'>deep_stringify_keys</span>
   <span class='kw'>end</span>
 
-  <span class='comment'># Get a field as JSON.
-</span>  <span class='comment'>#
-</span>  <span class='comment'># @param target [Object] The object containing the value.
-</span>  <span class='comment'># @param method [Symbol] The method containing the value.
+  <span class='comment'># :nodoc:
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_get_json_field'>get_json_field</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_as_json'>as_json</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:as_json</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
@@ -1318,8 +1258,8 @@ The only supported value are:</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_keys'>keys</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_include_empty'>include_empty</span> <span class='op'>=</span> <span class='op'>!</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude_empty</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_boolean'>to_boolean</span>
-  <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_exclude'>exclude</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:exclude</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_keys'>keys</span> <span class='op'>=</span> <span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sanitizer:</span> <span class='symbol'>:ensure_string</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_map_to_json'>map_to_json</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_exclude'>exclude</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_include_empty'>include_empty</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -1715,9 +1655,9 @@ The only supported value are:</p>
 </div>
 
     <div id="footer">
-  Generated on Sun May 11 18:17:17 2014 by
+  Generated on Tue Mar 29 12:47:22 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.0).
+  0.8.7.6 (ruby-2.3.0).
 </div>
 
   </body>

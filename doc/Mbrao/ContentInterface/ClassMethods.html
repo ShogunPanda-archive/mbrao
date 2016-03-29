@@ -6,7 +6,7 @@
 <title>
   Module: Mbrao::ContentInterface::ClassMethods
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -364,7 +364,7 @@ used.</p>
       <pre class="code"><span class="info file"># File 'lib/mbrao/content_interface.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_locales'>validate_locales</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='comma'>,</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_locales'>locales</span> <span class='op'>=</span> <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='op'>|</span> <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_locales'>locales</span> <span class='op'>=</span> <span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_ensure_array'>ensure_array</span><span class='lparen'>(</span><span class='label'>no_duplicates:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>compact:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>flatten:</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_l'>l</span><span class='op'>|</span> <span class='id identifier rubyid_l'>l</span><span class='period'>.</span><span class='id identifier rubyid_ensure_string'>ensure_string</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_locales'>locales</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_locale'>locale</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Exceptions</span><span class='op'>::</span><span class='const'>UnavailableLocalization</span> <span class='kw'>if</span> <span class='id identifier rubyid_content'>content</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_content'>content</span><span class='period'>.</span><span class='id identifier rubyid_enabled_for_locales?'>enabled_for_locales?</span><span class='lparen'>(</span><span class='id identifier rubyid_locales'>locales</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_locales'>locales</span>
@@ -379,9 +379,9 @@ used.</p>
 </div>
 
     <div id="footer">
-  Generated on Sun May 11 18:17:17 2014 by
+  Generated on Tue Mar 29 12:47:22 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.0).
+  0.8.7.6 (ruby-2.3.0).
 </div>
 
   </body>

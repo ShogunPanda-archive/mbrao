@@ -6,7 +6,7 @@
 <title>
   Class: Mbrao::Author
   
-    &mdash; Documentation by YARD 0.8.7.4
+    &mdash; Documentation by YARD 0.8.7.6
   
 </title>
 
@@ -499,7 +499,7 @@
   <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
   <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
   <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-  <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+  <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -632,7 +632,7 @@
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Returns the author as an Hash.
@@ -791,7 +791,7 @@
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Returns the author as an Hash.
@@ -950,7 +950,7 @@
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Returns the author as an Hash.
@@ -1109,7 +1109,7 @@
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Returns the author as an Hash.
@@ -1268,7 +1268,7 @@
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Returns the author as an Hash.
@@ -1427,7 +1427,7 @@
     <span class='ivar'>@email</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_email?'>email?</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_email'>email</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@website</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_website'>website</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_website'>website</span> <span class='op'>:</span> <span class='kw'>nil</span>
     <span class='ivar'>@image</span> <span class='op'>=</span> <span class='const'>Mbrao</span><span class='op'>::</span><span class='const'>Parser</span><span class='period'>.</span><span class='id identifier rubyid_url?'>url?</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_image'>image</span> <span class='op'>:</span> <span class='kw'>nil</span>
-    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='symbol'>:indifferent</span><span class='rparen'>)</span>
+    <span class='ivar'>@metadata</span> <span class='op'>=</span> <span class='id identifier rubyid_metadata'>metadata</span><span class='period'>.</span><span class='id identifier rubyid_ensure_hash'>ensure_hash</span><span class='lparen'>(</span><span class='label'>accesses:</span> <span class='symbol'>:indifferent</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='comment'># Returns the author as an Hash.
@@ -1663,9 +1663,9 @@ The only supported value are:</p>
 </div>
 
     <div id="footer">
-  Generated on Sun May 11 18:17:18 2014 by
+  Generated on Tue Mar 29 12:47:22 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7.4 (ruby-2.1.0).
+  0.8.7.6 (ruby-2.3.0).
 </div>
 
   </body>

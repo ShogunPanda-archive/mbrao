@@ -20,7 +20,11 @@
   </head>
   <body>
     <script type="text/javascript" charset="utf-8">
-      if (window.top.frames.main) {
+      var hasFrames = false;
+      try {
+        hasFrames = window.top.frames.main ? true : false;
+      } catch (e) { }
+      if (hasFrames) {
         document.getElementById('base_target').target = 'main';
         document.body.className = 'frames';
       }
@@ -66,20 +70,20 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/Content.html#author-instance_method" title="Mbrao::Content#author (method)">#author</a></span>
+    <span class='object_link'><a href="Mbrao/Content.html#assign_metadata-class_method" title="Mbrao::Content.assign_metadata (method)">assign_metadata</a></span>
     <small>Mbrao::Content</small>
   </li>
   
 
   <li class="r1 ">
-    <span class='object_link'><a href="Mbrao/Content.html#body-instance_method" title="Mbrao::Content#body (method)">#body</a></span>
+    <span class='object_link'><a href="Mbrao/Content.html#author-instance_method" title="Mbrao::Content#author (method)">#author</a></span>
     <small>Mbrao::Content</small>
   </li>
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="HTML/Pipeline/KramdownFilter.html#call-instance_method" title="HTML::Pipeline::KramdownFilter#call (method)">#call</a></span>
-    <small>HTML::Pipeline::KramdownFilter</small>
+    <span class='object_link'><a href="Mbrao/Content.html#body-instance_method" title="Mbrao::Content#body (method)">#body</a></span>
+    <small>Mbrao::Content</small>
   </li>
   
 
@@ -90,8 +94,8 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/ContentInterface/ClassMethods.html#create-instance_method" title="Mbrao::ContentInterface::ClassMethods#create (method)">#create</a></span>
-    <small>Mbrao::ContentInterface::ClassMethods</small>
+    <span class='object_link'><a href="HTML/Pipeline/KramdownFilter.html#call-instance_method" title="HTML::Pipeline::KramdownFilter#call (method)">#call</a></span>
+    <small>HTML::Pipeline::KramdownFilter</small>
   </li>
   
 
@@ -102,56 +106,68 @@
   
 
   <li class="r2 ">
+    <span class='object_link'><a href="Mbrao/ContentInterface/ClassMethods.html#create-instance_method" title="Mbrao::ContentInterface::ClassMethods#create (method)">#create</a></span>
+    <small>Mbrao::ContentInterface::ClassMethods</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/ParserInterface/ClassMethods.html#create_engine-instance_method" title="Mbrao::ParserInterface::ClassMethods#create_engine (method)">#create_engine</a></span>
     <small>Mbrao::ParserInterface::ClassMethods</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/Content.html#created_at-instance_method" title="Mbrao::Content#created_at (method)">#created_at</a></span>
     <small>Mbrao::Content</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/RenderingEngines/HtmlPipeline.html#default_options-instance_method" title="Mbrao::RenderingEngines::HtmlPipeline#default_options (method)">#default_options</a></span>
     <small>Mbrao::RenderingEngines::HtmlPipeline</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/RenderingEngines/HtmlPipeline.html#default_pipeline-instance_method" title="Mbrao::RenderingEngines::HtmlPipeline#default_pipeline (method)">#default_pipeline</a></span>
     <small>Mbrao::RenderingEngines::HtmlPipeline</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/Author.html#email-instance_method" title="Mbrao::Author#email (method)">#email</a></span>
     <small>Mbrao::Author</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/ParserValidations/ClassMethods.html#email%3F-instance_method" title="Mbrao::ParserValidations::ClassMethods#email? (method)">#email?</a></span>
     <small>Mbrao::ParserValidations::ClassMethods</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/ContentInterface.html#enabled_for_locales%3F-instance_method" title="Mbrao::ContentInterface#enabled_for_locales? (method)">#enabled_for_locales?</a></span>
     <small>Mbrao::ContentInterface</small>
   </li>
   
 
+  <li class="r2 ">
+    <span class='object_link'><a href="Mbrao/Content.html#extract_locales-class_method" title="Mbrao::Content.extract_locales (method)">extract_locales</a></span>
+    <small>Mbrao::Content</small>
+  </li>
+  
+
   <li class="r1 ">
-    <span class='object_link'><a href="Mbrao/ParsingEngines/PlainText.html#filter_content-instance_method" title="Mbrao::ParsingEngines::PlainText#filter_content (method)">#filter_content</a></span>
-    <small>Mbrao::ParsingEngines::PlainText</small>
+    <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#filter_content-instance_method" title="Mbrao::ParsingEngines::Base#filter_content (method)">#filter_content</a></span>
+    <small>Mbrao::ParsingEngines::Base</small>
   </li>
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#filter_content-instance_method" title="Mbrao::ParsingEngines::Base#filter_content (method)">#filter_content</a></span>
-    <small>Mbrao::ParsingEngines::Base</small>
+    <span class='object_link'><a href="Mbrao/ParsingEngines/PlainText.html#filter_content-instance_method" title="Mbrao::ParsingEngines::PlainText#filter_content (method)">#filter_content</a></span>
+    <small>Mbrao::ParsingEngines::PlainText</small>
   </li>
   
 
@@ -228,14 +244,14 @@
   
 
   <li class="r1 ">
-    <span class='object_link'><a href="Mbrao/Author.html#metadata-instance_method" title="Mbrao::Author#metadata (method)">#metadata</a></span>
-    <small>Mbrao::Author</small>
+    <span class='object_link'><a href="Mbrao/Content.html#metadata-instance_method" title="Mbrao::Content#metadata (method)">#metadata</a></span>
+    <small>Mbrao::Content</small>
   </li>
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/Content.html#metadata-instance_method" title="Mbrao::Content#metadata (method)">#metadata</a></span>
-    <small>Mbrao::Content</small>
+    <span class='object_link'><a href="Mbrao/Author.html#metadata-instance_method" title="Mbrao::Author#metadata (method)">#metadata</a></span>
+    <small>Mbrao::Author</small>
   </li>
   
 
@@ -252,14 +268,14 @@
   
 
   <li class="r1 ">
-    <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#parse-instance_method" title="Mbrao::ParsingEngines::Base#parse (method)">#parse</a></span>
-    <small>Mbrao::ParsingEngines::Base</small>
+    <span class='object_link'><a href="Mbrao/Content.html#normalize_locales-class_method" title="Mbrao::Content.normalize_locales (method)">normalize_locales</a></span>
+    <small>Mbrao::Content</small>
   </li>
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/Parser.html#parse-instance_method" title="Mbrao::Parser#parse (method)">#parse</a></span>
-    <small>Mbrao::Parser</small>
+    <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#parse-instance_method" title="Mbrao::ParsingEngines::Base#parse (method)">#parse</a></span>
+    <small>Mbrao::ParsingEngines::Base</small>
   </li>
   
 
@@ -270,8 +286,8 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#parse_metadata-instance_method" title="Mbrao::ParsingEngines::Base#parse_metadata (method)">#parse_metadata</a></span>
-    <small>Mbrao::ParsingEngines::Base</small>
+    <span class='object_link'><a href="Mbrao/Parser.html#parse-instance_method" title="Mbrao::Parser#parse (method)">#parse</a></span>
+    <small>Mbrao::Parser</small>
   </li>
   
 
@@ -282,32 +298,20 @@
   
 
   <li class="r2 ">
+    <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#parse_metadata-instance_method" title="Mbrao::ParsingEngines::Base#parse_metadata (method)">#parse_metadata</a></span>
+    <small>Mbrao::ParsingEngines::Base</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/ParserInterface/ClassMethods.html#parsing_engine-instance_method" title="Mbrao::ParserInterface::ClassMethods#parsing_engine (method)">#parsing_engine</a></span>
     <small>Mbrao::ParserInterface::ClassMethods</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="ActionView/Template/Handlers/MbraoTemplate.html#register-class_method" title="ActionView::Template::Handlers::MbraoTemplate.register (method)">register</a></span>
     <small>ActionView::Template::Handlers::MbraoTemplate</small>
-  </li>
-  
-
-  <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/RenderingEngines/HtmlPipeline.html#render-instance_method" title="Mbrao::RenderingEngines::HtmlPipeline#render (method)">#render</a></span>
-    <small>Mbrao::RenderingEngines::HtmlPipeline</small>
-  </li>
-  
-
-  <li class="r1 ">
-    <span class='object_link'><a href="Mbrao/ParserInterface/ClassMethods.html#render-instance_method" title="Mbrao::ParserInterface::ClassMethods#render (method)">#render</a></span>
-    <small>Mbrao::ParserInterface::ClassMethods</small>
-  </li>
-  
-
-  <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/Parser.html#render-instance_method" title="Mbrao::Parser#render (method)">#render</a></span>
-    <small>Mbrao::Parser</small>
   </li>
   
 
@@ -318,55 +322,67 @@
   
 
   <li class="r2 ">
+    <span class='object_link'><a href="Mbrao/Parser.html#render-instance_method" title="Mbrao::Parser#render (method)">#render</a></span>
+    <small>Mbrao::Parser</small>
+  </li>
+  
+
+  <li class="r1 ">
+    <span class='object_link'><a href="Mbrao/RenderingEngines/HtmlPipeline.html#render-instance_method" title="Mbrao::RenderingEngines::HtmlPipeline#render (method)">#render</a></span>
+    <small>Mbrao::RenderingEngines::HtmlPipeline</small>
+  </li>
+  
+
+  <li class="r2 ">
+    <span class='object_link'><a href="Mbrao/ParserInterface/ClassMethods.html#render-instance_method" title="Mbrao::ParserInterface::ClassMethods#render (method)">#render</a></span>
+    <small>Mbrao::ParserInterface::ClassMethods</small>
+  </li>
+  
+
+  <li class="r1 ">
     <span class='object_link'><a href="ActionView/Template/Handlers/MbraoTemplate.html#render-instance_method" title="ActionView::Template::Handlers::MbraoTemplate#render (method)">#render</a></span>
     <small>ActionView::Template::Handlers::MbraoTemplate</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/ParserInterface/ClassMethods.html#rendering_engine-instance_method" title="Mbrao::ParserInterface::ClassMethods#rendering_engine (method)">#rendering_engine</a></span>
     <small>Mbrao::ParserInterface::ClassMethods</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/ParsingEngines/Base.html#separate_components-instance_method" title="Mbrao::ParsingEngines::Base#separate_components (method)">#separate_components</a></span>
     <small>Mbrao::ParsingEngines::Base</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/ParsingEngines/PlainText.html#separate_components-instance_method" title="Mbrao::ParsingEngines::PlainText#separate_components (method)">#separate_components</a></span>
     <small>Mbrao::ParsingEngines::PlainText</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/Content.html#summary-instance_method" title="Mbrao::Content#summary (method)">#summary</a></span>
     <small>Mbrao::Content</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="ActionView/Template/Handlers/MbraoTemplate.html#supports_streaming%3F-instance_method" title="ActionView::Template::Handlers::MbraoTemplate#supports_streaming? (method)">#supports_streaming?</a></span>
     <small>ActionView::Template::Handlers::MbraoTemplate</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/Content.html#tags-instance_method" title="Mbrao::Content#tags (method)">#tags</a></span>
     <small>Mbrao::Content</small>
   </li>
   
 
-  <li class="r1 ">
-    <span class='object_link'><a href="Mbrao/Content.html#title-instance_method" title="Mbrao::Content#title (method)">#title</a></span>
-    <small>Mbrao::Content</small>
-  </li>
-  
-
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/Content.html#uid-instance_method" title="Mbrao::Content#uid (method)">#uid</a></span>
+    <span class='object_link'><a href="Mbrao/Content.html#title-instance_method" title="Mbrao::Content#title (method)">#title</a></span>
     <small>Mbrao::Content</small>
   </li>
   
@@ -378,24 +394,30 @@
   
 
   <li class="r2 ">
-    <span class='object_link'><a href="Mbrao/Content.html#updated_at-instance_method" title="Mbrao::Content#updated_at (method)">#updated_at</a></span>
+    <span class='object_link'><a href="Mbrao/Content.html#uid-instance_method" title="Mbrao::Content#uid (method)">#uid</a></span>
     <small>Mbrao::Content</small>
   </li>
   
 
   <li class="r1 ">
+    <span class='object_link'><a href="Mbrao/Content.html#updated_at-instance_method" title="Mbrao::Content#updated_at (method)">#updated_at</a></span>
+    <small>Mbrao::Content</small>
+  </li>
+  
+
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/ParserValidations/ClassMethods.html#url%3F-instance_method" title="Mbrao::ParserValidations::ClassMethods#url? (method)">#url?</a></span>
     <small>Mbrao::ParserValidations::ClassMethods</small>
   </li>
   
 
-  <li class="r2 ">
+  <li class="r1 ">
     <span class='object_link'><a href="Mbrao/ContentInterface/ClassMethods.html#validate_locales-instance_method" title="Mbrao::ContentInterface::ClassMethods#validate_locales (method)">#validate_locales</a></span>
     <small>Mbrao::ContentInterface::ClassMethods</small>
   </li>
   
 
-  <li class="r1 ">
+  <li class="r2 ">
     <span class='object_link'><a href="Mbrao/Author.html#website-instance_method" title="Mbrao::Author#website (method)">#website</a></span>
     <small>Mbrao::Author</small>
   </li>
