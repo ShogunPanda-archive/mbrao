@@ -11,6 +11,7 @@ gemspec
 # Testing
 gem "rspec", "~> 3.4"
 gem "rake", "~> 11.0"
+gem "actionpack", "~> 4.2"
 
 # Documentation
 gem "simplecov", "~> 0.11"

@@ -6,6 +6,7 @@
 
 require "spec_helper"
 require "mbrao/integrations/rails"
+require "action_view"
 
 describe ActionView::Template::Handlers::MbraoTemplate do
   class Rails
