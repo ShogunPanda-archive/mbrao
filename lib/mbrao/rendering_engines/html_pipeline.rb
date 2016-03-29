@@ -26,7 +26,7 @@ module Mbrao
       # @param context [Hash] A context for rendering.
       def render(content, options = {}, context = {})
         options = sanitize_options(options)
-        context = context.ensure_hash(:symbols)
+        context = context.ensure_hash(accesses: :symbols)
 
         begin
           create_pipeline(options, context).call(get_body(content, options))[:output].to_s
@@ -48,7 +48,7 @@ module Mbrao
       #
       # @return [Array] The default pipeline.
       def default_pipeline=(value)
-        @default_pipeline = value.ensure_array(nil, false, false) { |v| v.ensure_array(nil, true, true, true) { |p| p.ensure_string.to_sym } }
+        @default_pipeline = value.ensure_array { |v| v.ensure_array(no_duplicates: true, compact: true, flatten: true) { |p| p.ensure_string.to_sym } }
       end
 
       # Gets the default options.
@@ -67,33 +67,22 @@ module Mbrao
 
       private
 
-      # Sanitizes options.
-      #
-      # @param options [Hash] The options to sanitize.
-      # @return [Hash] The sanitized options.
+      # :nodoc:
       def sanitize_options(options)
-        options = options.ensure_hash(:symbols)
+        options = options.ensure_hash(accesses: :symbols)
         options = filter_filters(options)
-        options[:pipeline_options] = default_options.merge(options[:pipeline_options].ensure_hash(:symbols))
+        options[:pipeline_options] = default_options.merge(options[:pipeline_options].ensure_hash(accesses: :symbols))
 
         options
       end
 
-      # Get body of a content.
-      #
-      # @param content [Content|String] The content to sanitize.
-      # @param options [Hash] A list of options for renderer.
-      # @return [Array] The body to parse.
+      # :nodoc:
       def get_body(content, options)
         content = ::Mbrao::Content.create(nil, content.ensure_string) unless content.is_a?(::Mbrao::Content)
         content.get_body(options.fetch(:locales, ::Mbrao::Parser.locale).ensure_string)
       end
 
-      # Creates the pipeline for rendering.
-      #
-      # @param options [Hash] A list of options for renderer.
-      # @param context [Hash] A context for rendering.
-      # @return [HTML::Pipeline] The pipeline
+      # :nodoc:
       def create_pipeline(options, context)
         ::HTML::Pipeline.new(
           options[:pipeline].map { |f| ::Lazier.find_class(f, "::HTML::Pipeline::%CLASS%Filter", true) },
@@ -101,10 +90,7 @@ module Mbrao
         )
       end
 
-      # Filters pipeline filters basing on the options provided.
-      #
-      # @param options [Hash] The original options.
-      # @return [Hash] The options with the new set of filters.
+      # :nodoc:
       def filter_filters(options)
         options[:pipeline] = get_pipeline(options)
 
@@ -115,10 +101,7 @@ module Mbrao
         options
       end
 
-      # Gets the pipeline for the current options.
-      #
-      # @param options [Hash] The options to parse.
-      # @return [Array] The pipeline to process.
+      # :nodoc:
       def get_pipeline(options)
         options.fetch(:pipeline, default_pipeline.map(&:first)).map(&:to_sym)
       end

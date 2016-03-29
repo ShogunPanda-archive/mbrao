@@ -283,10 +283,10 @@ describe Mbrao::Content do
   describe "#enabled_for_locales?" do
     it "correctly check availability for certain locales" do
       subject.locales = [:en, :it]
-      expect(subject.enabled_for_locales?).to be_true
-      expect(subject.enabled_for_locales?(:en)).to be_true
-      expect(subject.enabled_for_locales?(:it, :es)).to be_true
-      expect(subject.enabled_for_locales?(:es, :de)).to be_false
+      expect(subject.enabled_for_locales?).to be_truthy
+      expect(subject.enabled_for_locales?(:en)).to be_truthy
+      expect(subject.enabled_for_locales?(:it, :es)).to be_truthy
+      expect(subject.enabled_for_locales?(:es, :de)).to be_falsey
     end
   end
 

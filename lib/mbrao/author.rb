@@ -39,7 +39,7 @@ module Mbrao
       @email = Mbrao::Parser.email?(email) ? email : nil
       @website = Mbrao::Parser.url?(website) ? website : nil
       @image = Mbrao::Parser.url?(image) ? image : nil
-      @metadata = metadata.ensure_hash(:indifferent)
+      @metadata = metadata.ensure_hash(accesses: :indifferent)
     end
 
     # Returns the author as an Hash.

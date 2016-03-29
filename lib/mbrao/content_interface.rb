@@ -19,7 +19,7 @@ module Mbrao
 
       "%F %T.%L", "%F %T", "%F %H:%M", "%F",
       "%d/%m/%Y %T.%L", "%d/%m/%Y %T", "%d/%m/%Y %H:%M", "%d/%m/%Y"
-    ]
+    ].freeze
 
     # Class methods.
     module ClassMethods
@@ -30,7 +30,7 @@ module Mbrao
       # @param content [Content|nil] An optional content to check for availability
       # @return [Array] The validated list of locales.
       def validate_locales(locales, content = nil)
-        locales = locales.ensure_array(nil, true, true, true) { |l| l.ensure_string.strip }
+        locales = locales.ensure_array(no_duplicates: true, compact: true, flatten: true) { |l| l.ensure_string.strip }
         locales = (locales.empty? ? [Mbrao::Parser.locale] : locales)
         raise Mbrao::Exceptions::UnavailableLocalization if content && !content.enabled_for_locales?(locales)
         locales
@@ -54,7 +54,7 @@ module Mbrao
     # @param locales [Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
     # @return [Boolean] `true` if the content is available for at least one of the desired locales, `false` otherwise.
     def enabled_for_locales?(*locales)
-      locales = locales.flatten.ensure_array(nil, false, false, true) { |l| l.ensure_string.strip }.reject { |l| l == "*" }
+      locales = locales.flatten.ensure_array(flatten: true) { |l| l.ensure_string.strip }.reject { |l| l == "*" }
       @locales.blank? || locales.blank? || (@locales & locales).present?
     end
 
@@ -110,12 +110,7 @@ module Mbrao
 
     private
 
-    # Filters an attribute basing a set of locales.
-    #
-    # @param attribute [Object|HashWithIndifferentAccess] The desired attribute.
-    # @param locales [String|Array] The desired locales. Can include `*` to match all. If none are specified, the default mbrao locale will be used.
-    # @return [String|HashWithIndifferentAccess] Return the object for desired locales. If only one locale is available, then only a object is returned,
-    #   else a `HashWithIndifferentAccess` with locales as keys.
+    # :nodoc:
     def filter_attribute_for_locales(attribute, locales)
       locales = ::Mbrao::Content.validate_locales(locales, self)
 
@@ -127,14 +122,7 @@ module Mbrao
       end
     end
 
-    # Adds an value on a hash if enable for requested locales.
-    #
-    # @param hash [Hash] The hash to handle.
-    # @param locale [String] The list of locale (separated by commas) for which the value is available.
-    # @param locales [Array] The list of locale for which this value is requested. Can include `*` to match all. If none are specified, the default mbrao
-    #   locale will be used.
-    # @param value [Object] The value to add.
-    # @return [Hash] Return the original hash.
+    # :nodoc:
     def append_value_for_locale(hash, locale, locales, value)
       locale.split(/\s*,\s*/).map(&:strip).each do |l|
         hash[l] = value if locales.include?("*") || locales.include?(l)

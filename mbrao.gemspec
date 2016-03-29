@@ -4,7 +4,7 @@
 # Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
 #
 
-require File.expand_path('../lib/mbrao/version', __FILE__)
+require File.expand_path("../lib/mbrao/version", __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name = "mbrao"
@@ -23,12 +23,12 @@ Gem::Specification.new do |gem|
   gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.required_ruby_version = ">= 1.9.3"
+  gem.required_ruby_version = ">= 2.3.0"
 
-  gem.add_dependency("lazier", "~> 3.5.5")
-  gem.add_dependency("html-pipeline", "~> 1.8.0")
-  gem.add_dependency("slim", "~> 2.0.2")
-  gem.add_dependency("kramdown", "~> 1.3.3")
-  gem.add_dependency("rinku", "~> 1.7.3")
-  gem.add_dependency("gemoji", "~> 1.5.0")
+  gem.add_dependency("lazier", "~> 4.2")
+  gem.add_dependency("html-pipeline", "~> 2.3")
+  gem.add_dependency("slim", "~> 3.0")
+  gem.add_dependency("kramdown", "~> 1.10")
+  gem.add_dependency("rinku", "~> 1.7")
+  gem.add_dependency("gemoji", "~> 2.1")
 end

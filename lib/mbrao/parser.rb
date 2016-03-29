@@ -35,12 +35,9 @@ module Mbrao
 
     private
 
-    # Sanitizes options for parsing.
-    #
-    # @param options [Hash] The options to sanitize.
-    # @return [HashWithIndifferentAccess] The sanitized options.
+    # :nodoc:
     def sanitize_parsing_options(options)
-      options = options.ensure_hash(:symbols)
+      options = options.ensure_hash(accesses: :symbols)
 
       options[:engine] ||= Mbrao::Parser.parsing_engine
       options[:metadata] = options.fetch(:metadata, true).to_boolean
@@ -49,12 +46,9 @@ module Mbrao
       HashWithIndifferentAccess.new(options)
     end
 
-    # Sanitizes options for rendering.
-    #
-    # @param options [Hash] The options to sanitize.
-    # @return [HashWithIndifferentAccess] The sanitized options.
+    # :nodoc:
     def sanitize_rendering_options(options)
-      options = options.ensure_hash(:symbols)
+      options = options.ensure_hash(accesses: :symbols)
 
       options[:engine] ||= Mbrao::Parser.rendering_engine
 

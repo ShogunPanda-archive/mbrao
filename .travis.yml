@@ -1,8 +1,10 @@
 language: ruby
 rvm:
-  - 2.1.2
-  - rbx-2.2.6
-script: bundle exec rake spec:coverage
+  - 2.3.0
+script: bundle exec rake spec:ci
 gemfile: .travis-gemfile
 notifications:
   email: false
+addons:
+  code_climate:
+    repo_token: 55a517f08ad82a755876285eb98b779caf3d97a6726572e45ad1377cf0cb34d0

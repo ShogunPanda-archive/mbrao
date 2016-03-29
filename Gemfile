@@ -9,14 +9,14 @@ source "http://rubygems.org"
 gemspec
 
 # Testing
-gem "rspec", "~> 2.14.1"
-gem "rake", "~> 10.3.1"
-gem "actionpack", ">= 3.2.18"
+gem "rspec", "~> 3.4"
+gem "rake", "~> 11.0"
 
 # Documentation
-gem "simplecov", ">= 0.8.2"
-gem "coveralls", ">= 0.7.0", require: false
-gem "pry", ">= 0"
-gem "yard", ">= 0.8.7"
-gem "kramdown", ">= 1.3.3"
-gem "github-markup", ">= 1.2.1"
+gem "simplecov", "~> 0.11"
+gem "coveralls", "~> 0.8", require: false
+gem "pry", "~> 0.10"
+gem "yard", "~> 0.8"
+gem "kramdown", "~> 1.10"
+gem "github-markup", "~> 1.4"
+gem "rubocop", "~> 0.39"

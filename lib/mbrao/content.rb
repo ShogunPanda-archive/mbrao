@@ -56,7 +56,7 @@ module Mbrao
     #
     # @param value [Array] The new value for the attribute. A empty or "*" will be the default value.
     def locales=(value)
-      @locales = value.ensure_array(nil, true, true, true) { |l| l.ensure_string.strip }
+      @locales = value.ensure_array(no_duplicates: true, compact: true, flatten: true) { |l| l.ensure_string.strip }
     end
 
     # Sets the `title` attribute.
@@ -64,7 +64,7 @@ module Mbrao
     # @param new_title [String|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas.
     #   A empty or "*" will be the default value.
     def title=(new_title)
-      @title = hash?(new_title) ? new_title.ensure_hash(:indifferent, nil, :ensure_string) : new_title.ensure_string
+      @title = hash?(new_title) ? new_title.ensure_hash(accesses: :indifferent, default: nil, sanitizer: :ensure_string) : new_title.ensure_string
     end
 
     # Sets the `summary` attribute.
@@ -72,7 +72,7 @@ module Mbrao
     # @param new_summary [String|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas.
     #   A empty or "*" will be the default value.
     def summary=(new_summary)
-      @summary = hash?(new_summary) ? new_summary.ensure_hash(:indifferent, nil, :ensure_string) : new_summary.ensure_string
+      @summary = hash?(new_summary) ? new_summary.ensure_hash(accesses: :indifferent, default: nil, sanitizer: :ensure_string) : new_summary.ensure_string
     end
 
     # Sets the `body` attribute.
@@ -87,7 +87,7 @@ module Mbrao
     # @param new_tags [Array|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas.
     #   A empty or "*" will be the default value. Tags can also be comma-separated.
     def tags=(new_tags)
-      @tags = hash?(new_tags) ? new_tags.ensure_hash(:indifferent) { |v| parse_tags(v) } : parse_tags(new_tags)
+      @tags = hash?(new_tags) ? new_tags.ensure_hash(accesses: :indifferent) { |v| parse_tags(v) } : parse_tags(new_tags)
     end
 
     # Sets the `more` attribute.
@@ -95,7 +95,7 @@ module Mbrao
     # @param new_more [String|Hash] The new value for the attribute. If an Hash, keys must be a string with one or locale separated by commas.
     #   A empty or "*" will be the default value.
     def more=(new_more)
-      @more = hash?(new_more) ? new_more.ensure_hash(:indifferent, nil, :ensure_string) : new_more.ensure_string
+      @more = hash?(new_more) ? new_more.ensure_hash(accesses: :indifferent, default: nil, sanitizer: :ensure_string) : new_more.ensure_string
     end
 
     # Sets the `author` attribute.
@@ -105,8 +105,8 @@ module Mbrao
       @author =
         if new_author.is_a?(Mbrao::Author)
           new_author
-        elsif hash?(new_author) then
-          Mbrao::Author.create(new_author.ensure_hash(:indifferent))
+        elsif hash?(new_author)
+          Mbrao::Author.create(new_author.ensure_hash(accesses: :indifferent))
         else
           new_author ? Mbrao::Author.new(new_author.ensure_string) : nil
         end
@@ -130,80 +130,7 @@ module Mbrao
     #
     # @param new_metadata [Hash] The new value for the attribute.
     def metadata=(new_metadata)
-      @metadata = hash?(new_metadata) ? new_metadata.ensure_hash(:indifferent) : @metadata = HashWithIndifferentAccess.new({raw: new_metadata})
-    end
-
-    private
-
-    # Extracts a date and time from a value.
-    #
-    # @param value [String|DateTime|Fixnum] The value to parse.
-    # @return [DateTime] The extracted value.
-    def extract_datetime(value)
-      value = parse_datetime(value) if value
-      value ? value.utc : nil
-    rescue ArgumentError
-      raise Mbrao::Exceptions::InvalidDate
-    end
-
-    # Parses a datetime.
-    #
-    # @param value [String|DateTime|Fixnum] The value to parse.
-    # @return [DateTime] The extracted value.
-    def parse_datetime(value)
-      rv =
-        case value.class.to_s
-        when "DateTime" then value
-        when "Date", "Time" then value.to_datetime
-        when "Float", "Fixnum" then parse_datetime_number(value)
-        else parse_datetime_string(value)
-        end
-
-      raise ArgumentError unless rv
-      rv
-    end
-
-    # Parses a datetime from a number.
-    #
-    # @param value [String] The value to parse.
-    # @return [Float|Fixnum] The extracted value.
-    def parse_datetime_number(value)
-      number = value.to_float
-      number > 0 ? Time.at(number).to_datetime : nil
-    end
-
-    # Parses a datetime from a string.
-    #
-    # @param value [String] The value to parse.
-    # @return [DateTime] The extracted value.
-    def parse_datetime_string(value)
-      value = value.ensure_string
-
-      catch(:parsed) do
-        ALLOWED_DATETIME_FORMATS.find do |format|
-          begin
-            throw(:parsed, DateTime.strptime(value, format))
-          rescue
-            nil
-          end
-        end
-      end
-    end
-
-    # Extracts tags from an array, making sure all the comma separated strings are evaluated.
-    #
-    # @param value [String|Array] The string or array to parse.
-    # @return [Array] The list of tags.
-    def parse_tags(value)
-      value.ensure_array(nil, true, true, true) { |v| v.ensure_string.split(/\s*,\s*/) }
-    end
-
-    # Check if value is an Hash.
-    #
-    # @param value [Object] The object to check.
-    # @return [Boolean] `true` if value is an Hash, `false` otherwise
-    def hash?(value)
-      value.is_a?(Hash)
+      @metadata = hash?(new_metadata) ? new_metadata.ensure_hash(accesses: :indifferent) : @metadata = HashWithIndifferentAccess.new({raw: new_metadata})
     end
 
     # Assigns metadata to a content
@@ -236,6 +163,61 @@ module Mbrao
     # @return [Array] The normalized locales.
     def self.normalize_locales(locales)
       locales.flatten.map(&:ensure_string).map(&:strip).uniq
+    end
+
+    private
+
+    # :nodoc:
+    def extract_datetime(value)
+      value = parse_datetime(value) if value
+      value ? value.utc : nil
+    rescue ArgumentError
+      raise Mbrao::Exceptions::InvalidDate
+    end
+
+    # :nodoc:
+    def parse_datetime(value)
+      rv =
+        case value.class.to_s
+        when "DateTime" then value
+        when "Date", "Time" then value.to_datetime
+        when "Float", "Fixnum" then parse_datetime_number(value)
+        else parse_datetime_string(value)
+        end
+
+      raise ArgumentError unless rv
+      rv
+    end
+
+    # :nodoc:
+    def parse_datetime_number(value)
+      number = value.to_float
+      number > 0 ? Time.at(number).to_datetime : nil
+    end
+
+    # :nodoc:
+    def parse_datetime_string(value)
+      value = value.ensure_string
+
+      catch(:parsed) do
+        ALLOWED_DATETIME_FORMATS.find do |format|
+          begin
+            throw(:parsed, DateTime.strptime(value, format))
+          rescue
+            nil
+          end
+        end
+      end
+    end
+
+    # :nodoc:
+    def parse_tags(value)
+      value.ensure_array(no_duplicates: true, compact: true, flatten: true) { |v| v.ensure_string.split(/\s*,\s*/) }
+    end
+
+    # :nodoc:
+    def hash?(value)
+      value.is_a?(Hash)
     end
   end
 end

@@ -5,7 +5,6 @@
 #
 
 require "spec_helper"
-require "action_view"
 require "mbrao/integrations/rails"
 
 describe ActionView::Template::Handlers::MbraoTemplate do
@@ -77,12 +76,12 @@ describe ActionView::Template::Handlers::MbraoTemplate do
       renderer = DummyRenderer.new
       allow(renderer).to receive(:controller).and_return(controller)
 
-      expect(controller.respond_to?(:mbrao_content)).to be_false
+      expect(controller.respond_to?(:mbrao_content)).to be_falsey
       expect(::Mbrao::Parser).to receive(:parse).and_call_original
       expect(controller.class).to receive(:helper_method).with(:mbrao_content)
       ActionView::Template::Handlers::MbraoTemplate.instance.render(renderer, "CONTENT")
 
-      expect(controller.respond_to?(:mbrao_content)).to be_true
+      expect(controller.respond_to?(:mbrao_content)).to be_truthy
       expect(controller.mbrao_content.body).to eq("CONTENT")
     end
 
@@ -101,7 +100,7 @@ describe ActionView::Template::Handlers::MbraoTemplate do
 
   describe "#supports_streaming?" do
     it "should be true" do
-      expect(ActionView::Template::Handlers::MbraoTemplate.instance.supports_streaming?).to be_true
+      expect(ActionView::Template::Handlers::MbraoTemplate.instance.supports_streaming?).to be_truthy
     end
   end
 end

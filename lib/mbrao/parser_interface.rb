@@ -75,8 +75,8 @@ module Mbrao
       # @return [Hash] An hash with all attributes.
       def as_json(target, keys, options = {})
         include_empty = !options[:exclude_empty].to_boolean
-        exclude = options[:exclude].ensure_array(nil, true, true, true, :ensure_string)
-        keys = keys.ensure_array(nil, true, true, true, :ensure_string)
+        exclude = options[:exclude].ensure_array(no_duplicates: true, compact: true, flatten: true, sanitizer: :ensure_string)
+        keys = keys.ensure_array(no_duplicates: true, compact: true, flatten: true, sanitizer: :ensure_string)
 
         map_to_json(target, (keys - exclude), include_empty)
       end
@@ -104,35 +104,25 @@ module Mbrao
 
       private
 
-      # Returns an attribute or a default value.
-      #
-      # @param attr [Object ]The attribute to return.
-      # @param default_value [Object] The value to return if `attr` is blank.
-      # @param sanitizer [Symbol] An optional method to sanitize the returned value.
+      # :nodoc:
       def attribute_or_default(attr, default_value = nil, sanitizer = :ensure_string)
         rv = attr.present? ? attr : default_value
         rv = rv.send(sanitizer) if sanitizer
         rv
       end
 
-      # Perform the mapping to JSON.
-      #
-      # @param target [Object] The target to serialize.
-      # @param keys [Array] The attributes to include in the serialization.
-      # @param include_empty [Boolean], if to include nil values.
-      # @return [Hash] An hash with all attributes.
+      # :nodoc:
       def map_to_json(target, keys, include_empty)
-        keys.reduce({}) { |rv, key|
+        json = keys.reduce({}) do |rv, key|
           value = get_json_field(target, key)
           rv[key] = value if include_empty || value.present?
           rv
-        }.deep_stringify_keys
+        end
+
+        json.deep_stringify_keys
       end
 
-      # Get a field as JSON.
-      #
-      # @param target [Object] The object containing the value.
-      # @param method [Symbol] The method containing the value.
+      # :nodoc:
       def get_json_field(target, method)
         value = target.send(method)
         value = value.as_json if value && value.respond_to?(:as_json) && !value.is_a?(Symbol)
