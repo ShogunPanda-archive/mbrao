@@ -1,3 +1,8 @@
+### 2.0.0 / 2016-03-29
+
+* Dropped support for Ruby < 2.3.
+* Updated dependencies and linted code.
+
 ### 1.5.0 / 2014-05-11
 
 * Metrics and code style fixes.

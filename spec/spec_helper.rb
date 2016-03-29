@@ -23,3 +23,4 @@ if ENV["COVERAGE"]
 end
 
 require File.dirname(__FILE__) + "/../lib/mbrao"
+Lazier::I18n.default_locale = :en

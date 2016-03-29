@@ -14,7 +14,7 @@ module Mbrao
     MAJOR = 1
 
     # The minor version.
-    MINOR = 5
+    MINOR = 6
 
     # The patch version.
     PATCH = 0
