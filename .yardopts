@@ -1,1 +1,1 @@
--m markdown --verbose
+-o ./docs -m markdown
