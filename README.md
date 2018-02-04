@@ -1,10 +1,9 @@
 # Introduction
 
-[![Gem Version](https://badge.fury.io/rb/mbrao.png)](http://badge.fury.io/rb/mbrao)
-[![Dependency Status](https://gemnasium.com/ShogunPanda/mbrao.png?travis)](https://gemnasium.com/ShogunPanda/mbrao)
-[![Build Status](https://secure.travis-ci.org/ShogunPanda/mbrao.png?branch=master)](https://travis-ci.org/ShogunPanda/mbrao)
-[![Code Climate](https://codeclimate.com/github/ShogunPanda/mbrao.png)](https://codeclimate.com/github/ShogunPanda/mbrao)
-[![Coverage Status](https://coveralls.io/repos/github/ShogunPanda/mbrao/badge.svg?branch=master)](https://coveralls.io/github/ShogunPanda/mbrao?branch=master)
+[![Gem Version](https://img.shields.io/gem/v/mbrao.svg)](https://rubygems.org/gems/mbrao)
+[![Dependency Status](https://img.shields.io/gemnasium/ShogunPanda/mbrao.svg)](https://gemnasium.com/ShogunPanda/mbrao)
+[![Build Status](https://img.shields.io/travis/ShogunPanda/mbrao.svg)](https://travis-ci.org/ShogunPanda/mbrao)
+[![Coverage Status](https://img.shields.io/coveralls/github/ShogunPanda/mbrao.svg)](https://coveralls.io/github/ShogunPanda/mbrao)
 
 A content parser and renderer with embedded metadata support.
 
@@ -62,4 +61,4 @@ The API documentation can be found [here](https://sw.cowtech.it/mbrao/docs).
 
 Copyright (C) 2013 and above Shogun (shogun@cowtech.it).
 
-Licensed under the MIT license, which can be found at http://www.opensource.org/licenses/mit-license.php.
+Licensed under the MIT license, which can be found at https://choosealicense.com/licenses/mit.
