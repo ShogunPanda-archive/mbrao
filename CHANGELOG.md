@@ -1,3 +1,11 @@
+### 2018-06-18 / 1.6.1
+
+* chore: End of development notice.
+* Updated license links and badges.
+* Updated docs location.
+* Updated docs.
+* Added missing copyright notes.
+
 ### 2.0.0 / 2016-03-29
 
 * Dropped support for Ruby < 2.3.
