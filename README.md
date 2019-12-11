@@ -1,17 +1,8 @@
-# Introduction
+# mbrao
 
-[![Gem Version](https://img.shields.io/gem/v/mbrao.svg)](https://rubygems.org/gems/mbrao)
-[![Dependency Status](https://img.shields.io/gemnasium/ShogunPanda/mbrao.svg)](https://gemnasium.com/ShogunPanda/mbrao)
-[![Build Status](https://img.shields.io/travis/ShogunPanda/mbrao.svg)](https://travis-ci.org/ShogunPanda/mbrao)
-[![Coverage Status](https://img.shields.io/coveralls/github/ShogunPanda/mbrao.svg)](https://coveralls.io/github/ShogunPanda/mbrao)
+## END OF DEVELOPMENT NOTICE - This gem has been discontinued
 
 A content parser and renderer with embedded metadata support.
-
-https://sw.cowtech.it/mbrao
-
-## END OF DEVELOPMENT NOTICE
-
-# This gem has been discontinued.
 
 ## Usage
 
